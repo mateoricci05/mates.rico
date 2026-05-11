@@ -30,9 +30,9 @@ const productos = [
   },
   {
     id: 2,
-    nombre: "Torpedo Virola Alpaca — Cuero Negro",
+    nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio. Solo queda 1 unidad.",
-    precio: 42000,
+    precio: 55000,
     stock: 1,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
