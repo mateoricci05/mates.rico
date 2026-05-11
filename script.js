@@ -56,7 +56,7 @@ const productos = [
       "Madera de algarrobo auténtica",
       "Guarda de acero inoxidable",
       "Bombilla pico de loro incluida",
-      "Base plana antivuelco",
+      "Tamaño chico",
       "Veta única en cada pieza",
     ],
   },
