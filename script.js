@@ -14,7 +14,7 @@
 const productos = [
   {
     id: 1,
-    nombre: "Imperial Guarda Alpaca — Cuero Borravino",
+    nombre: "Imperial Guarda Alpaca Premium — Cuero Borravino",
     descripcion: "Imperial de calabaza con guarda de alpaca cincelada a mano, cuero liso borravino y base de alpaca ancha. Una pieza única con identidad propia. Para el matera que no negocia calidad.",
     precio: 60000,
     stock: 1,
