@@ -97,7 +97,7 @@ const productos = [
     nombre: "Combo Boca Juniors — Camionero Grabado",
     descripcion: "Camionero de algarrobo con el escudo de Boca Juniors grabado a fuego + bombilla chata + caja de presentación lista para regalar. El regalo perfecto para el xeneize de tu vida.",
     precio: 39000,
-    stock: 1,
+    stock: 0,
     imagen: "img/combo_boca_camionero.jpg",
     categoria: "Combos",
     features: [
