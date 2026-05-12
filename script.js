@@ -17,7 +17,7 @@ const productos = [
     nombre: "Imperial Guarda Alpaca Premium — Cuero Borravino",
     descripcion: "Imperial de calabaza con guarda de alpaca cincelada a mano, cuero liso borravino y base de alpaca ancha. Una pieza única con identidad propia. Para el matera que no negocia calidad.",
     precio: 60000,
-    stock: 1,
+    stock: 5,
     imagen: "img/imperial_guarda_alpaca_borravino.jpg",
     categoria: "Mates",
     features: [
@@ -33,7 +33,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio. Solo queda 1 unidad.",
     precio: 55000,
-    stock: 1,
+    stock: 5,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -49,7 +49,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro de acero incluida. La madera de algarrobo tiene veta natural única en cada pieza — ningún mate es igual a otro.",
     precio: 30000,
-    stock: 5,
+    stock: 15,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -65,9 +65,9 @@ const productos = [
     nombre: "Imperial Alpaca + Termo 1L + Bombilla",
     descripcion: "El set completo del matera: Imperial de alpaca + termo de 1 litro en acero inoxidable + bombilla pico de loro. Todo lo que necesitás para matear en cualquier lado, en un solo paquete.",
     precio: 65000,
-    stock: 3,
+    stock: 10,
     imagen: "img/imperial_termo.jpg",
-    categoria: "Mates",
+    categoria: "Combos",
     features: [
       "Imperial guarda alpaca",
       "Termo 1L acero inoxidable",
@@ -80,8 +80,8 @@ const productos = [
     id: 5,
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes. Disponible también dentro de nuestros kits completos.",
-    precio: 11500,
-    stock: 10,
+    precio: 11300,
+    stock: 50,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -131,7 +131,7 @@ const productos = [
     precio: 55000,
     stock: 1,
     imagen: "img/imperial_alpaca_boca.jpg",
-    categoria: "Combos",
+    categoria: "Mates",
     features: [
       "Imperial calabaza con alpaca",
       "Grabado Boca Juniors exclusivo",
@@ -147,7 +147,7 @@ const productos = [
     precio: 55000,
     stock: 1,
     imagen: "img/imperial_alpaca_river.jpg",
-    categoria: "Combos",
+    categoria: "Mates",
     features: [
       "Imperial calabaza con alpaca",
       "Grabado River Plate exclusivo",
@@ -160,8 +160,8 @@ const productos = [
     id: 10,
     nombre: "Kit Matera Clásico — Imperial + Yerba 1kg + Canasta ECO",
     descripcion: "Todo para arrancar a matear: Imperial Virola Alpaca cuero negro + bombilla pico de loro + 1kg de Yerba Baldo incluida + Canasta ECO. Un solo pack, todo adentro.",
-    precio: 74000,
-    stock: 1,
+    precio: 75000,
+    stock: 10,
     imagen: "img/kit_clasico.jpg",
     categoria: "Combos",
     features: [
@@ -174,10 +174,10 @@ const productos = [
   },
   {
     id: 11,
-    nombre: "Kit Matera Premium — Imperial + Termo + Yerba 1kg ",
-    descripcion: "El combo más completo: Imperial Alpaca + Termo 1L acero + bombilla pico de loro + 1kg de Yerba Baldo. Todo incluido, empaquetado con identidad MATES.RICO. El regalo que lo tiene todo.",
+    nombre: "Kit Matera Premium — Imperial + Termo + Yerba 1kg + Canasta ECO",
+    descripcion: "El combo más completo: Imperial Alpaca + Termo 1L acero + Canasta ECO + bombilla pico de loro + 1kg de Yerba Baldo. Todo incluido, empaquetado con identidad MATES.RICO. El regalo que lo tiene todo.",
     precio: 95000,
-    stock: 3,
+    stock: 10,
     imagen: "img/kit_premium.jpg",
     categoria: "Combos",
     features: [
@@ -185,7 +185,7 @@ const productos = [
       "Termo 1L acero inoxidable",
       "Bombilla pico de loro acero",
       "Yerba Baldo 1kg incluida",
-      "Packaging premium MATES.RICO",
+      "Canasta ECO",
     ],
   },
   {
@@ -193,7 +193,7 @@ const productos = [
     nombre: "Combo Imperial + Canasta Eco",
     descripcion: "Imperial Guarda Alpaca presentado en canasta ecológica con chaulata y bombilla chata. El combo más fotogénico de la tienda. Perfecto para regalar con estilo rústico y premium a la vez.",
     precio: 58000,
-    stock: 2,
+    stock: 10,
     imagen: "img/combo_imperial_canasta_eco.jpg",
     categoria: "Combos",
     features: [
