@@ -464,7 +464,7 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
 /* ─── SPLASH SCREEN ──────────────────────────── */
 .splash {
   position: fixed; inset: 0; z-index: 9999;
-  background: var(--negro);
+  background: var(--hueso);
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
@@ -472,30 +472,21 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
 
 .splash-inner { text-align: center; }
 
-.splash-mate {
-  width: 64px; height: auto; margin: 0 auto 20px;
-  animation: splashPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
-}
-@keyframes splashPop {
-  from { opacity: 0; transform: scale(0.5) translateY(20px); }
-  to   { opacity: 1; transform: scale(1)   translateY(0); }
-}
-
 .splash-logo {
-  font-family: var(--font-display); font-size: 2rem; font-weight: 700;
-  color: var(--blanco); letter-spacing: -0.02em; margin-bottom: 28px;
-  opacity: 0; animation: fadeUp 0.5s ease 0.5s forwards;
+  font-family: var(--font-display); font-size: 2.4rem; font-weight: 700;
+  color: var(--negro); letter-spacing: -0.02em; margin-bottom: 32px;
+  opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
 }
-.splash-logo span { color: var(--dorado); }
+.splash-logo span { color: var(--verde-med); }
 
 .splash-bar {
-  width: 120px; height: 2px; background: rgba(255,255,255,0.12);
+  width: 100px; height: 1.5px; background: var(--gris-claro);
   border-radius: 2px; margin: 0 auto; overflow: hidden;
-  opacity: 0; animation: fadeUp 0.4s ease 0.7s forwards;
+  opacity: 0; animation: fadeUp 0.4s ease 0.3s forwards;
 }
 .splash-bar-fill {
-  height: 100%; width: 0%; background: var(--dorado);
-  border-radius: 2px; animation: barLoad 1s ease 0.8s forwards;
+  height: 100%; width: 0%; background: var(--verde-med);
+  border-radius: 2px; animation: barLoad 1s ease 0.4s forwards;
 }
 @keyframes barLoad { from { width: 0% } to { width: 100% } }
 
@@ -707,6 +698,19 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
   border-color: rgba(58,107,53,0.2);
 }
 .envio-progress-wrap.zona-gratis .envio-progress-header {
+  color: var(--verde-med);
+  font-weight: 500;
+}
+
+.envio-zonas-info {
+  font-size: 0.72rem;
+  color: var(--gris-med);
+  margin-top: 8px;
+  line-height: 1.5;
+  padding: 0 2px;
+}
+
+.envio-zonas-info strong {
   color: var(--verde-med);
   font-weight: 500;
 }
