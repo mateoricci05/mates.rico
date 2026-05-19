@@ -49,7 +49,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro de acero incluida. La madera de algarrobo tiene veta natural única en cada pieza — ningún mate es igual a otro.",
     precio: 30000,
-    stock: 15,
+    stock: 12,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -65,7 +65,7 @@ const productos = [
     nombre: "Imperial Alpaca + Termo 1L + Bombilla",
     descripcion: "El set completo del matera: Imperial de alpaca + termo de 1 litro en acero inoxidable + bombilla pico de loro. Todo lo que necesitás para matear en cualquier lado, en un solo paquete.",
     precio: 65000,
-    stock: 10,
+    stock: 8,
     imagen: "img/imperial_termo.jpg",
     categoria: "Combos",
     features: [
@@ -81,7 +81,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes. Disponible también dentro de nuestros kits completos.",
     precio: 11000,
-    stock: 50,
+    stock: 41,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
