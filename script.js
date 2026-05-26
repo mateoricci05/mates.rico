@@ -281,7 +281,7 @@ const productos = [
       "Guarda cincelada plateada",
       "Base tipo pata de mate clásica",
       "Acabado premium artesanal",
-      "Bombilla incluida",
+      "No incluye bombilla",
     ],
   },
 ];
