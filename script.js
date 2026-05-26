@@ -49,7 +49,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro de acero incluida. La madera de algarrobo tiene veta natural única en cada pieza — ningún mate es igual a otro.",
     precio: 30000,
-    stock: 15,
+    stock: 3,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
