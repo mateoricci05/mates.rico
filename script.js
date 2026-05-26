@@ -33,7 +33,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio. Solo queda 1 unidad.",
     precio: 55000,
-    stock: 0,
+    stock: 5,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -49,7 +49,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro de acero incluida. La madera de algarrobo tiene veta natural única en cada pieza — ningún mate es igual a otro.",
     precio: 30000,
-    stock: 12,
+    stock: 15,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -65,7 +65,7 @@ const productos = [
     nombre: "Imperial Alpaca + Termo 1L + Bombilla",
     descripcion: "El set completo del matera: Imperial de alpaca + termo de 1 litro en acero inoxidable + bombilla pico de loro. Todo lo que necesitás para matear en cualquier lado, en un solo paquete.",
     precio: 65000,
-    stock: 8,
+    stock: 10,
     imagen: "img/imperial_termo.jpg",
     categoria: "Combos",
     features: [
@@ -81,7 +81,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes. Disponible también dentro de nuestros kits completos.",
     precio: 11000,
-    stock: 41,
+    stock: 50,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -160,7 +160,7 @@ const productos = [
     id: 10,
     nombre: "Kit Matera Clásico — Imperial + Yerba 1kg + Canasta ECO",
     descripcion: "Todo para arrancar a matear: Imperial Virola Alpaca cuero negro + bombilla pico de loro + 1kg de Yerba Baldo incluida + Canasta ECO. Un solo pack, todo adentro.",
-    precio: 70000,
+    precio: 75000,
     stock: 10,
     imagen: "img/kit_clasico.jpg",
     categoria: "Combos",
@@ -176,7 +176,7 @@ const productos = [
     id: 11,
     nombre: "Kit Matera Premium — Imperial + Termo + Yerba 1kg + Canasta ECO",
     descripcion: "El combo más completo: Imperial Alpaca + Termo 1L acero + Canasta ECO + bombilla pico de loro + 1kg de Yerba Baldo. Todo incluido, empaquetado con identidad MATES.RICO. El regalo que lo tiene todo.",
-    precio: 92000,
+    precio: 95000,
     stock: 10,
     imagen: "img/kit_premium.jpg",
     categoria: "Combos",
@@ -192,7 +192,7 @@ const productos = [
     id: 12,
     nombre: "Combo Imperial + Canasta Eco",
     descripcion: "Imperial Guarda Alpaca presentado en canasta ecológica con chaulata y bombilla chata. El combo más fotogénico de la tienda. Perfecto para regalar con estilo rústico y premium a la vez.",
-    precio: 60000,
+    precio: 58000,
     stock: 10,
     imagen: "img/combo_imperial_canasta_eco.jpg",
     categoria: "Combos",
@@ -241,7 +241,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Para el matera que busca algo distinto.",
     precio: 42000,
-    stock: 1,
+    stock: 5,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -266,6 +266,22 @@ const productos = [
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
       "Estilo criollo auténtico",
+    ],
+  },
+  {
+    id: 17,
+    nombre: "Imperial Negro — Guarda Cincelada Plateada",
+    descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos — una combinación que no pasa desapercibida. Para el matera que busca algo distinto y con carácter.",
+    precio: 38000,
+    stock: 5,
+    imagen: "img/imperial_clasico.jpg",
+    categoria: "Mates",
+    features: [
+      "Calabaza en negro mate",
+      "Guarda cincelada plateada",
+      "Base tipo pata de mate clásica",
+      "Acabado premium artesanal",
+      "Bombilla incluida",
     ],
   },
 ];
@@ -323,6 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initModalCarrito();
   initModalEnvio();
   initReveal();
+  initCombo();
   feather.replace();
 });
 
@@ -390,6 +407,7 @@ function renderizarProductos(categoria = "Todos") {
   });
 
   initReveal();
+  initCombo();
   feather.replace();
 }
 
@@ -826,6 +844,115 @@ function mostrarToast(msg) {
   toast.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+
+// ═══════════════════════════════════════════════════════
+// 🎛️ ARMÁ TU COMBO
+// ═══════════════════════════════════════════════════════
+
+let comboSeleccionado = {}; // { grupo: { id, nombre, precio } }
+
+function initCombo() {
+  const opciones = document.querySelectorAll(".combo-option");
+  if (!opciones.length) return;
+
+  opciones.forEach(opcion => {
+    opcion.addEventListener("click", () => {
+      const grupo = opcion.closest(".combo-options").dataset.group;
+      const id     = opcion.dataset.id;
+      const precio = parseInt(opcion.dataset.precio);
+      const nombre = opcion.dataset.nombre;
+
+      // Toggle: si ya estaba seleccionado, deseleccionar
+      if (comboSeleccionado[grupo]?.id === id) {
+        delete comboSeleccionado[grupo];
+        opcion.classList.remove("selected");
+      } else {
+        // Deseleccionar el anterior del mismo grupo
+        opcion.closest(".combo-options")
+          .querySelectorAll(".combo-option")
+          .forEach(o => o.classList.remove("selected"));
+        // Seleccionar este
+        opcion.classList.add("selected");
+        comboSeleccionado[grupo] = { id, nombre, precio };
+      }
+
+      actualizarResumenCombo();
+    });
+  });
+
+  document.getElementById("btn-combo-carrito")?.addEventListener("click", agregarComboAlCarrito);
+}
+
+function actualizarResumenCombo() {
+  const itemsEl  = document.getElementById("combo-resumen-items");
+  const totalEl  = document.getElementById("combo-total");
+  const btnEl    = document.getElementById("btn-combo-carrito");
+  if (!itemsEl) return;
+
+  const items = Object.values(comboSeleccionado);
+  const total = items.reduce((acc, i) => acc + i.precio, 0);
+
+  if (items.length === 0) {
+    itemsEl.innerHTML = `
+      <div class="combo-resumen-vacio">
+        <i data-feather="shopping-bag"></i>
+        <p>Todavía no elegiste nada</p>
+      </div>`;
+    if (totalEl) totalEl.textContent = "$ 0";
+    if (btnEl) btnEl.disabled = true;
+    feather.replace();
+    return;
+  }
+
+  itemsEl.innerHTML = items.map(item => `
+    <div class="combo-item-resumen">
+      <span class="combo-item-nombre">${item.nombre}</span>
+      <span class="combo-item-precio">${fmt(item.precio)}</span>
+    </div>`).join("");
+
+  if (totalEl) totalEl.textContent = fmt(total);
+
+  // Habilitar botón solo si hay al menos un mate
+  const tieneMate = !!comboSeleccionado["mate"];
+  if (btnEl) btnEl.disabled = !tieneMate;
+  if (btnEl) btnEl.title = tieneMate ? "" : "Elegí un mate para continuar";
+}
+
+function agregarComboAlCarrito() {
+  const items = Object.values(comboSeleccionado);
+  if (!items.length || !comboSeleccionado["mate"]) return;
+
+  // Construir nombre del combo
+  const nombreCombo = "Combo: " + items.map(i => i.nombre).join(" + ");
+  const precioTotal = items.reduce((acc, i) => acc + i.precio, 0);
+
+  // Agregar como un único item al carrito
+  carrito.push({
+    id: Date.now(), // ID único
+    nombre: nombreCombo,
+    precio: precioTotal,
+    imagen: "img/kit_premium.jpg",
+    cantidad: 1,
+    esCombo: true,
+  });
+
+  actualizarBadge();
+  mostrarToast("✓ Combo agregado al carrito");
+  renderizarCarrito();
+
+  // Abrir carrito
+  setTimeout(() => {
+    document.getElementById("modal-carrito-overlay")?.classList.add("open");
+    document.body.style.overflow = "hidden";
+    renderizarCarrito();
+  }, 400);
+
+  // Reset selección
+  comboSeleccionado = {};
+  document.querySelectorAll(".combo-option").forEach(o => o.classList.remove("selected"));
+  actualizarResumenCombo();
 }
 
 // ═══════════════════════════════════════════════════════
