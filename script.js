@@ -277,7 +277,7 @@ const productos = [
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
-      "Calabaza en negro mate",
+      "Calabaza",
       "Guarda cincelada plateada",
       "Base tipo pata de mate clásica",
       "Acabado premium artesanal",
