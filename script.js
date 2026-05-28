@@ -81,7 +81,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes. Disponible también dentro de nuestros kits completos.",
     precio: 11000,
-    stock: 50,
+    stock: 9,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
