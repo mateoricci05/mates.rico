@@ -66,6 +66,7 @@
         <li><a href="#inicio"    class="nav-link">Inicio</a></li>
         <li><a href="#productos" class="nav-link">Productos</a></li>
         <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#arma-tu-combo" class="nav-link">Armá tu combo</a></li>
         <li><a href="#contacto"  class="nav-link">Contacto</a></li>
         <li>
           <a href="https://www.instagram.com/mates.rico" target="_blank" rel="noopener" class="nav-ig" aria-label="Instagram">
@@ -115,7 +116,7 @@
           <button class="filtro-btn active" data-cat="Todos">Todos</button>
           <button class="filtro-btn" data-cat="Mates">Mates</button>
           <button class="filtro-btn" data-cat="Yerbas">Yerbas</button>
-          <button class="filtro-btn" data-cat="Combos">Combos</button>
+          <button class="filtro-btn" data-cat="Accesorios">Accesorios</button>
         </div>
       </div>
     </div>
@@ -194,6 +195,163 @@
     </div>
   </section>
 
+
+
+  <!-- ══════════════ ARMÁ TU COMBO ══════════════ -->
+  <section class="combo-section" id="arma-tu-combo">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">Personalizá</p>
+        <h2 class="section-title">Armá tu combo</h2>
+        <p class="section-sub">Elegí tus favoritos y creá el combo perfecto para vos.</p>
+      </div>
+
+      <div class="combo-builder">
+
+        <!-- Columna izquierda: selector -->
+        <div class="combo-selectors">
+
+          <!-- Mate -->
+          <div class="combo-group">
+            <div class="combo-group-header">
+              <div class="combo-group-icon"><i data-feather="circle"></i></div>
+              <div>
+                <p class="combo-group-title">Mate</p>
+                <p class="combo-group-sub">Elegí tu compañero</p>
+              </div>
+            </div>
+            <div class="combo-options" data-group="mate">
+              <div class="combo-option" data-id="mate-1" data-precio="30000" data-nombre="Imperial Algarrobo">
+                <img src="img/imperial_algarrobo.jpg" alt="Imperial Algarrobo"/>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Imperial Algarrobo</p>
+                  <p class="combo-option-precio">$ 30.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+              <div class="combo-option" data-id="mate-2" data-precio="55000" data-nombre="Torpedo Virola Alpaca">
+                <img src="img/torpedo_virola_alpaca.jpg" alt="Torpedo Virola Alpaca"/>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Torpedo Virola Alpaca</p>
+                  <p class="combo-option-precio">$ 55.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+              <div class="combo-option" data-id="mate-3" data-precio="39900" data-nombre="Camionero Criollo">
+                <img src="img/mate_camionero_criollo.jpg" alt="Camionero Criollo"/>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Camionero Criollo</p>
+                  <p class="combo-option-precio">$ 39.900</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+              <div class="combo-option" data-id="mate-4" data-precio="43000" data-nombre="Mate Galleta Premium">
+                <img src="img/mate_galleta.jpg" alt="Mate Galleta"/>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Mate Galleta Premium</p>
+                  <p class="combo-option-precio">$ 43.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Termo (opcional) -->
+          <div class="combo-group">
+            <div class="combo-group-header">
+              <div class="combo-group-icon"><i data-feather="thermometer"></i></div>
+              <div>
+                <p class="combo-group-title">Termo <span class="combo-opcional">opcional</span></p>
+                <p class="combo-group-sub">Para matear donde vayas</p>
+              </div>
+            </div>
+            <div class="combo-options" data-group="termo">
+              <div class="combo-option" data-id="termo-1" data-precio="25000" data-nombre="Termo 1L Acero Inoxidable">
+                <div class="combo-option-icon"><i data-feather="thermometer"></i></div>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Termo 1L Acero Inoxidable</p>
+                  <p class="combo-option-precio">$ 25.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Yerba (opcional) -->
+          <div class="combo-group">
+            <div class="combo-group-header">
+              <div class="combo-group-icon"><i data-feather="feather"></i></div>
+              <div>
+                <p class="combo-group-title">Yerba <span class="combo-opcional">opcional</span></p>
+                <p class="combo-group-sub">La mejor para acompañar</p>
+              </div>
+            </div>
+            <div class="combo-options" data-group="yerba">
+              <div class="combo-option" data-id="yerba-1" data-precio="11000" data-nombre="Yerba Baldo 1kg">
+                <img src="img/yerba_baldo.jpg" alt="Yerba Baldo"/>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Yerba Baldo 1kg</p>
+                  <p class="combo-option-precio">$ 11.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Canasta ECO (opcional) -->
+          <div class="combo-group">
+            <div class="combo-group-header">
+              <div class="combo-group-icon"><i data-feather="gift"></i></div>
+              <div>
+                <p class="combo-group-title">Presentación <span class="combo-opcional">opcional</span></p>
+                <p class="combo-group-sub">Para regalar con estilo</p>
+              </div>
+            </div>
+            <div class="combo-options" data-group="presentacion">
+              <div class="combo-option" data-id="canasta-1" data-precio="8000" data-nombre="Canasta ECO Artesanal">
+                <div class="combo-option-icon combo-option-icon--gold"><i data-feather="package"></i></div>
+                <div class="combo-option-info">
+                  <p class="combo-option-nombre">Canasta ECO Artesanal</p>
+                  <p class="combo-option-precio">$ 8.000</p>
+                </div>
+                <div class="combo-check"><i data-feather="check"></i></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Columna derecha: resumen sticky -->
+        <div class="combo-resumen-wrap">
+          <div class="combo-resumen" id="combo-resumen">
+            <div class="combo-resumen-header">
+              <p class="combo-resumen-titulo">Tu combo</p>
+              <p class="combo-resumen-sub">Seleccioná al menos un mate</p>
+            </div>
+
+            <div class="combo-resumen-items" id="combo-resumen-items">
+              <div class="combo-resumen-vacio">
+                <i data-feather="shopping-bag"></i>
+                <p>Todavía no elegiste nada</p>
+              </div>
+            </div>
+
+            <div class="combo-resumen-footer">
+              <div class="combo-total-row">
+                <span>Total</span>
+                <strong id="combo-total">$ 0</strong>
+              </div>
+              <button class="btn btn-primary btn-full" id="btn-combo-carrito" disabled>
+                <i data-feather="shopping-bag"></i> Agregar combo al carrito
+              </button>
+              <p class="combo-resumen-nota">Podés seguir agregando otros productos al carrito</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ══════════════ CONTACTO ══════════════ -->
   <section class="contacto-section" id="contacto">
