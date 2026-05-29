@@ -34,7 +34,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio.",
     precio: 55000,
-    stock: 5,
+    stock: 0,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -50,7 +50,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro incluida. Veta natural única en cada pieza.",
     precio: 30000,
-    stock: 15,
+    stock: 5,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -113,7 +113,7 @@ const productos = [
     id: 14,
     nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
-    precio: 43000,
+    precio: 41000,
     stock: 5,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
@@ -130,7 +130,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro.",
     precio: 42000,
-    stock: 5,
+    stock: 1,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -212,7 +212,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 50,
+    stock: 10,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
