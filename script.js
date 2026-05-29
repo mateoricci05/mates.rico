@@ -34,7 +34,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio.",
     precio: 55000,
-    stock: 0,
+    stock: 5,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -50,7 +50,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro incluida. Veta natural única en cada pieza.",
     precio: 30000,
-    stock: 5,
+    stock: 15,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -113,7 +113,7 @@ const productos = [
     id: 14,
     nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
-    precio: 41000,
+    precio: 43000,
     stock: 5,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
@@ -130,7 +130,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro.",
     precio: 42000,
-    stock: 1,
+    stock: 5,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -212,7 +212,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 10,
+    stock: 50,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -312,7 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initModalCarrito();
   initModalEnvio();
   initReveal();
-  initCombo();
   feather.replace();
 });
 
@@ -380,7 +379,6 @@ function renderizarProductos(categoria = "Todos") {
   });
 
   initReveal();
-  initCombo();
   feather.replace();
 }
 
@@ -820,113 +818,6 @@ function mostrarToast(msg) {
 }
 
 
-// ═══════════════════════════════════════════════════════
-// 🎛️ ARMÁ TU COMBO
-// ═══════════════════════════════════════════════════════
-
-let comboSeleccionado = {}; // { grupo: { id, nombre, precio } }
-
-function initCombo() {
-  const opciones = document.querySelectorAll(".combo-option");
-  if (!opciones.length) return;
-
-  opciones.forEach(opcion => {
-    opcion.addEventListener("click", () => {
-      const grupo = opcion.closest(".combo-options").dataset.group;
-      const id     = opcion.dataset.id;
-      const precio = parseInt(opcion.dataset.precio);
-      const nombre = opcion.dataset.nombre;
-
-      // Toggle: si ya estaba seleccionado, deseleccionar
-      if (comboSeleccionado[grupo]?.id === id) {
-        delete comboSeleccionado[grupo];
-        opcion.classList.remove("selected");
-      } else {
-        // Deseleccionar el anterior del mismo grupo
-        opcion.closest(".combo-options")
-          .querySelectorAll(".combo-option")
-          .forEach(o => o.classList.remove("selected"));
-        // Seleccionar este
-        opcion.classList.add("selected");
-        comboSeleccionado[grupo] = { id, nombre, precio };
-      }
-
-      actualizarResumenCombo();
-    });
-  });
-
-  document.getElementById("btn-combo-carrito")?.addEventListener("click", agregarComboAlCarrito);
-}
-
-function actualizarResumenCombo() {
-  const itemsEl  = document.getElementById("combo-resumen-items");
-  const totalEl  = document.getElementById("combo-total");
-  const btnEl    = document.getElementById("btn-combo-carrito");
-  if (!itemsEl) return;
-
-  const items = Object.values(comboSeleccionado);
-  const total = items.reduce((acc, i) => acc + i.precio, 0);
-
-  if (items.length === 0) {
-    itemsEl.innerHTML = `
-      <div class="combo-resumen-vacio">
-        <i data-feather="shopping-bag"></i>
-        <p>Todavía no elegiste nada</p>
-      </div>`;
-    if (totalEl) totalEl.textContent = "$ 0";
-    if (btnEl) btnEl.disabled = true;
-    feather.replace();
-    return;
-  }
-
-  itemsEl.innerHTML = items.map(item => `
-    <div class="combo-item-resumen">
-      <span class="combo-item-nombre">${item.nombre}</span>
-      <span class="combo-item-precio">${fmt(item.precio)}</span>
-    </div>`).join("");
-
-  if (totalEl) totalEl.textContent = fmt(total);
-
-  // Habilitar botón solo si hay al menos un mate
-  const tieneMate = !!comboSeleccionado["mate"];
-  if (btnEl) btnEl.disabled = !tieneMate;
-  if (btnEl) btnEl.title = tieneMate ? "" : "Elegí un mate para continuar";
-}
-
-function agregarComboAlCarrito() {
-  const items = Object.values(comboSeleccionado);
-  if (!items.length || !comboSeleccionado["mate"]) return;
-
-  // Construir nombre del combo
-  const nombreCombo = "Combo: " + items.map(i => i.nombre).join(" + ");
-  const precioTotal = items.reduce((acc, i) => acc + i.precio, 0);
-
-  // Agregar como un único item al carrito
-  carrito.push({
-    id: Date.now(), // ID único
-    nombre: nombreCombo,
-    precio: precioTotal,
-    imagen: "img/kit_premium.jpg",
-    cantidad: 1,
-    esCombo: true,
-  });
-
-  actualizarBadge();
-  mostrarToast("✓ Combo agregado al carrito");
-  renderizarCarrito();
-
-  // Abrir carrito
-  setTimeout(() => {
-    document.getElementById("modal-carrito-overlay")?.classList.add("open");
-    document.body.style.overflow = "hidden";
-    renderizarCarrito();
-  }, 400);
-
-  // Reset selección
-  comboSeleccionado = {};
-  document.querySelectorAll(".combo-option").forEach(o => o.classList.remove("selected"));
-  actualizarResumenCombo();
-}
 
 // ═══════════════════════════════════════════════════════
 // 💰 FORMATO PRECIO
