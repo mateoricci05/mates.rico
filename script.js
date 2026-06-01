@@ -111,7 +111,7 @@ const productos = [
   },
   {
     id: 14,
-    nombre: "Mate Galleta Premium",
+    nombre: "Mate Galleta - Cuero Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
     precio: 43000,
     stock: 1,
@@ -146,7 +146,7 @@ const productos = [
     nombre: "Mate Torpedo Criollo",
     descripcion: "Torpedo de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera.",
     precio: 38000,
-    stock: 5,
+    stock: 2,
     imagen: "img/mate_torpedo_criollo.jpg",
     categoria: "Mates",
     features: [
@@ -178,7 +178,7 @@ const productos = [
     nombre: "Mate Porito Cincelado",
     descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura — ideal para el mate de todos los días.",
     precio: 22000,
-    stock: 10,
+    stock: 0,
     imagen: "img/mate_porito.jpg",
     categoria: "Mates",
     features: [
@@ -230,7 +230,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 10,
+    stock: 5,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
