@@ -178,7 +178,7 @@ const productos = [
     nombre: "Mate Porito Cincelado",
     descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura — ideal para el mate de todos los días.",
     precio: 22000,
-    stock: 10,
+    stock: 0,
     imagen: "img/mate_porito.jpg",
     categoria: "Mates",
     features: [
