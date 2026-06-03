@@ -34,7 +34,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio.",
     precio: 55000,
-    stock: 5,
+    stock: 0,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -50,7 +50,7 @@ const productos = [
     nombre: "Imperial Algarrobo + Bombilla",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro incluida. Veta natural única en cada pieza.",
     precio: 30000,
-    stock: 15,
+    stock: 3,
     imagen: "img/imperial_algarrobo.jpg",
     categoria: "Mates",
     features: [
@@ -81,7 +81,7 @@ const productos = [
     id: 9,
     nombre: "Camionero River Plate — Edición Oficial",
     descripcion: "Camionero de madera con virola grabada oficial River Plate, bombilla incluida y caja de presentación negra. Club Atlético River Plate — 1901. El regalo ideal para el millonario de la familia.",
-    precio: 55000,
+    precio: 35000,
     stock: 1,
     imagen: "img/mate_river_plate.jpg",
     categoria: "Mates",
@@ -194,7 +194,7 @@ const productos = [
     nombre: "Torpedo Uruguayo Cincelado",
     descripcion: "Torpedo estilo uruguayo con guarda cincelada plateada y cuerpo negro. La forma más reconocida del litoral, con la elegancia del cincelado artesanal. Una pieza con identidad propia.",
     precio: 43000,
-    stock: 10,
+    stock: 5,
     imagen: "img/mate_torpedo_uruguayo.jpg",
     categoria: "Mates",
     features: [
