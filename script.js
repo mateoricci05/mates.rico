@@ -34,7 +34,7 @@ const productos = [
     nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
     descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio.",
     precio: 55000,
-    stock: 0,
+    stock: 5,
     imagen: "img/torpedo_virola_alpaca.jpg",
     categoria: "Mates",
     features: [
@@ -79,18 +79,18 @@ const productos = [
   },
   {
     id: 9,
-    nombre: "Imperial Alpaca Grabado River Plate",
-    descripcion: "Imperial de calabaza con cuero alpaca y grabado exclusivo River Plate. Pieza de colección, solo 1 unidad disponible.",
+    nombre: "Camionero River Plate — Edición Oficial",
+    descripcion: "Camionero de madera con virola grabada oficial River Plate, bombilla incluida y caja de presentación negra. Club Atlético River Plate — 1901. El regalo ideal para el millonario de la familia.",
     precio: 55000,
     stock: 1,
-    imagen: "img/imperial_alpaca_river.jpg",
+    imagen: "img/mate_river_plate.jpg",
     categoria: "Mates",
     features: [
-      "Imperial calabaza con alpaca",
-      "Grabado River Plate exclusivo",
-      "Edición especial",
-      "Sin bombilla",
-      "Solo 1 unidad disponible",
+      "Forma camionero artesanal",
+      "Virola con grabado oficial River Plate",
+      "Madera curada artesanalmente",
+      "Bombilla incluida",
+      "Caja de presentación negra — 1 unidad",
     ],
   },
   {
@@ -111,10 +111,10 @@ const productos = [
   },
   {
     id: 14,
-    nombre: "Mate Galleta - Cuero Premium",
+    nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
     precio: 43000,
-    stock: 1,
+    stock: 5,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
     features: [
@@ -130,7 +130,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro.",
     precio: 42000,
-    stock: 1,
+    stock: 5,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -146,7 +146,7 @@ const productos = [
     nombre: "Mate Torpedo Criollo",
     descripcion: "Torpedo de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera.",
     precio: 38000,
-    stock: 2,
+    stock: 5,
     imagen: "img/mate_torpedo_criollo.jpg",
     categoria: "Mates",
     features: [
@@ -178,7 +178,7 @@ const productos = [
     nombre: "Mate Porito Cincelado",
     descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura — ideal para el mate de todos los días.",
     precio: 22000,
-    stock: 0,
+    stock: 10,
     imagen: "img/mate_porito.jpg",
     categoria: "Mates",
     features: [
@@ -212,7 +212,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 9,
+    stock: 50,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -230,7 +230,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 5,
+    stock: 10,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
