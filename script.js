@@ -243,15 +243,15 @@ const productos = [
   },
   {
     id: 21,
-    nombre: "Kit Matero — Porta Mate + Yerbera",
-    descripcion: "Kit matero de cuero negro con porta mate artesanal y yerbera con cierre. Todo lo que necesitás para llevar tu ritual a cualquier lado con estilo.",
+    nombre: "Kit Matero ",
+    descripcion: "Kit matero de cuero negro con porta mate artesanal. Todo lo que necesitás para llevar tu ritual a cualquier lado con estilo.",
     precio: 25000,
     stock: 5,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
       "Porta mate de cuero negro",
-      "Yerbera con cierre",
+      "Premium",
       "Costuras artesanales",
       "Broches metálicos",
       "Ideal para llevar a todos lados",
