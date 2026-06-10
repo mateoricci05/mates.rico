@@ -243,8 +243,8 @@ const productos = [
   },
   {
     id: 21,
-    nombre: "Kit Matero ",
-    descripcion: "Kit matero de cuero negro con porta mate artesanal. Todo lo que necesitás para llevar tu ritual a cualquier lugar.",
+    nombre: "Matera ",
+    descripcion: " Matera de cuero negro con porta mate artesanal. Todo lo que necesitás para llevar tu ritual a cualquier lugar.",
     precio: 25000,
     stock: 5,
     imagen: "img/kit_matera_negra.jpg",
