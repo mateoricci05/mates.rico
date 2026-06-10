@@ -49,7 +49,7 @@ const productos = [
     id: 3,
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro incluida. Veta natural única en cada pieza.",
-    precio: 29000,
+    precio: 30000,
     stock: 15,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
