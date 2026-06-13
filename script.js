@@ -114,7 +114,7 @@ const productos = [
     nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
     precio: 42000,
-    stock: 1,
+    stock: 0,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
     features: [
@@ -246,7 +246,7 @@ const productos = [
     nombre: "Matera ",
     descripcion: " Matera de cuero negro con porta mate artesanal. Todo lo que necesitás para llevar tu ritual a cualquier lugar.",
     precio: 25000,
-    stock: 5,
+    stock: 0,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
