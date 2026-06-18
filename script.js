@@ -1,54 +1,17 @@
 /* =====================================================
    mates.rico — script.js  v2
-   - Stock real integrado
-   - Modal detalle producto
-   - Carrito lateral
-   - Modal envío con detección de zona gratuita
-   - Mensaje WhatsApp automático
    ===================================================== */
 
 // ═══════════════════════════════════════════════════════
-// 📦 PRODUCTOS
-// Para editar: modificá este array.
+// 📦 PRODUCTOS — ordenados: Mates → Yerbas → Accesorios
 // ═══════════════════════════════════════════════════════
 const productos = [
-  // ─── MATES ───────────────────────────────────────────────
-  {
-    id: 1,
-    nombre: "Imperial Guarda Alpaca Premium — Cuero Borravino",
-    descripcion: "Imperial de calabaza con guarda de alpaca cincelada a mano, cuero liso borravino y base de alpaca ancha. Una pieza única con identidad propia.",
-    precio: 60000,
-    stock: 0,
-    imagen: "img/imperial_guarda_alpaca_borravino.jpg",
-    categoria: "Mates",
-    features: [
-      "Guarda de alpaca cincelada",
-      "Cuero liso borravino",
-      "Base de alpaca ancha",
-      "Calabaza curada artesanalmente",
-      "Sin bombilla",
-    ],
-  },
-  {
-    id: 2,
-    nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
-    descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. El clásico argentino con carácter propio.",
-    precio: 55000,
-    stock: 0,
-    imagen: "img/torpedo_virola_alpaca.jpg",
-    categoria: "Mates",
-    features: [
-      "Virola de alpaca cincelada",
-      "Cuero liso negro",
-      "Base alpaca con pelotitas de bronce",
-      "Forma torpedo tradicional",
-      "Sin bombilla",
-    ],
-  },
+
+  // ─── MATES ───────────────────────────────────────────
   {
     id: 3,
     nombre: "Imperial Algarrobo",
-    descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Bombilla pico de loro incluida. Veta natural única en cada pieza.",
+    descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
     stock: 15,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
@@ -56,47 +19,15 @@ const productos = [
     features: [
       "Madera de algarrobo auténtica",
       "Guarda de acero inoxidable",
-      "Recto",
-      "Tamaño chico/ Tamaño mediano",
+      "Disponible recto",
+      "Tamaño chico / Tamaño mediano",
       "Veta única en cada pieza",
-    ],
-  },
-  {
-    id: 8,
-    nombre: "Imperial Alpaca Grabado Boca Juniors",
-    descripcion: "Imperial de calabaza con cuero alpaca y grabado exclusivo Boca Juniors. La pieza más premium para el fanático xeneize. Solo 1 unidad disponible.",
-    precio: 55000,
-    stock: 1,
-    imagen: "img/imperial_alpaca_boca.jpg",
-    categoria: "Mates",
-    features: [
-      "Imperial calabaza con alpaca",
-      "Grabado Boca Juniors exclusivo",
-      "Edición especial",
-      "Sin bombilla",
-      "Solo 1 unidad disponible",
-    ],
-  },
-  {
-    id: 9,
-    nombre: "Camionero River Plate — Edición Oficial",
-    descripcion: "Camionero de madera con virola grabada oficial River Plate, bombilla incluida y caja de presentación negra. Club Atlético River Plate — 1901. El regalo ideal para el millonario de la familia.",
-    precio: 35000,
-    stock: 0,
-    imagen: "img/mate_river_plate.jpg",
-    categoria: "Mates",
-    features: [
-      "Forma camionero artesanal",
-      "Virola con grabado oficial River Plate",
-      "Madera curada artesanalmente",
-      "Bombilla incluida",
-      "Caja de presentación negra — 1 unidad",
     ],
   },
   {
     id: 13,
     nombre: "Mate Camionero Criollo",
-    descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único.",
+    descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único. Bombilla no incluida.",
     precio: 39000,
     stock: 5,
     imagen: "img/mate_camionero_criollo.jpg",
@@ -106,45 +37,13 @@ const productos = [
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
       "Forma camionero clásica",
-      "Sin bombilla",
-    ],
-  },
-  {
-    id: 14,
-    nombre: "Mate Galleta Premium",
-    descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar — cae perfecto en la mano.",
-    precio: 42000,
-    stock: 0,
-    imagen: "img/mate_galleta.jpg",
-    categoria: "Mates",
-    features: [
-      "Forma galleta ergonómica",
-      "Calabaza curada artesanalmente",
-      "Base de cuero premium",
-      "Trenzado de cuero crudo a mano",
-      "Sin bombilla",
-    ],
-  },
-  {
-    id: 15,
-    nombre: "Mate Ranchero",
-    descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro.",
-    precio: 42000,
-    stock: 1,
-    imagen: "img/mate_ranchero.jpg",
-    categoria: "Mates",
-    features: [
-      "Madera con terminación bicolor",
-      "Veta y manchas únicas en cada pieza",
-      "Diseño ranchero tradicional",
-      "Liviano y cómodo",
-      "Sin bombilla",
+      "Bombilla no incluida",
     ],
   },
   {
     id: 16,
     nombre: "Mate Torpedo Criollo",
-    descripcion: "Torpedo de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera.",
+    descripcion: "Torpedo de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera. Bombilla no incluida.",
     precio: 38000,
     stock: 5,
     imagen: "img/mate_torpedo_criollo.jpg",
@@ -154,29 +53,13 @@ const productos = [
       "Calabaza curada artesanalmente",
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
-      "Sin bombilla",
-    ],
-  },
-  {
-    id: 17,
-    nombre: "Imperial Negro — Guarda Cincelada Plateada",
-    descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos — una combinación que no pasa desapercibida.",
-    precio: 40000,
-    stock: 5,
-    imagen: "img/imperial_clasico.jpg",
-    categoria: "Mates",
-    features: [
-      "Calabaza en negro mate",
-      "Guarda cincelada plateada",
-      "Base tipo pata clásica",
-      "Acabado premium artesanal",
-      "Sin bombilla",
+      "Bombilla no incluida",
     ],
   },
   {
     id: 18,
     nombre: "Mate Porito Cincelado",
-    descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura — ideal para el mate de todos los días.",
+    descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura. Bombilla no incluida.",
     precio: 22000,
     stock: 0,
     imagen: "img/mate_porito.jpg",
@@ -186,13 +69,29 @@ const productos = [
       "Calabaza curada artesanalmente",
       "Guarda cincelada plateada",
       "Compacto y liviano",
-      "Sin bombilla",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 17,
+    nombre: "Imperial Negro — Guarda Cincelada Plateada",
+    descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
+    precio: 40000,
+    stock: 5,
+    imagen: "img/imperial_clasico.jpg",
+    categoria: "Mates",
+    features: [
+      "Calabaza en negro mate",
+      "Guarda cincelada plateada",
+      "Base tipo pata clásica",
+      "Acabado premium artesanal",
+      "Bombilla no incluida",
     ],
   },
   {
     id: 19,
     nombre: "Torpedo Uruguayo Cincelado",
-    descripcion: "Torpedo estilo uruguayo con guarda cincelada plateada y cuerpo negro. La forma más reconocida del litoral, con la elegancia del cincelado artesanal. Una pieza con identidad propia.",
+    descripcion: "Torpedo estilo uruguayo con guarda cincelada plateada y cuerpo negro. La forma más reconocida del litoral, con la elegancia del cincelado artesanal. Bombilla no incluida.",
     precio: 43000,
     stock: 5,
     imagen: "img/mate_torpedo_uruguayo.jpg",
@@ -202,11 +101,139 @@ const productos = [
       "Cuerpo negro mate",
       "Guarda cincelada plateada",
       "Acabado artesanal",
-      "Sin bombilla",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 25,
+    nombre: "Torpedo Uruguayo — Apliques en Bronce",
+    descripcion: "Torpedo uruguayo de calabaza negra con guarda cincelada plateada y apliques en bronce dorado. La combinación de plata y bronce le da un carácter único. Bombilla no incluida.",
+    precio: 60000,
+    stock: 5,
+    imagen: "img/torpedo_uruguayo_bronce.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma torpedo uruguayo",
+      "Calabaza negra curada",
+      "Guarda cincelada plateada",
+      "Apliques en bronce dorado",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 15,
+    nombre: "Mate Ranchero",
+    descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
+    precio: 42000,
+    stock: 1,
+    imagen: "img/mate_ranchero.jpg",
+    categoria: "Mates",
+    features: [
+      "Madera con terminación bicolor",
+      "Veta y manchas únicas en cada pieza",
+      "Diseño ranchero tradicional",
+      "Liviano y cómodo",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 14,
+    nombre: "Mate Galleta Premium",
+    descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar. Bombilla no incluida.",
+    precio: 42000,
+    stock: 0,
+    imagen: "img/mate_galleta.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma galleta ergonómica",
+      "Calabaza curada artesanalmente",
+      "Base de cuero premium",
+      "Trenzado de cuero crudo a mano",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 8,
+    nombre: "Imperial Alpaca Grabado Boca Juniors",
+    descripcion: "Imperial de calabaza con cuero alpaca y grabado exclusivo Boca Juniors. La pieza más premium para el fanático xeneize. Solo 1 unidad disponible. Bombilla no incluida.",
+    precio: 55000,
+    stock: 1,
+    imagen: "img/imperial_alpaca_boca.jpg",
+    categoria: "Mates",
+    features: [
+      "Imperial calabaza con alpaca",
+      "Grabado Boca Juniors exclusivo",
+      "Edición especial",
+      "Bombilla no incluida",
+      "Solo 1 unidad disponible",
+    ],
+  },
+  {
+    id: 9,
+    nombre: "Camionero River Plate — Edición Oficial",
+    descripcion: "Camionero de madera con virola grabada oficial River Plate, bombilla incluida y caja de presentación negra. Club Atlético River Plate — 1901.",
+    precio: 35000,
+    stock: 0,
+    imagen: "img/mate_river_plate.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma camionero artesanal",
+      "Virola con grabado oficial River Plate",
+      "Madera curada artesanalmente",
+      "Bombilla incluida",
+      "Caja de presentación negra",
+    ],
+  },
+  {
+    id: 2,
+    nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
+    descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. Bombilla no incluida.",
+    precio: 55000,
+    stock: 0,
+    imagen: "img/torpedo_virola_alpaca.jpg",
+    categoria: "Mates",
+    features: [
+      "Virola de alpaca cincelada",
+      "Cuero liso negro",
+      "Base alpaca con pelotitas de bronce",
+      "Forma torpedo tradicional",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 1,
+    nombre: "Imperial Guarda Alpaca Premium — Cuero Borravino",
+    descripcion: "Imperial de calabaza con guarda de alpaca cincelada a mano, cuero liso borravino y base de alpaca ancha. Una pieza única con identidad propia. Bombilla no incluida.",
+    precio: 60000,
+    stock: 0,
+    imagen: "img/imperial_guarda_alpaca_borravino.jpg",
+    categoria: "Mates",
+    features: [
+      "Guarda de alpaca cincelada",
+      "Cuero liso borravino",
+      "Base de alpaca ancha",
+      "Calabaza curada artesanalmente",
+      "Bombilla no incluida",
     ],
   },
 
-  // ─── YERBAS ──────────────────────────────────────────────
+  // ─── YERBAS ──────────────────────────────────────────
+  {
+    id: 22,
+    nombre: "Yerba Verdecita 1kg",
+    descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
+    precio: 8500,
+    stock: 20,
+    imagen: "img/yerba_verdecita.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Elaborada despalada",
+      "Padrón uruguayo",
+      "Selección especial Brasil-Argentina",
+      "Suave al paladar",
+      "Peso neto 1kg",
+    ],
+  },
   {
     id: 5,
     nombre: "Yerba Baldo 1kg",
@@ -223,8 +250,56 @@ const productos = [
       "Bolsa resellable",
     ],
   },
+  {
+    id: 23,
+    nombre: "Yerba Canarias 1kg",
+    descripcion: "Yerba Canarias 1kg — sabor tradicional, industria brasileña. Cebadas generosas, sabor firme y aroma intenso. Ideal para el mate de todos los días.",
+    precio: 11000,
+    stock: 20,
+    imagen: "img/yerba_canarias.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Sabor tradicional",
+      "Industria brasileña",
+      "Cebadas generosas",
+      "Sabor firme y aroma intenso",
+      "Peso neto 1kg",
+    ],
+  },
+  {
+    id: 24,
+    nombre: "Yerba Baldo 5kg",
+    descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
+    precio: 49500,
+    stock: 10,
+    imagen: "img/baldo_5kg.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Yerba Baldo seleccionada",
+      "Formato familiar 5kg",
+      "Reservas naturales del Brasil",
+      "Sabor equilibrado y aroma intenso",
+      "Bolsa resellable",
+    ],
+  },
 
-  // ─── ACCESORIOS ──────────────────────────────────────────
+  // ─── ACCESORIOS ──────────────────────────────────────
+  {
+    id: 26,
+    nombre: "Bombilla Pico de Loro — Acero Inoxidable",
+    descripcion: "Bombilla pico de loro de 16cm en acero inoxidable. El filtro que usan los materos de verdad — no tapa, no se dobla, dura años. Compatible con cualquier mate.",
+    precio: 5000,
+    stock: 30,
+    imagen: "img/bombilla_acero.jpg",
+    categoria: "Accesorios",
+    features: [
+      "Pico de loro 16cm",
+      "Acero inoxidable",
+      "Filtro resistente y duradero",
+      "Fácil de limpiar",
+      "Compatible con cualquier mate",
+    ],
+  },
   {
     id: 20,
     nombre: "Termo 1L Acero Inoxidable",
@@ -243,8 +318,8 @@ const productos = [
   },
   {
     id: 21,
-    nombre: "Matera ",
-    descripcion: " Matera de cuero negro con porta mate artesanal. Todo lo que necesitás para llevar tu ritual a cualquier lugar.",
+    nombre: "Matera de Cuero Negro",
+    descripcion: "Matera de cuero negro con porta mate artesanal. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
     stock: 0,
     imagen: "img/kit_matera_negra.jpg",
@@ -257,93 +332,21 @@ const productos = [
       "Ideal para llevar a todos lados",
     ],
   },
-  {
-    id: 22,
-    nombre: "Yerba Verdecita 1kg",
-    descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco. Para los que prefieren una yerba fina y delicada.",
-    precio: 8500,
-    stock: 20,
-    imagen: "img/yerba_verdecita.jpg",
-    categoria: "Yerbas",
-    features: [
-      "Elaborada despalada",
-      "Padrón uruguayo",
-      "Selección especial Brasil-Argentina",
-      "Suave al paladar",
-      "Peso neto 1kg",
-    ],
-  },
-  {
-    id: 23,
-    nombre: "Yerba Canarias 1kg",
-    descripcion: "Yerba Canarias 1kg — sabor tradicional, industria brasileña. Una de las más reconocidas del mercado. Cebadas generosas, sabor firme y aroma intenso. Ideal para el mate de todos los días.",
-    precio: 11000,
-    stock: 20,
-    imagen: "img/yerba_canarias.jpg",
-    categoria: "Yerbas",
-    features: [
-      "Sabor tradicional",
-      "Industria brasileña",
-      "Cebadas generosas",
-      "Sabor firme y aroma intenso",
-      "Peso neto 1kg",
-    ],
-  },
-  {
-    id: 24,
-    nombre: "Yerba Baldo 5kg",
-    descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado y aroma intenso de siempre, ahora en el tamaño que dura. Para el matero de ley.",
-    precio: 49500,
-    stock: 10,
-    imagen: "img/baldo_5kg.jpg",
-    categoria: "Yerbas",
-    features: [
-      "Yerba Baldo seleccionada",
-      "Formato familiar 5kg",
-      "Procedente de reservas naturales del Brasil",
-      "Sabor equilibrado y aroma intenso",
-      "Bolsa resellable",
-    ],
-  },
-  {
-    id: 25,
-    nombre: "Torpedo Uruguayo — Apliques en Bronce",
-    descripcion: "Torpedo uruguayo de calabaza negra con guarda cincelada plateada y apliques en bronce dorado. La combinación de plata y bronce le da un carácter único. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
-    precio: 60000,
-    stock: 5,
-    imagen: "img/torpedo_uruguayo_bronce.jpg",
-    categoria: "Mates",
-    features: [
-      "Forma torpedo uruguayo",
-      "Calabaza negra curada",
-      "Guarda cincelada plateada",
-      "Apliques en bronce dorado",
-      "Bombilla no incluida",
-    ],
-  },
 ];
 
 // ═══════════════════════════════════════════════════════
 // ⚙️ CONFIG
 // ═══════════════════════════════════════════════════════
 const WHATSAPP_NUMBER = "5493543650854";
-
-// Zonas con envío gratis (en minúsculas para comparación)
 const ZONAS_GRATIS = ["río ceballos", "rio ceballos", "salsipuedes", "unquillo", "villa allende"];
-
-// Monto mínimo para envío gratis en otras zonas
 const ENVIO_GRATIS_MINIMO = 100000;
 
 // ═══════════════════════════════════════════════════════
 // 🗃️ ESTADO
 // ═══════════════════════════════════════════════════════
-let carrito        = [];
+let carrito = [];
 let categoriaActual = "Todos";
 let localidadElegida = "";
-
-// ═══════════════════════════════════════════════════════
-// 🚀 INIT
-// ═══════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════
 // ✨ SPLASH SCREEN
@@ -351,15 +354,10 @@ let localidadElegida = "";
 function initSplash() {
   const splash = document.getElementById("splash");
   if (!splash) return;
-
-  // Ocultar splash después de que la barra de carga termina (1.8s total)
   const timer = setTimeout(() => {
     splash.classList.add("oculto");
-    // Quitar del DOM tras la transición para no bloquear interacción
     setTimeout(() => splash.remove(), 700);
   }, 1800);
-
-  // Si el usuario toca/clickea, ocultar antes
   splash.addEventListener("click", () => {
     clearTimeout(timer);
     splash.classList.add("oculto");
@@ -398,7 +396,6 @@ function renderizarProductos(categoria = "Todos") {
 
   filtrados.forEach((p, i) => {
     const agotado = p.stock === 0;
-
     const card = document.createElement("div");
     card.className = "producto-card reveal";
     card.style.transitionDelay = `${i * 50}ms`;
@@ -424,17 +421,11 @@ function renderizarProductos(categoria = "Todos") {
         </div>
       </div>`;
 
-    // Click en la card → abre modal de detalle
     card.addEventListener("click", (e) => {
-      if (!e.target.classList.contains("btn-comprar")) {
-        abrirModalProducto(p.id);
-      }
+      if (!e.target.classList.contains("btn-comprar")) abrirModalProducto(p.id);
     });
     card.addEventListener("keydown", (e) => { if (e.key === "Enter") abrirModalProducto(p.id); });
-
-    // Click en "Agregar" → agrega al carrito (sin abrir modal)
-    const btnComp = card.querySelector(".btn-comprar");
-    btnComp?.addEventListener("click", (e) => {
+    card.querySelector(".btn-comprar")?.addEventListener("click", (e) => {
       e.stopPropagation();
       agregarAlCarrito(p.id);
     });
@@ -452,12 +443,11 @@ function renderizarProductos(categoria = "Todos") {
 function abrirModalProducto(id) {
   const p = productos.find(x => x.id === id);
   if (!p) return;
-
   const overlay = document.getElementById("modal-producto-overlay");
-  const inner   = document.getElementById("modal-producto-inner");
+  const inner = document.getElementById("modal-producto-inner");
   if (!overlay || !inner) return;
 
-  const agotado   = p.stock === 0;
+  const agotado = p.stock === 0;
   const stockBajo = p.stock <= 2 && p.stock > 0;
   const stockLabel = agotado
     ? "Sin stock"
@@ -492,7 +482,6 @@ function abrirModalProducto(id) {
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
   feather.replace();
-
   document.getElementById("mp-btn-agregar")?.addEventListener("click", () => {
     agregarAlCarrito(id);
     cerrarModalProducto();
@@ -505,7 +494,7 @@ function cerrarModalProducto() {
 }
 
 function initModalProducto() {
-  const overlay  = document.getElementById("modal-producto-overlay");
+  const overlay = document.getElementById("modal-producto-overlay");
   const closeBtn = document.getElementById("modal-producto-close");
   closeBtn?.addEventListener("click", cerrarModalProducto);
   overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarModalProducto(); });
@@ -518,10 +507,8 @@ function initModalProducto() {
 function agregarAlCarrito(id) {
   const p = productos.find(x => x.id === id);
   if (!p || p.stock === 0) return;
-
   const existente = carrito.find(i => i.id === id);
   if (existente) {
-    // No superar el stock
     if (existente.cantidad >= p.stock) {
       mostrarToast(`Solo hay ${p.stock} unidad${p.stock > 1 ? "es" : ""} disponible`);
       return;
@@ -530,7 +517,6 @@ function agregarAlCarrito(id) {
   } else {
     carrito.push({ id: p.id, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: 1 });
   }
-
   actualizarBadge();
   actualizarBarraEnvio();
   mostrarToast(`✓ ${p.nombre.split(" ").slice(0,3).join(" ")} agregado`);
@@ -574,13 +560,12 @@ function actualizarBadge() {
   badge.classList.add("bump");
 }
 
-
 // ═══════════════════════════════════════════════════════
-// 🚚 BARRA DE PROGRESO — ENVÍO GRATIS
+// 🚚 BARRA ENVÍO GRATIS
 // ═══════════════════════════════════════════════════════
 function actualizarBarraEnvio() {
-  const wrap  = document.getElementById("envio-progress-wrap");
-  const fill  = document.getElementById("envio-progress-fill");
+  const wrap = document.getElementById("envio-progress-wrap");
+  const fill = document.getElementById("envio-progress-fill");
   const texto = document.getElementById("envio-progress-texto");
   const falta = document.getElementById("envio-falta");
   if (!wrap || !fill) return;
@@ -588,10 +573,8 @@ function actualizarBarraEnvio() {
   const total = calcularTotal();
   const porcentaje = Math.min((total / ENVIO_GRATIS_MINIMO) * 100, 100);
   const restante = Math.max(ENVIO_GRATIS_MINIMO - total, 0);
-
   fill.style.width = porcentaje + "%";
 
-  // Si ya eligió una localidad de zona gratis, mostrar mensaje especial
   if (localidadElegida && ZONAS_GRATIS.includes(localidadElegida.toLowerCase())) {
     wrap.className = "envio-progress-wrap zona-gratis";
     if (texto) texto.innerHTML = "📍 Tu zona tiene <strong>envío gratis</strong> 🎉";
@@ -600,7 +583,6 @@ function actualizarBarraEnvio() {
     return;
   }
 
-  // Restablecer barra si cambió
   const barWrap = wrap.querySelector(".envio-progress-bar");
   if (barWrap) barWrap.style.display = "";
 
@@ -615,7 +597,7 @@ function actualizarBarraEnvio() {
 }
 
 function renderizarCarrito() {
-  const body   = document.getElementById("modal-body");
+  const body = document.getElementById("modal-body");
   const footer = document.getElementById("modal-footer");
   const totalEl = document.getElementById("carrito-total-precio");
   if (!body) return;
@@ -633,7 +615,6 @@ function renderizarCarrito() {
   }
 
   if (footer) footer.style.display = "flex";
-
   body.innerHTML = carrito.map(item => `
     <div class="carrito-item">
       <img class="carrito-item-img" src="${item.imagen}" alt="${item.nombre}"
@@ -655,56 +636,47 @@ function renderizarCarrito() {
   if (totalEl) totalEl.textContent = fmt(calcularTotal());
   actualizarBarraEnvio();
 
-  // Eventos de cantidad y eliminar
   body.querySelectorAll(".qty-btn").forEach(btn => {
     btn.addEventListener("click", () => cambiarCantidad(+btn.dataset.id, +btn.dataset.delta));
   });
   body.querySelectorAll(".carrito-item-eliminar").forEach(btn => {
     btn.addEventListener("click", () => eliminarDelCarrito(+btn.dataset.id));
   });
-
   feather.replace();
 }
 
 function initModalCarrito() {
-  const overlay  = document.getElementById("modal-carrito-overlay");
-  const fab      = document.getElementById("carrito-fab");
+  const overlay = document.getElementById("modal-carrito-overlay");
+  const fab = document.getElementById("carrito-fab");
   const closeBtn = document.getElementById("modal-carrito-close");
-  const btnFin   = document.getElementById("btn-finalizar");
-  const btnVac   = document.getElementById("btn-vaciar");
+  const btnFin = document.getElementById("btn-finalizar");
+  const btnVac = document.getElementById("btn-vaciar");
 
   fab?.addEventListener("click", () => {
     renderizarCarrito();
     overlay?.classList.add("open");
     document.body.style.overflow = "hidden";
   });
-
   closeBtn?.addEventListener("click", () => {
     overlay?.classList.remove("open");
     document.body.style.overflow = "";
   });
-
   overlay?.addEventListener("click", (e) => {
     if (e.target === overlay) {
       overlay.classList.remove("open");
       document.body.style.overflow = "";
     }
   });
-
-  // Finalizar → cierra carrito y abre modal envío
   btnFin?.addEventListener("click", () => {
     if (carrito.length === 0) { mostrarToast("Tu carrito está vacío"); return; }
     overlay?.classList.remove("open");
     document.body.style.overflow = "";
     setTimeout(() => abrirModalEnvio(), 200);
   });
-
   btnVac?.addEventListener("click", () => {
     vaciarCarrito();
     mostrarToast("Carrito vaciado");
   });
-
-  // Estado inicial
   const footer = document.getElementById("modal-footer");
   if (footer) footer.style.display = "none";
 }
@@ -717,7 +689,6 @@ function abrirModalEnvio() {
   overlay?.classList.add("open");
   document.body.style.overflow = "hidden";
   localidadElegida = "";
-  // Limpiar selección previa
   document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
   const wrap = document.getElementById("envio-otra-wrap");
   if (wrap) wrap.style.display = "none";
@@ -731,20 +702,18 @@ function cerrarModalEnvio() {
 }
 
 function initModalEnvio() {
-  const overlay   = document.getElementById("modal-envio-overlay");
-  const closeBtn  = document.getElementById("modal-envio-close");
+  const overlay = document.getElementById("modal-envio-overlay");
+  const closeBtn = document.getElementById("modal-envio-close");
   const confirmar = document.getElementById("btn-confirmar-envio");
-  const otraWrap  = document.getElementById("envio-otra-wrap");
+  const otraWrap = document.getElementById("envio-otra-wrap");
 
   closeBtn?.addEventListener("click", cerrarModalEnvio);
   overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarModalEnvio(); });
 
-  // Botones de localidad
   document.querySelectorAll(".envio-opcion").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-
       if (btn.dataset.loc === "otra") {
         localidadElegida = "";
         if (otraWrap) otraWrap.style.display = "block";
@@ -756,11 +725,8 @@ function initModalEnvio() {
     });
   });
 
-  // Confirmar pedido
   confirmar?.addEventListener("click", () => {
     const input = document.getElementById("envio-localidad-input");
-
-    // Si eligió "otra localidad", tomar el input
     const btnOtra = document.querySelector('.envio-opcion[data-loc="otra"]');
     if (btnOtra?.classList.contains("selected")) {
       localidadElegida = input?.value.trim() || "";
@@ -770,67 +736,42 @@ function initModalEnvio() {
         return;
       }
     }
-
     if (!localidadElegida) {
       mostrarToast("Elegí tu localidad para continuar");
       return;
     }
-
     cerrarModalEnvio();
     generarWhatsapp(localidadElegida);
   });
 }
 
 // ═══════════════════════════════════════════════════════
-// 💬 MENSAJE WHATSAPP
+// 💬 WHATSAPP
 // ═══════════════════════════════════════════════════════
 function generarWhatsapp(localidad) {
   if (carrito.length === 0) return;
-
   const esGratis = ZONAS_GRATIS.includes(localidad.toLowerCase());
-
-  const detalle = carrito
-    .map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`)
-    .join("\n");
-
+  const detalle = carrito.map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
   const total = calcularTotal();
-
-  const envioTexto = esGratis
-    ? "Envio: gratis (zona sin cargo)"
-    : "Envio: a coordinar";
-
-  const mensaje =
-`Hola mates.rico, quiero hacer el siguiente pedido:
-
-${detalle}
-
-Total: ${fmt(total)}
-Localidad: ${localidad}
-${envioTexto}
-
-Me confirmas disponibilidad y coordinamos la entrega? Gracias!`;
-
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
+  const envioTexto = esGratis ? "Envio: gratis (zona sin cargo)" : "Envio: a coordinar";
+  const mensaje = `Hola mates.rico, quiero hacer el siguiente pedido:\n\n${detalle}\n\nTotal: ${fmt(total)}\nLocalidad: ${localidad}\n${envioTexto}\n\nMe confirmas disponibilidad y coordinamos la entrega? Gracias!`;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
 // ═══════════════════════════════════════════════════════
 // 🧭 NAVBAR
 // ═══════════════════════════════════════════════════════
 function initNavbar() {
-  const navbar     = document.getElementById("navbar");
-  const hamburger  = document.getElementById("hamburger");
-  const navLinks   = document.getElementById("nav-links");
-
+  const navbar = document.getElementById("navbar");
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
   const onScroll = () => navbar?.classList.toggle("scrolled", window.scrollY > 30);
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-
   hamburger?.addEventListener("click", () => {
     hamburger.classList.toggle("open");
     navLinks?.classList.toggle("open");
   });
-
   navLinks?.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", () => {
       hamburger?.classList.remove("open");
@@ -880,8 +821,6 @@ function mostrarToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
 }
-
-
 
 // ═══════════════════════════════════════════════════════
 // 💰 FORMATO PRECIO
