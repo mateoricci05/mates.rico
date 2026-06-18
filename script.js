@@ -141,7 +141,7 @@ const productos = [
     nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar. Bombilla no incluida.",
     precio: 42000,
-    stock: 0,
+    stock: 2,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
     features: [
