@@ -223,7 +223,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 20,
+    stock: 9,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 20,
+    stock: 0,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -255,7 +255,7 @@ const productos = [
     nombre: "Yerba Canarias 1kg",
     descripcion: "Yerba Canarias 1kg — sabor tradicional, industria brasileña. Cebadas generosas, sabor firme y aroma intenso. Ideal para el mate de todos los días.",
     precio: 11000,
-    stock: 20,
+    stock: 5,
     imagen: "img/yerba_canarias.jpg",
     categoria: "Yerbas",
     features: [
@@ -271,7 +271,7 @@ const productos = [
     nombre: "Yerba Baldo 5kg",
     descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
     precio: 49500,
-    stock: 10,
+    stock: 1,
     imagen: "img/baldo_5kg.jpg",
     categoria: "Yerbas",
     features: [
