@@ -321,7 +321,7 @@ const productos = [
     nombre: "Matera de Cuero Negro",
     descripcion: "Matera de cuero negro con porta mate artesanal. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 0,
+    stock: 10,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -334,7 +334,7 @@ const productos = [
   },
   {
     id: 27,
-    nombre: "Termo System Messi Goat — Edición Especial 800ml",
+    nombre: "Termo System Messi Goat | Edición Especial 800ml",
     descripcion: "Termo Stanley edición especial Goat Messi de 800ml en rosa. Incluye mate térmico y bombilla de regalo. Vacuum Bottle BPA Free — mantiene temperatura 24hs. Con caja original.",
     precio: 75000,
     stock: 1,
