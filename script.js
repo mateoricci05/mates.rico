@@ -380,55 +380,7 @@ const productos = [
       "Bombilla de regalo + caja original",
     ],
   },
-  {
-    id: 27,
-    nombre: "Stanley Classic Vacuum Bottle 1.2L — Azul",
-    descripcion: "Termo Stanley Classic Vacuum Bottle 1.2L en azul marino. El legendario termo americano desde 1913. Mantiene la temperatura 24 horas. Viene con caja original, bombilla de regalo. BPA Free.",
-    precio: 59990,
-    stock: 5,
-    imagen: "img/stanley_system_azul.jpg",
-    categoria: "Accesorios",
-    features: [
-      "Stanley Classic — Since 1913",
-      "Capacidad 1.2 litros",
-      "Mantiene temperatura 24 horas",
-      "BPA Free — apto para mate",
-      "Bombilla de regalo incluida",
-    ],
-  },
-  {
-    id: 28,
-    nombre: "Stanley Classic Vacuum Bottle 1.2L — Negro",
-    descripcion: "Termo Stanley Classic Vacuum Bottle 1.2L en negro mate. Diseño icónico, resistencia legendaria. El preferido por los materos que no negocian calidad. Viene con caja original, bombilla de regalo. BPA Free.",
-    precio: 59990,
-    stock: 5,
-    imagen: "img/stanley_system_negro.jpg",
-    categoria: "Accesorios",
-    features: [
-      "Stanley Classic — Since 1913",
-      "Capacidad 1.2 litros",
-      "Mantiene temperatura 24 horas",
-      "BPA Free — apto para mate",
-      "Bombilla de regalo incluida",
-    ],
-  },
-  {
-    id: 29,
-    nombre: "Stanley GOAT Messi 800ml — Edición Especial",
-    descripcion: "Termo Stanley edición especial GOAT Messi en rosa. 800ml con mate térmico tamaño chico incluido y bombilla de regalo. Viene con caja original. La edición para los que saben que el mejor es el mejor.",
-    precio: 75000,
-    stock: 3,
-    imagen: "img/stanley_goat_messi.jpg",
-    categoria: "Accesorios",
-    features: [
-      "Stanley GOAT — Edición Messi",
-      "Capacidad 800ml",
-      "Mate térmico tamaño chico incluido",
-      "Bombilla de regalo incluida",
-      "Viene con caja original",
-    ],
-  },
-];
+  
 
 // ═══════════════════════════════════════════════════════
 // ⚙️ CONFIG
