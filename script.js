@@ -336,7 +336,7 @@ const productos = [
     id: 27,
     nombre: "Stanley Goat Messi — Edición Especial 800ml",
     descripcion: "Termo Stanley edición especial Goat Messi de 800ml en rosa. Incluye mate térmico Stanley tamaño chico y bombilla de regalo. Vacuum Bottle BPA Free — mantiene temperatura 24hs. Con caja original.",
-    precio: 69990,
+    precio: 75000,
     stock: 1,
     imagen: "img/stanley_goat_messi.jpg",
     categoria: "Accesorios",
@@ -353,7 +353,7 @@ const productos = [
     nombre: "Stanley Classic Vacuum Bottle — Azul 1.2L",
     descripcion: "Termo Stanley Classic Vacuum Bottle 1.2L color azul marino. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. Con caja original. El clásico de Stanley en su versión más reconocida.",
     precio: 59990,
-    stock: 1,
+    stock: 5,
     imagen: "img/stanley_system_azul.jpg",
     categoria: "Accesorios",
     features: [
@@ -369,7 +369,7 @@ const productos = [
     nombre: "Stanley Classic Vacuum Bottle — Negro 1.2L",
     descripcion: "Termo Stanley Classic Vacuum Bottle 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. Con caja original. El más elegante de la línea Classic.",
     precio: 59990,
-    stock: 1,
+    stock: 5,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
