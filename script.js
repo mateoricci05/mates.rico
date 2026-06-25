@@ -379,7 +379,7 @@ const productos = [
       "BPA Free — 24hs de temperatura",
       "Bombilla de regalo + caja original",
     ],
-  },
+  };
   
 
 // ═══════════════════════════════════════════════════════
