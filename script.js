@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 20,
+    stock: 19,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -337,7 +337,7 @@ const productos = [
     nombre: "Termo System Messi Goat | Edición Especial 800ml",
     descripcion: "Termo Stanley edición especial Goat Messi de 800ml en rosa. Incluye mate térmico y bombilla de regalo. Vacuum Bottle BPA Free — mantiene temperatura 24hs. Con caja original.",
     precio: 60000,
-    stock: 1,
+    stock: 0,
     imagen: "img/stanley_goat_messi.jpg",
     categoria: "Accesorios",
     features: [
