@@ -286,7 +286,7 @@ const productos = [
     id: 31,
     nombre: "Yerba Canarias 1kg — Sabor Suave",
     descripcion: "Yerba Canarias 1kg sabor suave, industria brasileña. Cebadas suaves y aroma delicado, ideal para quienes prefieren un mate menos amargo.",
-    precio: 11000,
+    precio: 12900,
     stock: 0,
     imagen: "img/yerba_canarias_suave.jpg",
     categoria: "Yerbas",
