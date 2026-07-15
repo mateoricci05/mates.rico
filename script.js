@@ -278,7 +278,7 @@ const productos = [
       "Lata metálica coleccionable",
       "Ventana medidora de nivel",
       "Guía de preparación impresa",
-      "Yerba Baldo procedente de reservas naturales de Brasil",
+      "Yerba Baldo Original",
       "Ideal para regalar",
     ],
   },
