@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 5,
+    stock: 0,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -255,7 +255,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 19,
+    stock: 1,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -271,7 +271,7 @@ const productos = [
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
     precio: 22000,
-    stock: 20,
+    stock: 7,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -337,7 +337,7 @@ const productos = [
     nombre: "Bombilla Pico de Loro — Acero Inoxidable",
     descripcion: "Bombilla pico de loro de 16cm en acero inoxidable. El filtro que usan los materos de verdad — no tapa, no se dobla, dura años. Compatible con cualquier mate.",
     precio: 5000,
-    stock: 30,
+    stock: 50,
     imagen: "img/bombilla_acero.jpg",
     categoria: "Accesorios",
     features: [
@@ -369,7 +369,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 10,
+    stock: 0,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -401,7 +401,7 @@ const productos = [
     nombre: "Termo Stanley System Azul | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color azul marino. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El clásico de Stanley en su versión más reconocida.",
     precio: 49000,
-    stock: 5,
+    stock: 0,
     imagen: "img/stanley_system_azul.jpg",
     categoria: "Accesorios",
     features: [
@@ -417,7 +417,7 @@ const productos = [
     nombre: "Termo Stanley System Negro | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El más elegante de la línea Classic.",
     precio: 49000,
-    stock: 5,
+    stock: 1,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
