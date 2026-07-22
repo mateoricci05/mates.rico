@@ -973,16 +973,16 @@ function generarWhatsapp(localidad) {
       `\n${envioTexto}`;
   }
 
-  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, qué tal!"];
+  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, que tal!"];
   const saludo = saludos[Math.floor(Math.random() * saludos.length)];
   const cierres = [
     "¿Me confirmás si tenés todo esto disponible? ¡Gracias!",
-    "¿Está todo disponible? Quedo atento/a, ¡gracias!",
-    "¿Me confirmás disponibilidad? ¡Mil gracias!",
+    "¿Está todo disponible? ¡gracias!",
+    "¿Me confirmás disponibilidad? ¡Muchas gracias!",
   ];
   const cierre = cierres[Math.floor(Math.random() * cierres.length)];
 
-  const mensaje = `${saludo} 🌿 Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} 🧉`;
+  const mensaje = `${saludo}  Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} `;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
