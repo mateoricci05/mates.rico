@@ -319,7 +319,7 @@ const productos = [
     nombre: "Yerba Baldo 5kg",
     descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
     precio: 49500,
-    stock: 1,
+    stock: 0,
     imagen: "img/baldo_5kg.jpg",
     categoria: "Yerbas",
     features: [
