@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 0,
+    stock: 5,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -255,7 +255,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 1,
+    stock: 19,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -271,14 +271,14 @@ const productos = [
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
     precio: 22000,
-    stock: 7,
+    stock: 20,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
     features: [
       "Lata metálica coleccionable",
       "Ventana medidora de nivel",
       "Guía de preparación impresa",
-      "Baldo Original",
+      "Envase de lata reutilizable, mantiene la yerba fresca por más tiempo",
       "Ideal para regalar",
     ],
   },
@@ -337,7 +337,7 @@ const productos = [
     nombre: "Bombilla Pico de Loro — Acero Inoxidable",
     descripcion: "Bombilla pico de loro de 16cm en acero inoxidable. El filtro que usan los materos de verdad — no tapa, no se dobla, dura años. Compatible con cualquier mate.",
     precio: 5000,
-    stock: 50,
+    stock: 30,
     imagen: "img/bombilla_acero.jpg",
     categoria: "Accesorios",
     features: [
@@ -369,7 +369,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 0,
+    stock: 10,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -401,7 +401,7 @@ const productos = [
     nombre: "Termo Stanley System Azul | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color azul marino. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El clásico de Stanley en su versión más reconocida.",
     precio: 49000,
-    stock: 0,
+    stock: 5,
     imagen: "img/stanley_system_azul.jpg",
     categoria: "Accesorios",
     features: [
@@ -417,7 +417,7 @@ const productos = [
     nombre: "Termo Stanley System Negro | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El más elegante de la línea Classic.",
     precio: 49000,
-    stock: 1,
+    stock: 5,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
@@ -435,7 +435,16 @@ const productos = [
 // ⚙️ CONFIG
 // ═══════════════════════════════════════════════════════
 const WHATSAPP_NUMBER = "5493543650854";
-const ZONAS_GRATIS = ["río ceballos", "rio ceballos", "salsipuedes", "unquillo", "villa allende"];
+// Costo de envío fijo por zona. 0 = gratis.
+const ZONAS_ENVIO = {
+  "río ceballos": 0,
+  "rio ceballos": 0,
+  "salsipuedes": 2000,
+  "unquillo": 2000,
+  "villa allende": 4000,
+};
+// Para el resto del país (envío por Correo Argentino, "otra localidad"):
+// si la compra llega a este monto, el envío sale gratis. Si no, se cotiza aparte.
 const ENVIO_GRATIS_MINIMO = 100000;
 
 // ═══════════════════════════════════════════════════════
@@ -444,6 +453,8 @@ const ENVIO_GRATIS_MINIMO = 100000;
 let carrito = [];
 let categoriaActual = "Todos";
 let localidadElegida = "";
+let tipoEntregaElegido = "domicilio"; // "domicilio" | "sucursal", solo aplica a "otra localidad"
+let datosEnvioNacional = null; // se completa solo si es "otra localidad"
 
 // ═══════════════════════════════════════════════════════
 // ✨ SPLASH SCREEN
@@ -658,6 +669,19 @@ function actualizarBadge() {
 }
 
 // ═══════════════════════════════════════════════════════
+// 🚚 CÁLCULO DE ENVÍO
+// ═══════════════════════════════════════════════════════
+// Devuelve: número (costo fijo) | 0 (gratis) | null (a cotizar, resto del país)
+function calcularCostoEnvio() {
+  if (!localidadElegida) return null;
+  const key = localidadElegida.toLowerCase().trim();
+  if (key in ZONAS_ENVIO) return ZONAS_ENVIO[key];
+  // "Otra localidad" → resto del país por Correo Argentino
+  const total = calcularTotal();
+  return total >= ENVIO_GRATIS_MINIMO ? 0 : null;
+}
+
+// ═══════════════════════════════════════════════════════
 // 🚚 BARRA ENVÍO GRATIS
 // ═══════════════════════════════════════════════════════
 function actualizarBarraEnvio() {
@@ -672,14 +696,34 @@ function actualizarBarraEnvio() {
   const restante = Math.max(ENVIO_GRATIS_MINIMO - total, 0);
   fill.style.width = porcentaje + "%";
 
-  if (localidadElegida && ZONAS_GRATIS.includes(localidadElegida.toLowerCase())) {
-    wrap.className = "envio-progress-wrap zona-gratis";
-    if (texto) texto.innerHTML = "📍 Tu zona tiene <strong>envío gratis</strong> 🎉";
+  const key = localidadElegida ? localidadElegida.toLowerCase().trim() : "";
+  const esZonaConocida = key in ZONAS_ENVIO;
+
+  // Zona con precio fijo (Río Ceballos, Salsipuedes, Unquillo, Villa Allende)
+  if (localidadElegida && esZonaConocida) {
+    const costo = ZONAS_ENVIO[key];
     const barWrap = wrap.querySelector(".envio-progress-bar");
     if (barWrap) barWrap.style.display = "none";
+    if (costo === 0) {
+      wrap.className = "envio-progress-wrap zona-gratis";
+      if (texto) texto.innerHTML = "📍 Tu zona tiene <strong>envío gratis</strong> 🎉";
+    } else {
+      wrap.className = "envio-progress-wrap zona-fija";
+      if (texto) texto.innerHTML = `📍 Envío a tu zona: <strong>${fmt(costo)}</strong>`;
+    }
     return;
   }
 
+  // Sin localidad elegida todavía
+  if (!localidadElegida) {
+    wrap.className = "envio-progress-wrap";
+    const barWrap = wrap.querySelector(".envio-progress-bar");
+    if (barWrap) barWrap.style.display = "none";
+    if (texto) texto.innerHTML = "Elegí tu localidad para ver el costo de envío";
+    return;
+  }
+
+  // "Otra localidad" → resto del país, por Correo Argentino
   const barWrap = wrap.querySelector(".envio-progress-bar");
   if (barWrap) barWrap.style.display = "";
 
@@ -689,7 +733,7 @@ function actualizarBarraEnvio() {
     if (falta) falta.textContent = "";
   } else {
     wrap.className = "envio-progress-wrap";
-    if (texto) texto.innerHTML = `Te faltan <strong id="envio-falta">${fmt(restante)}</strong> para envío gratis`;
+    if (texto) texto.innerHTML = `Te faltan <strong id="envio-falta">${fmt(restante)}</strong> para envío gratis. Si no, el envío se cotiza aparte por Correo Argentino.`;
   }
 }
 
@@ -786,11 +830,22 @@ function abrirModalEnvio() {
   overlay?.classList.add("open");
   document.body.style.overflow = "hidden";
   localidadElegida = "";
+  tipoEntregaElegido = "domicilio";
+  datosEnvioNacional = null;
   document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
   const wrap = document.getElementById("envio-otra-wrap");
   if (wrap) wrap.style.display = "none";
-  const input = document.getElementById("envio-localidad-input");
-  if (input) input.value = "";
+  // Limpiar todos los inputs del formulario de "otra localidad"
+  ["envio-localidad-input", "envio-provincia-input", "envio-cp-input",
+   "envio-direccion-input", "envio-nombre-input", "envio-codarea-input",
+   "envio-celular-input", "envio-email-input"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+  document.querySelectorAll(".envio-tipo-btn").forEach(b => b.classList.remove("active"));
+  document.querySelector('.envio-tipo-btn[data-tipo="domicilio"]')?.classList.add("active");
+  const dirWrap = document.getElementById("envio-direccion-wrap");
+  if (dirWrap) dirWrap.style.display = "block";
 }
 
 function cerrarModalEnvio() {
@@ -803,6 +858,7 @@ function initModalEnvio() {
   const closeBtn = document.getElementById("modal-envio-close");
   const confirmar = document.getElementById("btn-confirmar-envio");
   const otraWrap = document.getElementById("envio-otra-wrap");
+  const dirWrap = document.getElementById("envio-direccion-wrap");
 
   closeBtn?.addEventListener("click", cerrarModalEnvio);
   overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarModalEnvio(); });
@@ -822,21 +878,55 @@ function initModalEnvio() {
     });
   });
 
+  // Toggle "Entrega a domicilio" / "Retiro en sucursal" (solo aplica a otra localidad)
+  document.querySelectorAll(".envio-tipo-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".envio-tipo-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      tipoEntregaElegido = btn.dataset.tipo;
+      if (dirWrap) dirWrap.style.display = tipoEntregaElegido === "domicilio" ? "block" : "none";
+    });
+  });
+
   confirmar?.addEventListener("click", () => {
-    const input = document.getElementById("envio-localidad-input");
     const btnOtra = document.querySelector('.envio-opcion[data-loc="otra"]');
+
     if (btnOtra?.classList.contains("selected")) {
-      localidadElegida = input?.value.trim() || "";
-      if (!localidadElegida) {
-        input?.focus();
-        mostrarToast("Ingresá tu localidad para continuar");
+      // ── Envío nacional: validar y juntar todos los datos ──
+      const val = (id) => document.getElementById(id)?.value.trim() || "";
+      const nombre = val("envio-nombre-input");
+      const localidad = val("envio-localidad-input");
+      const provincia = val("envio-provincia-input");
+      const cp = val("envio-cp-input");
+      const direccion = val("envio-direccion-input");
+      const codArea = val("envio-codarea-input");
+      const celular = val("envio-celular-input");
+      const email = val("envio-email-input");
+
+      const faltantes = [];
+      if (!nombre) faltantes.push("nombre y apellido");
+      if (!localidad) faltantes.push("localidad");
+      if (!provincia) faltantes.push("provincia");
+      if (!cp) faltantes.push("código postal");
+      if (!celular) faltantes.push("celular");
+      if (tipoEntregaElegido === "domicilio" && !direccion) faltantes.push("dirección");
+
+      if (faltantes.length > 0) {
+        mostrarToast(`Faltan datos: ${faltantes[0]}`);
         return;
       }
+
+      localidadElegida = localidad;
+      datosEnvioNacional = { nombre, localidad, provincia, cp, direccion, codArea, celular, email, tipoEntrega: tipoEntregaElegido };
+    } else {
+      // ── Zona con precio fijo ──
+      if (!localidadElegida) {
+        mostrarToast("Elegí tu localidad para continuar");
+        return;
+      }
+      datosEnvioNacional = null;
     }
-    if (!localidadElegida) {
-      mostrarToast("Elegí tu localidad para continuar");
-      return;
-    }
+
     cerrarModalEnvio();
     generarWhatsapp(localidadElegida);
   });
@@ -847,11 +937,52 @@ function initModalEnvio() {
 // ═══════════════════════════════════════════════════════
 function generarWhatsapp(localidad) {
   if (carrito.length === 0) return;
-  const esGratis = ZONAS_GRATIS.includes(localidad.toLowerCase());
+
   const detalle = carrito.map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
-  const total = calcularTotal();
-  const envioTexto = esGratis ? "Envio: gratis (zona sin cargo)" : "Envio: a coordinar";
-  const mensaje = `Hola mates.rico, quiero hacer el siguiente pedido:\n\n${detalle}\n\nTotal: ${fmt(total)}\nLocalidad: ${localidad}\n${envioTexto}\n\nMe confirmas disponibilidad y coordinamos la entrega? Gracias!`;
+  const subtotal = calcularTotal();
+  const costoEnvio = calcularCostoEnvio(); // número | 0 | null (a cotizar)
+
+  let envioTexto, totalTexto;
+  if (costoEnvio === null) {
+    envioTexto = "Envío: a cotizar por Correo Argentino";
+    totalTexto = `Subtotal productos: ${fmt(subtotal)}`;
+  } else if (costoEnvio === 0) {
+    envioTexto = "Envío: gratis";
+    totalTexto = `Total: ${fmt(subtotal)}`;
+  } else {
+    envioTexto = `Envío: ${fmt(costoEnvio)}`;
+    totalTexto = `Total (productos + envío): ${fmt(subtotal + costoEnvio)}`;
+  }
+
+  let bloqueEnvio = `📍 Localidad: ${localidad}\n${envioTexto}`;
+
+  // Si es envío nacional (otra localidad), agrego todos los datos para MiCorreo
+  if (datosEnvioNacional) {
+    const d = datosEnvioNacional;
+    const tipoTexto = d.tipoEntrega === "domicilio" ? "Entrega a domicilio" : "Retiro en sucursal";
+    bloqueEnvio = `Así te paso mis datos para el envío:\n\n` +
+      `Nombre y apellido: ${d.nombre}\n` +
+      `Tipo de entrega: ${tipoTexto}\n` +
+      `CP: ${d.cp}\n` +
+      `Provincia: ${d.provincia}\n` +
+      `Localidad: ${d.localidad}\n` +
+      (d.tipoEntrega === "domicilio" ? `Dirección: ${d.direccion}\n` : "") +
+      (d.codArea ? `Cód. área: ${d.codArea}\n` : "") +
+      `Celular: ${d.celular}\n` +
+      (d.email ? `Email: ${d.email}\n` : "") +
+      `\n${envioTexto}`;
+  }
+
+  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, qué tal!"];
+  const saludo = saludos[Math.floor(Math.random() * saludos.length)];
+  const cierres = [
+    "¿Me confirmás si tenés todo esto disponible? ¡Gracias!",
+    "¿Está todo disponible? Quedo atento/a, ¡gracias!",
+    "¿Me confirmás disponibilidad? ¡Mil gracias!",
+  ];
+  const cierre = cierres[Math.floor(Math.random() * cierres.length)];
+
+  const mensaje = `${saludo} 🌿 Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} 🧉`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
