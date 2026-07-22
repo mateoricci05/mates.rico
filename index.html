@@ -209,7 +209,7 @@
         </p>
         <div class="contacto-info-items">
           <div class="info-item"><i data-feather="map-pin"></i><span>Río Ceballos, Córdoba</span></div>
-          <div class="info-item"><i data-feather="truck"></i><span>Envío gratis en Río Ceballos, Salsipuedes, Unquillo y Villa Allende</span></div>
+          <div class="info-item"><i data-feather="truck"></i><span>Envío gratis en Río Ceballos · Salsipuedes $2.000 · Unquillo $2.000 · Villa Allende $4.000</span></div>
           <div class="info-item"><i data-feather="package"></i><span>Envíos a todo el país por correo</span></div>
         </div>
         <div class="contacto-btns">
@@ -476,7 +476,7 @@
             <div class="envio-progress-fill" id="envio-progress-fill" style="width:0%"></div>
           </div>
           <p class="envio-zonas-info">
-            <strong>Envío gratis</strong> en Río Ceballos, Salsipuedes, Unquillo y Villa Allende · Resto del país desde $100.000
+            <strong>Envío gratis</strong> en Río Ceballos y Salsipuedes · Unquillo $2.000 · Villa Allende $4.000 · Resto del país gratis desde $100.000
           </p>
         </div>
 
@@ -499,19 +499,72 @@
       <div class="envio-icon"><i data-feather="truck"></i></div>
       <h3>¿Dónde te entregamos?</h3>
       <p class="envio-desc">
-        Seleccioná tu localidad para calcular el envío.<br/>
-        <strong>Envío gratis en Río Ceballos, Salsipuedes, Unquillo y Villa Allende 🎉</strong>
+        Seleccioná tu localidad para calcular el envío automáticamente.
       </p>
       <div class="envio-opciones">
-        <button class="envio-opcion" data-loc="Río Ceballos">📍 Río Ceballos</button>
-        <button class="envio-opcion" data-loc="Salsipuedes">📍 Salsipuedes</button>
-        <button class="envio-opcion" data-loc="Unquillo">📍 Unquillo</button>
-        <button class="envio-opcion" data-loc="Villa Allende">📍 Villa Allende</button>
-        <button class="envio-opcion envio-otro" data-loc="otra">📦 Otra localidad</button>
+        <button class="envio-opcion" data-loc="Río Ceballos">📍 Río Ceballos <span class="envio-opcion-precio envio-opcion-precio--gratis">Gratis</span></button>
+        <button class="envio-opcion" data-loc="Salsipuedes">📍 Salsipuedes <span class="envio-opcion-precio">$2.000</span></button>
+        <button class="envio-opcion" data-loc="Unquillo">📍 Unquillo <span class="envio-opcion-precio">$2.000</span></button>
+        <button class="envio-opcion" data-loc="Villa Allende">📍 Villa Allende <span class="envio-opcion-precio">$4.000</span></button>
+        <button class="envio-opcion envio-otro" data-loc="otra">📦 Otra localidad (resto del país)</button>
       </div>
+
       <div class="envio-otra-wrap" id="envio-otra-wrap" style="display:none">
-        <input type="text" id="envio-localidad-input" class="envio-input" placeholder="Ej: Córdoba Capital, Villa Carlos Paz..." maxlength="60"/>
+        <p class="envio-otra-info">Envío gratis en compras desde $100.000. Si no llegás a ese monto, se cotiza aparte por Correo Argentino según tu destino.</p>
+
+        <div class="envio-grupo">
+          <label class="envio-label" for="envio-nombre-input">Nombre y apellido</label>
+          <input type="text" id="envio-nombre-input" class="envio-input" placeholder="Ej: Juan Pérez" maxlength="60"/>
+        </div>
+
+        <div class="envio-grupo">
+          <label class="envio-label">Tipo de entrega</label>
+          <div class="envio-tipo-entrega">
+            <button type="button" class="envio-tipo-btn active" data-tipo="domicilio">Entrega a domicilio</button>
+            <button type="button" class="envio-tipo-btn" data-tipo="sucursal">Retiro en sucursal</button>
+          </div>
+        </div>
+
+        <p class="envio-separador">Datos para Correo Argentino</p>
+
+        <div class="envio-fila-doble">
+          <div class="envio-grupo">
+            <label class="envio-label" for="envio-cp-input">Código postal</label>
+            <input type="text" id="envio-cp-input" class="envio-input" placeholder="Ej: 5000" maxlength="10"/>
+          </div>
+          <div class="envio-grupo">
+            <label class="envio-label" for="envio-provincia-input">Provincia</label>
+            <input type="text" id="envio-provincia-input" class="envio-input" placeholder="Ej: Córdoba" maxlength="40"/>
+          </div>
+        </div>
+
+        <div class="envio-grupo">
+          <label class="envio-label" for="envio-localidad-input">Localidad</label>
+          <input type="text" id="envio-localidad-input" class="envio-input" placeholder="Ej: Córdoba Capital" maxlength="60"/>
+        </div>
+
+        <div class="envio-grupo" id="envio-direccion-wrap">
+          <label class="envio-label" for="envio-direccion-input">Dirección (calle, altura, piso y dpto.)</label>
+          <input type="text" id="envio-direccion-input" class="envio-input" placeholder="Ej: San Martín 1234, 2° B" maxlength="120"/>
+        </div>
+
+        <div class="envio-fila-doble">
+          <div class="envio-grupo">
+            <label class="envio-label" for="envio-codarea-input">Cód. área (sin 0)</label>
+            <input type="text" id="envio-codarea-input" class="envio-input" placeholder="Ej: 351" maxlength="6"/>
+          </div>
+          <div class="envio-grupo">
+            <label class="envio-label" for="envio-celular-input">Celular (sin 15)</label>
+            <input type="text" id="envio-celular-input" class="envio-input" placeholder="Ej: 1512345678" maxlength="14"/>
+          </div>
+        </div>
+
+        <div class="envio-grupo">
+          <label class="envio-label" for="envio-email-input">Correo electrónico (opcional)</label>
+          <input type="email" id="envio-email-input" class="envio-input" placeholder="Ej: nombre@mail.com" maxlength="80"/>
+        </div>
       </div>
+
       <button class="btn btn-primary btn-full" id="btn-confirmar-envio" style="margin-top:20px">
         Confirmar y enviar pedido
       </button>
