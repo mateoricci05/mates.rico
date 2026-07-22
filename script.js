@@ -369,7 +369,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 10,
+    stock: 0,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -417,7 +417,7 @@ const productos = [
     nombre: "Termo Stanley System Negro | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El más elegante de la línea Classic.",
     precio: 49000,
-    stock: 1,
+    stock: 0,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
