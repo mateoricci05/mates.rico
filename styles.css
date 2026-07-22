@@ -324,6 +324,7 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
   padding:40px 36px; position:relative;
   transform:translateY(20px) scale(0.96); transition:transform var(--tr);
   box-shadow:0 24px 80px rgba(0,0,0,0.18); text-align:center;
+  max-height:90vh; overflow-y:auto;
 }
 #modal-envio-overlay.open .modal-envio { transform:translateY(0) scale(1); }
 .envio-icon { width:56px; height:56px; border-radius:50%; background:var(--verde-suave); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; color:var(--verde-med); }
@@ -336,13 +337,40 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
   padding:12px 10px; border-radius:10px; border:1.5px solid var(--gris-claro);
   font-family:var(--font-body); font-size:0.85rem; font-weight:500;
   color:var(--gris-osc); cursor:pointer; transition:all var(--tr); text-align:center;
+  display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;
 }
 .envio-opcion:hover { border-color:var(--verde-med); color:var(--verde-med); background:var(--verde-suave); }
 .envio-opcion.selected { border-color:var(--verde); background:var(--verde); color:var(--blanco); }
+.envio-opcion-precio {
+  font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:50px;
+  background:var(--dorado-suave); color:#9a7a3a; white-space:nowrap;
+}
+.envio-opcion-precio--gratis { background:var(--verde-suave); color:var(--verde-med); }
+.envio-opcion.selected .envio-opcion-precio { background:rgba(255,255,255,0.25); color:var(--blanco); }
 .envio-otro { grid-column:1/-1; }
-.envio-otra-wrap { margin-top:14px; }
-.envio-input { width:100%; padding:12px 16px; border:1.5px solid var(--gris-claro); border-radius:10px; font-family:var(--font-body); font-size:0.9rem; color:var(--negro); background:var(--hueso); outline:none; transition:border-color var(--tr); }
+.envio-otra-wrap { margin-top:16px; display:flex; flex-direction:column; gap:16px; text-align:left; }
+.envio-otra-info { font-size:0.76rem; color:var(--gris-med); line-height:1.5; margin-bottom:2px; }
+.envio-grupo { display:flex; flex-direction:column; gap:7px; }
+.envio-label {
+  font-size:0.7rem; font-weight:600; color:var(--gris-med);
+  text-transform:uppercase; letter-spacing:0.06em; padding-left:2px;
+}
+.envio-separador {
+  font-size:0.72rem; font-weight:700; color:var(--verde-med);
+  text-transform:uppercase; letter-spacing:0.08em;
+  margin-top:4px; padding-top:16px; border-top:1px solid var(--gris-claro);
+}
+.envio-input { width:100%; padding:13px 16px; border:1.5px solid var(--gris-claro); border-radius:10px; font-family:var(--font-body); font-size:0.92rem; color:var(--negro); background:var(--hueso); outline:none; transition:border-color var(--tr); }
 .envio-input:focus { border-color:var(--verde-med); }
+.envio-fila-doble { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.envio-tipo-entrega { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.envio-tipo-btn {
+  padding:11px 8px; border-radius:10px; border:1.5px solid var(--gris-claro);
+  font-family:var(--font-body); font-size:0.8rem; font-weight:500;
+  color:var(--gris-osc); cursor:pointer; transition:all var(--tr); text-align:center;
+}
+.envio-tipo-btn:hover { border-color:var(--verde-med); color:var(--verde-med); }
+.envio-tipo-btn.active { border-color:var(--verde); background:var(--verde); color:var(--blanco); }
 
 /* ─── CONTACTO ───────────────────────────────── */
 .contacto-section { padding:96px 0; background:var(--hueso); }
@@ -451,6 +479,7 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
   .filtros-inner { gap:10px; }
   .envio-opciones { grid-template-columns:1fr; }
   .envio-otro { grid-column:unset; }
+  .envio-fila-doble { grid-template-columns:1fr; }
   .modal-carrito { max-width:100%; }
   #modal-carrito-overlay { align-items:flex-end; }
   .modal-carrito { height:88vh; border-radius:20px 20px 0 0; transform:translateY(100%); }
@@ -630,6 +659,15 @@ button { cursor:pointer; border:none; background:none; font-family:var(--font-bo
 .envio-progress-wrap.alcanzado {
   background: var(--verde-suave);
   border-color: rgba(58,107,53,0.2);
+}
+
+.envio-progress-wrap.zona-fija {
+  background: var(--dorado-suave);
+  border-color: rgba(154,122,58,0.25);
+}
+.envio-progress-wrap.zona-fija .envio-progress-header {
+  color: #9a7a3a;
+  font-weight: 500;
 }
 
 .envio-progress-header {
