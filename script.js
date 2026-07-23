@@ -1014,7 +1014,7 @@ function generarWhatsapp(localidad) {
   ];
   const cierre = cierres[Math.floor(Math.random() * cierres.length)];
 
-  const mensaje = `${saludo} 🌿 Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} 🧉`;
+  const mensaje = `${saludo}  Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} `;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
