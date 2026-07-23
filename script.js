@@ -319,7 +319,7 @@ const productos = [
     nombre: "Yerba Baldo 5kg",
     descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
     precio: 49500,
-    stock: 0,
+    stock: 1,
     imagen: "img/baldo_5kg.jpg",
     categoria: "Yerbas",
     features: [
@@ -328,6 +328,38 @@ const productos = [
       "Reservas naturales del Brasil",
       "Sabor equilibrado y aroma intenso",
       "Bolsa resellable",
+    ],
+  },
+  {
+    id: 33,
+    nombre: "Yerba Esmeralda 1kg",
+    descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
+    precio: 14500,
+    stock: 8,
+    imagen: "img/yerba_esmeralda.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Super Extra tipo P.U.1",
+      "Sin adición de azúcar",
+      "Producida y cosechada de forma sustentable",
+      "Cebadas parejas, sabor limpio",
+      "Peso neto 1kg",
+    ],
+  },
+  {
+    id: 34,
+    nombre: "Yerba Sara Coco 500g — Edición Limitada",
+    descripcion: "Yerba Sara saborizada a coco, edición limitada. Libre de gluten, envase biopack sustentable. Ideal para quienes buscan un mate distinto y dulce.",
+    precio: 9500,
+    stock: 8,
+    imagen: "img/yerba_sara_coco.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Sabor coco, edición limitada",
+      "Libre de gluten",
+      "Envase biopack sustentable",
+      "Yerba mate saborizada",
+      "Peso neto 500g",
     ],
   },
 
@@ -369,7 +401,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 0,
+    stock: 10,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -401,7 +433,7 @@ const productos = [
     nombre: "Termo Stanley System Azul | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color azul marino. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El clásico de Stanley en su versión más reconocida.",
     precio: 49000,
-    stock: 0,
+    stock: 5,
     imagen: "img/stanley_system_azul.jpg",
     categoria: "Accesorios",
     features: [
@@ -417,7 +449,7 @@ const productos = [
     nombre: "Termo Stanley System Negro | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El más elegante de la línea Classic.",
     precio: 49000,
-    stock: 0,
+    stock: 5,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
@@ -973,16 +1005,16 @@ function generarWhatsapp(localidad) {
       `\n${envioTexto}`;
   }
 
-  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, que tal!"];
+  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, qué tal!"];
   const saludo = saludos[Math.floor(Math.random() * saludos.length)];
   const cierres = [
     "¿Me confirmás si tenés todo esto disponible? ¡Gracias!",
-    "¿Está todo disponible? ¡gracias!",
-    "¿Me confirmás disponibilidad? ¡Muchas gracias!",
+    "¿Está todo disponible? Quedo atento/a, ¡gracias!",
+    "¿Me confirmás disponibilidad? ¡Mil gracias!",
   ];
   const cierre = cierres[Math.floor(Math.random() * cierres.length)];
 
-  const mensaje = `${saludo}  Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} `;
+  const mensaje = `${saludo} 🌿 Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} 🧉`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
