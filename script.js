@@ -42,14 +42,14 @@ const productos = [
   },
   {
     id: 16,
-    nombre: "Mate Torpedo Criollo",
-    descripcion: "Torpedo de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera. Bombilla no incluida.",
+    nombre: "Mate Coquito",
+    descripcion: "Coquito de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera. Bombilla no incluida.",
     precio: 32000,
     stock: 5,
     imagen: "img/mate_torpedo_criollo.jpg",
     categoria: "Mates",
     features: [
-      "Forma torpedo tradicional",
+      "Forma Coquito tradicional",
       "Calabaza curada artesanalmente",
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
@@ -60,7 +60,7 @@ const productos = [
     id: 18,
     nombre: "Mate Porito Cincelado",
     descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura. Bombilla no incluida.",
-    precio: 22000,
+    precio: 20000,
     stock: 1,
     imagen: "img/mate_porito.jpg",
     categoria: "Mates",
@@ -109,7 +109,7 @@ const productos = [
     nombre: "Torpedo Uruguayo — Apliques en Bronce",
     descripcion: "Torpedo uruguayo de calabaza negra con guarda cincelada plateada y apliques en bronce dorado. La combinación de plata y bronce le da un carácter único. Bombilla no incluida.",
     precio: 58000,
-    stock: 5,
+    stock: 1,
     imagen: "img/torpedo_uruguayo_bronce.jpg",
     categoria: "Mates",
     features: [
@@ -157,7 +157,7 @@ const productos = [
     nombre: "Mate Galleta",
     descripcion: "Mate galleta de calabaza curada, forma cómoda para cebar. Versión sencilla, sin apliques, ideal para el uso diario. Bombilla no incluida.",
     precio: 20000,
-    stock: 15,
+    stock: 10,
     imagen: "img/mate_galleta_simple.jpg",
     categoria: "Mates",
     features: [
@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 5,
+    stock: 15,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -255,7 +255,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 19,
+    stock: 20,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -271,7 +271,7 @@ const productos = [
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
     precio: 22000,
-    stock: 20,
+    stock: 3,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -287,7 +287,7 @@ const productos = [
     nombre: "Yerba Canarias 1kg",
     descripcion: "Yerba Canarias 1kg — sabor tradicional, industria brasileña. Cebadas generosas, sabor firme y aroma intenso. Ideal para el mate de todos los días.",
     precio: 11000,
-    stock: 5,
+    stock: 2,
     imagen: "img/yerba_canarias.jpg",
     categoria: "Yerbas",
     features: [
@@ -302,7 +302,7 @@ const productos = [
     id: 31,
     nombre: "Yerba Canarias 1kg — Sabor Suave",
     descripcion: "Yerba Canarias 1kg sabor suave, industria brasileña. Cebadas suaves y aroma delicado, ideal para quienes prefieren un mate menos amargo.",
-    precio: 11000,
+    precio: 12900,
     stock: 0,
     imagen: "img/yerba_canarias_suave.jpg",
     categoria: "Yerbas",
@@ -319,7 +319,7 @@ const productos = [
     nombre: "Yerba Baldo 5kg",
     descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
     precio: 49500,
-    stock: 1,
+    stock: 0,
     imagen: "img/baldo_5kg.jpg",
     categoria: "Yerbas",
     features: [
@@ -401,7 +401,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 10,
+    stock: 0,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
@@ -433,7 +433,7 @@ const productos = [
     nombre: "Termo Stanley System Azul | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color azul marino. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El clásico de Stanley en su versión más reconocida.",
     precio: 49000,
-    stock: 5,
+    stock: 0,
     imagen: "img/stanley_system_azul.jpg",
     categoria: "Accesorios",
     features: [
@@ -449,7 +449,7 @@ const productos = [
     nombre: "Termo Stanley System Negro | 1.2 lts",
     descripcion: "Termo Stanley System 1.2L color negro mate. BPA Free, acero inoxidable, mantiene temperatura 24hs. Bombilla de regalo incluida. El más elegante de la línea Classic.",
     precio: 49000,
-    stock: 5,
+    stock: 0,
     imagen: "img/stanley_system_negro.jpg",
     categoria: "Accesorios",
     features: [
