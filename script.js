@@ -29,7 +29,7 @@ const productos = [
     nombre: "Mate Camionero Criollo",
     descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único. Bombilla no incluida.",
     precio: 33000,
-    stock: 5,
+    stock: 1,
     imagen: "img/mate_camionero_criollo.jpg",
     categoria: "Mates",
     features: [
@@ -49,7 +49,7 @@ const productos = [
     imagen: "img/mate_torpedo_criollo.jpg",
     categoria: "Mates",
     features: [
-      "Forma Coquito tradicional",
+      "Forma de coco tradicional",
       "Calabaza curada artesanalmente",
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
@@ -60,7 +60,7 @@ const productos = [
     id: 18,
     nombre: "Mate Porito Cincelado",
     descripcion: "Porito de calabaza con guarda cincelada plateada. Compacto, liviano y con mucho carácter. El clásico argentino en su versión más pura. Bombilla no incluida.",
-    precio: 20000,
+    precio: 21000,
     stock: 1,
     imagen: "img/mate_porito.jpg",
     categoria: "Mates",
@@ -77,7 +77,7 @@ const productos = [
     nombre: "Imperial Negro — Guarda Cincelada Plateada",
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 39000,
-    stock: 5,
+    stock: 6,
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
@@ -157,7 +157,7 @@ const productos = [
     nombre: "Mate Galleta",
     descripcion: "Mate galleta de calabaza curada, forma cómoda para cebar. Versión sencilla, sin apliques, ideal para el uso diario. Bombilla no incluida.",
     precio: 20000,
-    stock: 10,
+    stock: 5,
     imagen: "img/mate_galleta_simple.jpg",
     categoria: "Mates",
     features: [
@@ -239,7 +239,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 15,
+    stock: 14,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -255,7 +255,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 20,
+    stock: 18,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -287,7 +287,7 @@ const productos = [
     nombre: "Yerba Canarias 1kg",
     descripcion: "Yerba Canarias 1kg — sabor tradicional, industria brasileña. Cebadas generosas, sabor firme y aroma intenso. Ideal para el mate de todos los días.",
     precio: 11000,
-    stock: 2,
+    stock: 3,
     imagen: "img/yerba_canarias.jpg",
     categoria: "Yerbas",
     features: [
@@ -369,7 +369,7 @@ const productos = [
     nombre: "Bombilla Pico de Loro — Acero Inoxidable",
     descripcion: "Bombilla pico de loro de 16cm en acero inoxidable. El filtro que usan los materos de verdad — no tapa, no se dobla, dura años. Compatible con cualquier mate.",
     precio: 5000,
-    stock: 30,
+    stock: 25,
     imagen: "img/bombilla_acero.jpg",
     categoria: "Accesorios",
     features: [
@@ -986,7 +986,7 @@ function generarWhatsapp(localidad) {
     totalTexto = `Total (productos + envío): ${fmt(subtotal + costoEnvio)}`;
   }
 
-  let bloqueEnvio = `📍 Localidad: ${localidad}\n${envioTexto}`;
+  let bloqueEnvio = `Localidad: ${localidad}\n${envioTexto}`;
 
   // Si es envío nacional (otra localidad), agrego todos los datos para MiCorreo
   if (datosEnvioNacional) {
@@ -1005,16 +1005,7 @@ function generarWhatsapp(localidad) {
       `\n${envioTexto}`;
   }
 
-  const saludos = ["¡Hola!", "¡Buenas!", "¡Hola, qué tal!"];
-  const saludo = saludos[Math.floor(Math.random() * saludos.length)];
-  const cierres = [
-    "¿Me confirmás si tenés todo esto disponible? ¡Gracias!",
-    "¿Está todo disponible? Quedo atento/a, ¡gracias!",
-    "¿Me confirmás disponibilidad? ¡Mil gracias!",
-  ];
-  const cierre = cierres[Math.floor(Math.random() * cierres.length)];
-
-  const mensaje = `${saludo}  Te escribo desde la web de mates.rico, quiero hacer este pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n${cierre} `;
+  const mensaje = `¡Hola, qué tal! Te escribo desde la web de mates.rico porque quiero hacer el siguiente pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n¿Me confirmás si está todo disponible? ¡Muchas gracias!`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
