@@ -3,7 +3,7 @@
    ===================================================== */
 
 // ═══════════════════════════════════════════════════════
-// 📦 PRODUCTOS — ordenados: Mates → Yerbas → Accesorios
+// 📦 PRODUCTOS — ordenados: Mates → Yerbas → Bombillas → Accesorios
 // ═══════════════════════════════════════════════════════
 const productos = [
 
@@ -42,8 +42,8 @@ const productos = [
   },
   {
     id: 16,
-    nombre: "Mate Coquito",
-    descripcion: "Coquito de calabaza curada con base de cuero premium y trenzado de cuero crudo. Sin adornos, pura esencia matera. Bombilla no incluida.",
+    nombre: "Mate Coquito Premium",
+    descripcion: "Coquito de calabaza curada con base de cuero premium y trenzado de cuero crudo. La versión premium, con terminación más cuidada. Bombilla no incluida.",
     precio: 32000,
     stock: 5,
     imagen: "img/mate_torpedo_criollo.jpg",
@@ -53,6 +53,22 @@ const productos = [
       "Calabaza curada artesanalmente",
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 38,
+    nombre: "Mate Coquito",
+    descripcion: "Coquito de calabaza curada, versión normal, sin apliques. Cómodo, liviano y con la forma de coco tradicional. Bombilla no incluida.",
+    precio: 23000,
+    stock: 2,
+    imagen: "img/mate_coquito.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma de coco tradicional",
+      "Calabaza curada artesanalmente",
+      "Terminación simple",
+      "Liviano y cómodo",
       "Bombilla no incluida",
     ],
   },
@@ -121,6 +137,38 @@ const productos = [
     ],
   },
   {
+    id: 39,
+    nombre: "Torpedo al Lacre — Borravino",
+    descripcion: "Torpedo de calabaza en color borravino, con virola plateada cincelada con motivos florales. Una pieza con color y carácter propio. Bombilla no incluida.",
+    precio: 48000,
+    stock: 2,
+    imagen: "img/torpedo_borravino.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma torpedo tradicional",
+      "Calabaza curada color borravino",
+      "Virola plateada cincelada, motivos florales",
+      "Base con patas",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 40,
+    nombre: "Torpedo al Lacre — Negro",
+    descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
+    precio: 48000,
+    stock: 1,
+    imagen: "img/torpedo_negro.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma torpedo tradicional",
+      "Calabaza curada en negro mate",
+      "Virola plateada cincelada, motivos florales",
+      "Base con patas",
+      "Bombilla no incluida",
+    ],
+  },
+  {
     id: 15,
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
@@ -165,6 +213,22 @@ const productos = [
       "Calabaza curada artesanalmente",
       "Terminación simple y resistente",
       "Ideal para uso diario",
+      "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 37,
+    nombre: "Camionero Cuero Crudo — Virola Volteada con Doble Anillo",
+    descripcion: "Camionero de calabaza con cuero crudo natural, virola plateada volteada con doble anillo cincelado. Una pieza de carácter único, con el color natural del cuero sin curtir. Bombilla no incluida.",
+    precio: 69000,
+    stock: 1,
+    imagen: "img/camionero_cuero_crudo_doble_anillo.jpg",
+    categoria: "Mates",
+    features: [
+      "Cuero crudo natural sin curtir",
+      "Virola plateada volteada",
+      "Doble anillo cincelado",
+      "Forma camionero clásica",
       "Bombilla no incluida",
     ],
   },
@@ -363,7 +427,7 @@ const productos = [
     ],
   },
 
-  // ─── ACCESORIOS ──────────────────────────────────────
+  // ─── BOMBILLAS ───────────────────────────────────────
   {
     id: 26,
     nombre: "Bombilla Pico de Loro — Acero Inoxidable",
@@ -371,7 +435,7 @@ const productos = [
     precio: 5000,
     stock: 25,
     imagen: "img/bombilla_acero.jpg",
-    categoria: "Accesorios",
+    categoria: "Bombillas",
     features: [
       "Pico de loro 16cm",
       "Acero inoxidable",
@@ -381,11 +445,45 @@ const productos = [
     ],
   },
   {
+    id: 35,
+    nombre: "Bombillón Obrero — 100% Alpaca",
+    descripcion: "Bombillón de 16cm, 100% alpaca, con cuerpo trenzado y filtro cuchara. Un clásico robusto para el mate de todos los días.",
+    precio: 32000,
+    stock: 1,
+    imagen: "img/bombillon_obrero.jpg",
+    categoria: "Bombillas",
+    features: [
+      "16cm de largo",
+      "100% alpaca",
+      "Cuerpo trenzado",
+      "Filtro tipo cuchara",
+      "Compatible con cualquier mate",
+    ],
+  },
+  {
+    id: 36,
+    nombre: "Bombillón Oro — Alpaca y Bronce",
+    descripcion: "Bombillón de 16cm, combinación de alpaca y bronce, con cuerpo trenzado y filtro cuchara. Un brillo distinto para destacar en la ronda de mate.",
+    precio: 32000,
+    stock: 2,
+    imagen: "img/bombillon_oro.jpg",
+    categoria: "Bombillas",
+    features: [
+      "16cm de largo",
+      "Alpaca y bronce",
+      "Cuerpo trenzado",
+      "Filtro tipo cuchara",
+      "Compatible con cualquier mate",
+    ],
+  },
+
+  // ─── ACCESORIOS ──────────────────────────────────────
+  {
     id: 20,
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 5,
+    stock: 0,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
