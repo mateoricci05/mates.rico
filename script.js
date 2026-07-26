@@ -415,7 +415,7 @@ const productos = [
     nombre: "Yerba Sara Coco 500g — Edición Limitada",
     descripcion: "Yerba Sara saborizada a coco, edición limitada. Libre de gluten, envase biopack sustentable. Ideal para quienes buscan un mate distinto y dulce.",
     precio: 9500,
-    stock: 8,
+    stock: 0,
     imagen: "img/yerba_sara_coco.jpg",
     categoria: "Yerbas",
     features: [
@@ -483,7 +483,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 0,
+    stock: 2,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
