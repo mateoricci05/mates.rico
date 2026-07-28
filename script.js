@@ -157,7 +157,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Negro",
     descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
     precio: 48000,
-    stock: 1,
+    stock: 0,
     imagen: "img/torpedo_negro.jpg",
     categoria: "Mates",
     features: [
@@ -221,7 +221,7 @@ const productos = [
     nombre: "Camionero Cuero Crudo — Virola Volteada con Doble Anillo",
     descripcion: "Camionero de calabaza con cuero crudo natural, virola plateada volteada con doble anillo cincelado. Una pieza de carácter único, con el color natural del cuero sin curtir. Bombilla no incluida.",
     precio: 69000,
-    stock: 1,
+    stock: 0,
     imagen: "img/camionero_cuero_crudo_doble_anillo.jpg",
     categoria: "Mates",
     features: [
