@@ -141,7 +141,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Borravino",
     descripcion: "Torpedo de calabaza en color borravino, con virola plateada cincelada con motivos florales. Una pieza con color y carácter propio. Bombilla no incluida.",
     precio: 48000,
-    stock: 2,
+    stock: 1,
     imagen: "img/torpedo_borravino.jpg",
     categoria: "Mates",
     features: [
@@ -157,7 +157,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Negro",
     descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
     precio: 48000,
-    stock: 0,
+    stock: 2,
     imagen: "img/torpedo_negro.jpg",
     categoria: "Mates",
     features: [
@@ -205,7 +205,7 @@ const productos = [
     nombre: "Mate Galleta",
     descripcion: "Mate galleta de calabaza curada, forma cómoda para cebar. Versión sencilla, sin apliques, ideal para el uso diario. Bombilla no incluida.",
     precio: 20000,
-    stock: 5,
+    stock: 2,
     imagen: "img/mate_galleta_simple.jpg",
     categoria: "Mates",
     features: [
@@ -221,7 +221,7 @@ const productos = [
     nombre: "Camionero Cuero Crudo — Virola Volteada con Doble Anillo",
     descripcion: "Camionero de calabaza con cuero crudo natural, virola plateada volteada con doble anillo cincelado. Una pieza de carácter único, con el color natural del cuero sin curtir. Bombilla no incluida.",
     precio: 69000,
-    stock: 0,
+    stock: 2,
     imagen: "img/camionero_cuero_crudo_doble_anillo.jpg",
     categoria: "Mates",
     features: [
@@ -399,7 +399,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 8,
+    stock: 1,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
@@ -449,7 +449,7 @@ const productos = [
     nombre: "Bombillón Obrero — 100% Alpaca",
     descripcion: "Bombillón de 16cm, 100% alpaca, con cuerpo trenzado y filtro cuchara. Un clásico robusto para el mate de todos los días.",
     precio: 32000,
-    stock: 1,
+    stock: 0,
     imagen: "img/bombillon_obrero.jpg",
     categoria: "Bombillas",
     features: [
@@ -465,7 +465,7 @@ const productos = [
     nombre: "Bombillón Oro — Alpaca y Bronce",
     descripcion: "Bombillón de 16cm, combinación de alpaca y bronce, con cuerpo trenzado y filtro cuchara. Un brillo distinto para destacar en la ronda de mate.",
     precio: 32000,
-    stock: 2,
+    stock: 1,
     imagen: "img/bombillon_oro.jpg",
     categoria: "Bombillas",
     features: [
@@ -483,7 +483,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 2,
+    stock: 1,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
