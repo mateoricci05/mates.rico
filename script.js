@@ -141,7 +141,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Borravino",
     descripcion: "Torpedo de calabaza en color borravino, con virola plateada cincelada con motivos florales. Una pieza con color y carácter propio. Bombilla no incluida.",
     precio: 48000,
-    stock: 1,
+    stock: 0,
     imagen: "img/torpedo_borravino.jpg",
     categoria: "Mates",
     features: [
