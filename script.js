@@ -13,7 +13,7 @@ const productos = [
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
-    stock: 5,
+    stock: 7,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
