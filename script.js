@@ -13,7 +13,7 @@ const productos = [
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
-    stock: 0,
+    stock: 5,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
@@ -124,7 +124,7 @@ const productos = [
     id: 25,
     nombre: "Torpedo Uruguayo — Apliques en Bronce",
     descripcion: "Torpedo uruguayo de calabaza negra con guarda cincelada plateada y apliques en bronce dorado. La combinación de plata y bronce le da un carácter único. Bombilla no incluida.",
-    precio: 58000,
+    precio: 55000,
     stock: 1,
     imagen: "img/torpedo_uruguayo_bronce.jpg",
     categoria: "Mates",
@@ -189,7 +189,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
     precio: 40000,
-    stock: 0,
+    stock: 4,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -205,7 +205,7 @@ const productos = [
     nombre: "Mate Galleta Premium",
     descripcion: "Mate galleta de calabaza con base de cuero premium y trenzado de cuero crudo. La forma más cómoda para cebar. Bombilla no incluida.",
     precio: 40000,
-    stock: 0,
+    stock: 2,
     imagen: "img/mate_galleta.jpg",
     categoria: "Mates",
     features: [
