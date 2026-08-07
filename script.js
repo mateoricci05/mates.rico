@@ -319,7 +319,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 0,
+    stock: 10,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -335,7 +335,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11000,
-    stock: 3,
+    stock: 17,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -415,7 +415,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 0,
+    stock: 5,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
@@ -431,7 +431,7 @@ const productos = [
     nombre: "Yerba Sara Coco 500g — Edición Limitada",
     descripcion: "Yerba Sara saborizada a coco, edición limitada. Libre de gluten, envase biopack sustentable. Ideal para quienes buscan un mate distinto y dulce.",
     precio: 9500,
-    stock: 0,
+    stock: 8,
     imagen: "img/yerba_sara_coco.jpg",
     categoria: "Yerbas",
     features: [
