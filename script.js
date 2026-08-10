@@ -499,7 +499,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable",
     descripcion: "Termo Marwal de 1 litro en acero inoxidable. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 25000,
-    stock: 1,
+    stock: 0,
     imagen: "img/termo_1l.jpg",
     categoria: "Accesorios",
     features: [
