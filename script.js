@@ -28,7 +28,7 @@ const productos = [
     id: 17,
     nombre: "Imperial Negro — Guarda Cincelada Plateada",
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
-    precio: 39000,
+    precio: 30000,
     stock: 6,
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
