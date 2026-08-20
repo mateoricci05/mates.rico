@@ -109,7 +109,7 @@ const productos = [
     nombre: "Camionero Cuero Crudo — Virola Volcada con Doble Anillo",
     descripcion: "Camionero de calabaza con cuero crudo natural, virola plateada volcada con doble anillo cincelado. Una pieza de carácter único, con el color natural del cuero sin curtir. Bombilla no incluida.",
     precio: 69000,
-    stock: 0,
+    stock: 1,
     imagen: "img/camionero_cuero_crudo_doble_anillo.jpg",
     categoria: "Mates",
     features: [
