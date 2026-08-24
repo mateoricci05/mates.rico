@@ -317,7 +317,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
     precio: 40000,
-    stock: 1,
+    stock: 0,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -366,7 +366,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 4,
+    stock: 0,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -462,7 +462,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 1,
+    stock: 0,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
@@ -478,7 +478,7 @@ const productos = [
     nombre: "Yerba Sara Coco 500g — Edición Limitada",
     descripcion: "Yerba Sara saborizada a coco, edición limitada. Libre de gluten, envase biopack sustentable. Ideal para quienes buscan un mate distinto y dulce.",
     precio: 9500,
-    stock: 6,
+    stock: 1,
     imagen: "img/yerba_sara_coco.jpg",
     categoria: "Yerbas",
     features: [
