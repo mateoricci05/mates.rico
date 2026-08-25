@@ -478,7 +478,7 @@ const productos = [
     nombre: "Yerba Sara Coco 500g — Edición Limitada",
     descripcion: "Yerba Sara saborizada a coco, edición limitada. Libre de gluten, envase biopack sustentable. Ideal para quienes buscan un mate distinto y dulce.",
     precio: 9500,
-    stock: 1,
+    stock: 0,
     imagen: "img/yerba_sara_coco.jpg",
     categoria: "Yerbas",
     features: [
