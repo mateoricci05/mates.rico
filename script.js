@@ -561,7 +561,7 @@ const productos = [
     nombre: "Bombillón Pampa — Alpaca y Bronce",
     descripcion: "Bombillón de alpaca y bronce, con cuerpo trenzado y filtro cuchara. Terminación combinada que le da un brillo distinto a la ronda de mate.",
     precio: 32000,
-    stock: 2,
+    stock: 0,
     imagen: "img/bombillon_pampa.jpg",
     categoria: "Bombillas",
     features: [
