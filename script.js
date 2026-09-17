@@ -13,7 +13,7 @@ const productos = [
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
-    stock: 7,
+    stock: 1,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
@@ -93,7 +93,7 @@ const productos = [
     nombre: "Camionero Criollo",
     descripcion: "Camionero de calabaza curada con base de cuero crudo natural, sin curtir ni teñir. Boca ancha, forma criolla clásica. Bombilla no incluida.",
     precio: 24000,
-    stock: 5,
+    stock: 1,
     imagen: "img/camionero_criollo_natural.jpg",
     categoria: "Mates",
     features: [
@@ -157,7 +157,7 @@ const productos = [
     nombre: "Mate Coquito Premium",
     descripcion: "Coquito de calabaza curada con base de cuero premium y trenzado de cuero crudo. La versión premium, con terminación más cuidada. Bombilla no incluida.",
     precio: 32000,
-    stock: 1,
+    stock: 0,
     imagen: "img/mate_torpedo_criollo.jpg",
     categoria: "Mates",
     features: [
@@ -269,7 +269,7 @@ const productos = [
     nombre: "Torpedo Criollo — Base Canasta Premium, Cincelado al Lacre",
     descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación artesanal de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
     precio: 50000,
-    stock: 5,
+    stock: 0,
     imagen: "img/torpedo_base_canasta.jpg",
     categoria: "Mates",
     features: [
@@ -365,7 +365,7 @@ const productos = [
     nombre: "Mate Galleta",
     descripcion: "Mate galleta de calabaza curada, forma cómoda para cebar. Versión sencilla, sin apliques, ideal para el uso diario. Bombilla no incluida.",
     precio: 20000,
-    stock: 2,
+    stock: 1,
     imagen: "img/mate_galleta_simple.jpg",
     categoria: "Mates",
     features: [
@@ -398,7 +398,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11500,
-    stock: 27,
+    stock: 10,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
