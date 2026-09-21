@@ -573,7 +573,40 @@ const productos = [
     ],
   },
 
+  {
+    id: 48,
+    nombre: "Bombillón Pico de Loro — Alpaca y Bronce",
+    descripcion: "Bombillón pico de loro en alpaca y bronce, con cuerpo trenzado y filtro cuchara. Terminación combinada que le suma un brillo distinto a cada cebada.",
+    precio: 32000,
+    stock: 2,
+    imagen: "img/bombillon_pico_de_loro.jpg",
+    categoria: "Bombillas",
+    features: [
+      "Pico de loro",
+      "Alpaca y bronce",
+      "Cuerpo trenzado",
+      "Filtro tipo cuchara",
+      "Compatible con cualquier mate",
+    ],
+  },
+
   // ─── ACCESORIOS ──────────────────────────────────────
+  {
+    id: 47,
+    nombre: "Canasta Cuero Crudo",
+    descripcion: "Canasta de mano en cuero ancho de Laguna, forrada en gamuza por dentro. Asas trenzadas a mano, resistentes y con mucho estilo. Ideal para llevar todo el set de mate junto — yerba, bombilla y termo — con onda y prolijidad.",
+    precio: 70000,
+    stock: 1,
+    imagen: "img/canasta_cuero_crudo.jpg",
+    categoria: "Accesorios",
+    features: [
+      "Cuero ancho de Laguna",
+      "Forrada en gamuza por dentro",
+      "Asas trenzadas a mano",
+      "Ideal para llevar el set de mate completo",
+      "Pieza única, hecha a mano",
+    ],
+  },
   {
     id: 20,
     nombre: "Termo 1L Acero Inoxidable",
