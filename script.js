@@ -13,7 +13,7 @@ const productos = [
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
-    stock: 1,
+    stock: 0,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
@@ -29,7 +29,7 @@ const productos = [
     nombre: "Imperial Negro — Guarda Cincelada Plateada",
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 30000,
-    stock: 6,
+    stock: 5,
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
@@ -109,7 +109,7 @@ const productos = [
     nombre: "Camionero Criollo Cincelado",
     descripcion: "Camionero de calabaza con base de cuero crudo trenzado tipo canasta y virola plateada cincelada con motivos florales. Boca ancha, terminación artesanal prolija. Bombilla no incluida.",
     precio: 46000,
-    stock: 5,
+    stock: 3,
     imagen: "img/camionero_criollo_cincelado.jpg",
     categoria: "Mates",
     features: [
@@ -253,7 +253,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Negro",
     descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
     precio: 48000,
-    stock: 4,
+    stock: 2,
     imagen: "img/torpedo_negro.jpg",
     categoria: "Mates",
     features: [
@@ -301,7 +301,7 @@ const productos = [
     nombre: "Torpedo Avejentado — Sol de Mayo, Cincelado al Lacre",
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
-    stock: 4,
+    stock: 0,
     imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
     categoria: "Mates",
     features: [
@@ -365,7 +365,7 @@ const productos = [
     nombre: "Mate Galleta",
     descripcion: "Mate galleta de calabaza curada, forma cómoda para cebar. Versión sencilla, sin apliques, ideal para el uso diario. Bombilla no incluida.",
     precio: 20000,
-    stock: 1,
+    stock: 0,
     imagen: "img/mate_galleta_simple.jpg",
     categoria: "Mates",
     features: [
@@ -382,7 +382,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 9,
+    stock: 1,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -398,7 +398,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11500,
-    stock: 10,
+    stock: 20,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -413,7 +413,7 @@ const productos = [
     id: 32,
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
-    precio: 22000,
+    precio: 23000,
     stock: 0,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
@@ -478,7 +478,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 9,
+    stock: 5,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
