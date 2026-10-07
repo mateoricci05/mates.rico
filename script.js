@@ -414,7 +414,7 @@ const productos = [
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
     precio: 23000,
-    stock: 0,
+    stock: 2,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -628,7 +628,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 0,
+    stock: 2,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
