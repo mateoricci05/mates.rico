@@ -382,7 +382,7 @@ const productos = [
     nombre: "Yerba Verdecita 1kg",
     descripcion: "Yerba Verdecita elaborada despalada, padrón uruguayo. Selección especial de Brasil y Argentina — suave al paladar, cebadas largas y aroma fresco.",
     precio: 8500,
-    stock: 1,
+    stock: 0,
     imagen: "img/yerba_verdecita.jpg",
     categoria: "Yerbas",
     features: [
@@ -578,7 +578,7 @@ const productos = [
     nombre: "Bombillón Pico de Loro — Alpaca y Bronce",
     descripcion: "Bombillón pico de loro en alpaca y bronce, con cuerpo trenzado y filtro cuchara. Terminación combinada que le suma un brillo distinto a cada cebada.",
     precio: 32000,
-    stock: 2,
+    stock: 0,
     imagen: "img/bombillon_pico_de_loro.jpg",
     categoria: "Bombillas",
     features: [
