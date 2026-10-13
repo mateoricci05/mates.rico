@@ -269,7 +269,7 @@ const productos = [
     nombre: "Torpedo Criollo — Base Canasta Premium, Cincelado al Lacre",
     descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación artesanal de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
     precio: 50000,
-    stock: 0,
+    stock: 3,
     imagen: "img/torpedo_base_canasta.jpg",
     categoria: "Mates",
     features: [
