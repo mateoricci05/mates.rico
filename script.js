@@ -77,7 +77,7 @@ const productos = [
     nombre: "Camionero Criollo Premium",
     descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único. Bombilla no incluida.",
     precio: 33000,
-    stock: 1,
+    stock: 0,
     imagen: "img/mate_camionero_criollo.jpg",
     categoria: "Mates",
     features: [
