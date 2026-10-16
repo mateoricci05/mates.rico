@@ -449,7 +449,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 5,
+    stock: 0,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
