@@ -2,6 +2,9 @@
    mates.rico — script.js  v2
    ===================================================== */
 
+// Si los íconos (feather) no cargan, que la tienda siga andando igual
+if (!window.feather) window.feather = { replace() {} };
+
 // ═══════════════════════════════════════════════════════
 // 📦 PRODUCTOS — ordenados: Mates → Yerbas → Bombillas → Accesorios
 // ═══════════════════════════════════════════════════════
@@ -57,22 +60,6 @@ const productos = [
     ],
   },
   {
-    id: 1,
-    nombre: "Imperial Guarda Alpaca Premium — Cuero Borravino",
-    descripcion: "Imperial de calabaza con guarda de alpaca cincelada a mano, cuero liso borravino y base de alpaca ancha. Una pieza única con identidad propia. Bombilla no incluida.",
-    precio: 60000,
-    stock: 0,
-    imagen: "img/imperial_guarda_alpaca_borravino.jpg",
-    categoria: "Mates",
-    features: [
-      "Guarda de alpaca cincelada",
-      "Cuero liso borravino",
-      "Base de alpaca ancha",
-      "Calabaza curada artesanalmente",
-      "Bombilla no incluida",
-    ],
-  },
-  {
     id: 13,
     nombre: "Camionero Criollo Premium",
     descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único. Bombilla no incluida.",
@@ -100,7 +87,7 @@ const productos = [
       "Calabaza 100%",
       "Base cuero crudo natural, sin teñir",
       "Boca ancha, forma criolla",
-      "Terminación",
+      "Terminación artesanal",
       "Bombilla no incluida",
     ],
   },
@@ -150,22 +137,6 @@ const productos = [
       "Madera curada artesanalmente",
       "Bombilla incluida",
       "Caja de presentación negra",
-    ],
-  },
-  {
-    id: 16,
-    nombre: "Mate Coquito Premium",
-    descripcion: "Coquito de calabaza curada con base de cuero premium y trenzado de cuero crudo. La versión premium, con terminación más cuidada. Bombilla no incluida.",
-    precio: 32000,
-    stock: 0,
-    imagen: "img/mate_torpedo_criollo.jpg",
-    categoria: "Mates",
-    features: [
-      "Forma de coco tradicional",
-      "Calabaza curada artesanalmente",
-      "Base de cuero premium",
-      "Trenzado de cuero crudo a mano",
-      "Bombilla no incluida",
     ],
   },
   {
@@ -306,7 +277,7 @@ const productos = [
     categoria: "Mates",
     features: [
       "Forma torpedo tradicional",
-      "Calabaza",
+      "Calabaza avejentada",
       "Virola plateada cincelada al lacre",
       "Aplique de Sol de Mayo en bronce",
       "Bombilla no incluida",
@@ -691,29 +662,64 @@ const productos = [
   
 
 // ═══════════════════════════════════════════════════════
+// 💐 DÍA DE LA MADRE — producto destacado
+//    Se muestra arriba de todo y primero en el catálogo.
+//    "visibleHasta": desde ese día se oculta solo.
+// ═══════════════════════════════════════════════════════
+const destacado = {
+  id: 100,
+  nombre: "Box Día de la Madre",
+  bajada: "Un regalo con todo el amor, listo para dar.",
+  descripcion: "Una caja pensada para mamá: mate de algarrobo con su bombilla, una canastita tejida, vela, bombones y una tarjeta escrita. Llega armada, lista para regalar.",
+  precio: 50000,
+  stock: 20,                                   // ← cuántas cajas quedan
+  imagen: "img/box_dia_de_la_madre.jpg",
+  categoria: "Día de la Madre",
+  features: [
+    "Mate de algarrobo con bombilla",
+    "Canastita tejida con flores",
+    "Vela",
+    "Bombones Bon o Bon",
+    "Tarjeta con dedicatoria",
+    "Caja de regalo mates.rico",
+  ],
+  fechaLimite: "En la zona lo entregamos hasta el mismo domingo 18",
+  visibleHasta: "2026-10-19",
+};
+
+// ═══════════════════════════════════════════════════════
 // ⚙️ CONFIG
 // ═══════════════════════════════════════════════════════
 const WHATSAPP_NUMBER = "5493543650854";
+
+// Datos para transferir (se muestran con botón "Copiar")
+const PAGO = {
+  alias: "mates.rico",
+  titular: "Mateo Ricci Vázquez",
+};
+
 // Costo de envío fijo por zona. 0 = gratis.
 const ZONAS_ENVIO = {
-  "río ceballos": 0,
-  "rio ceballos": 0,
-  "salsipuedes": 2000,
-  "unquillo": 2000,
-  "villa allende": 4000,
+  "Río Ceballos": 0,
+  "Salsipuedes": 3000,
+  "Unquillo": 3000,
+  "Villa Allende": 5000,
 };
-// Para el resto del país (envío por Correo Argentino, "otra localidad"):
-// si la compra llega a este monto, el envío sale gratis. Si no, se cotiza aparte.
+// Resto del país (Correo Argentino): gratis desde este monto, si no se cotiza aparte.
 const ENVIO_GRATIS_MINIMO = 100000;
 
 // ═══════════════════════════════════════════════════════
 // 🗃️ ESTADO
 // ═══════════════════════════════════════════════════════
+const IMG_FALLBACK = "data:image/svg+xml," + encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='#eaf3e8'/>" +
+  "<text x='200' y='210' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='34' fill='#3a6b35'>mates.rico</text></svg>");
+
 let carrito = [];
 let categoriaActual = "Todos";
-let localidadElegida = "";
-let tipoEntregaElegido = "domicilio"; // "domicilio" | "sucursal", solo aplica a "otra localidad"
-let datosEnvioNacional = null; // se completa solo si es "otra localidad"
+let zonaElegida = "";              // una de ZONAS_ENVIO, "otra" o ""
+let pagoElegido = "Transferencia"; // "Transferencia" | "Efectivo" (efectivo solo en la zona)
+let tipoEntregaElegido = "domicilio";
 
 // ═══════════════════════════════════════════════════════
 // ✨ SPLASH SCREEN
@@ -721,28 +727,72 @@ let datosEnvioNacional = null; // se completa solo si es "otra localidad"
 function initSplash() {
   const splash = document.getElementById("splash");
   if (!splash) return;
-  const timer = setTimeout(() => {
-    splash.classList.add("oculto");
-    setTimeout(() => splash.remove(), 700);
-  }, 1800);
-  splash.addEventListener("click", () => {
-    clearTimeout(timer);
-    splash.classList.add("oculto");
-    setTimeout(() => splash.remove(), 700);
-  });
+  const cerrar = () => { splash.classList.add("oculto"); setTimeout(() => splash.remove(), 700); };
+  let visto = false;
+  try { visto = sessionStorage.getItem("splashVisto") === "1"; sessionStorage.setItem("splashVisto", "1"); } catch {}
+  if (visto) { splash.remove(); return; }
+  const timer = setTimeout(cerrar, 900);
+  splash.addEventListener("click", () => { clearTimeout(timer); cerrar(); });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initSplash();
+  prepararDestacado();
+  recuperarPedido();
+  renderizarDestacado();
   renderizarProductos();
   initNavbar();
   initFiltros();
   initModalProducto();
-  initModalCarrito();
-  initModalEnvio();
+  initCarrito();
+  initCopiar();
+  actualizarBadge();
+  document.getElementById("barra-pedido")?.addEventListener("click", abrirCarritoLateral);
   initReveal();
   feather.replace();
 });
+
+// ═══════════════════════════════════════════════════════
+// 💐 DESTACADO
+// ═══════════════════════════════════════════════════════
+function prepararDestacado() {
+  const hoy = new Date().toLocaleDateString("sv-SE"); // AAAA-MM-DD en hora local
+  const activo = !destacado.visibleHasta || hoy < destacado.visibleHasta;
+  if (activo) productos.unshift({ ...destacado, esDestacado: true });
+  // Todo lo marcado con data-solo-madre se oculta cuando termina la fecha
+  document.querySelectorAll("[data-solo-madre]").forEach(el => el.style.display = activo ? "" : "none");
+}
+
+function renderizarDestacado() {
+  const sec = document.getElementById("dia-de-la-madre");
+  const d = productos.find(p => p.esDestacado);
+  if (!sec || !d) return;
+  const agotado = d.stock === 0;
+  sec.innerHTML = `
+    <div class="container">
+      <div class="madre-card">
+        <div class="madre-foto">
+          <img src="${d.imagen}" alt="${d.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
+        </div>
+        <div class="madre-info">
+          <p class="section-tag">Domingo 18 de octubre</p>
+          <h2 class="madre-titulo">Box Día de la <em>Madre</em></h2>
+          <p class="madre-bajada">${d.bajada}</p>
+          <ul class="madre-incluye">
+            ${d.features.map(f => `<li><span class="mp-feature-dot"></span>${f}</li>`).join("")}
+          </ul>
+          <div class="madre-compra">
+            <span class="madre-precio">${fmt(d.precio)}</span>
+            <button class="btn btn-primary" id="btn-madre" ${agotado ? "disabled" : ""}>
+              ${agotado ? "Agotado" : "Lo quiero"}
+            </button>
+          </div>
+          ${d.fechaLimite && !agotado ? `<p class="madre-fecha">${d.fechaLimite}</p>` : ""}
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("btn-madre")?.addEventListener("click", () => agregarAlCarrito(d.id, { abrirCarrito: true }));
+}
 
 // ═══════════════════════════════════════════════════════
 // 🧱 RENDER PRODUCTOS
@@ -752,56 +802,92 @@ function renderizarProductos(categoria = "Todos") {
   if (!grid) return;
   grid.innerHTML = "";
 
-  const filtrados = categoria === "Todos"
-    ? productos
-    : productos.filter(p => p.categoria === categoria);
+  // Primero lo que hay. Lo que no tiene stock aparece al final como "Próximamente".
+  const deCategoria = categoria === "Todos" ? productos : productos.filter(p => p.categoria === categoria);
+  const disponibles = deCategoria.filter(p => p.stock > 0);
+  const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado);
 
-  if (filtrados.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gris-med);">No hay productos en esta categoría.</div>`;
+  if (disponibles.length === 0 && proximamente.length === 0) {
+    grid.innerHTML = `<div class="grid-vacio">Por ahora no hay productos en esta categoría.</div>`;
     return;
   }
 
-  filtrados.forEach((p, i) => {
-    const agotado = p.stock === 0;
-    const card = document.createElement("div");
-    card.className = "producto-card reveal";
-    card.style.transitionDelay = `${i * 50}ms`;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", `Ver ${p.nombre}`);
-    card.tabIndex = 0;
+  disponibles.forEach((p, i) => grid.appendChild(crearCard(p, i)));
 
-    card.innerHTML = `
-      <div class="producto-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy"
-          onerror="this.src='https://via.placeholder.com/400x400/eaf3e8/3a6b35?text=mates.rico'"/>
-        <span class="producto-badge">${p.categoria}</span>
-      </div>
-      <div class="producto-info">
-        <div class="producto-cat">${p.categoria}</div>
-        <h3 class="producto-nombre">${p.nombre}</h3>
-        <p class="producto-desc">${p.descripcion.substring(0, 85)}…</p>
-        <div class="producto-footer">
-          <span class="producto-precio">${fmt(p.precio)}</span>
-          <button class="btn-comprar" ${agotado ? "disabled" : ""}>
-            ${agotado ? "Agotado" : "Agregar"}
-          </button>
-        </div>
-      </div>`;
-
-    card.addEventListener("click", (e) => {
-      if (!e.target.classList.contains("btn-comprar")) abrirModalProducto(p.id);
-    });
-    card.addEventListener("keydown", (e) => { if (e.key === "Enter") abrirModalProducto(p.id); });
-    card.querySelector(".btn-comprar")?.addEventListener("click", (e) => {
-      e.stopPropagation();
-      agregarAlCarrito(p.id);
-    });
-
-    grid.appendChild(card);
-  });
+  if (proximamente.length) {
+    const sep = document.createElement("div");
+    sep.className = "grid-proximamente";
+    sep.innerHTML = `
+      <p class="section-tag">Próximamente</p>
+      <h3>Vuelven pronto</h3>
+      <p>Tocá <strong>Avisame</strong> y te escribimos apenas los tengamos.</p>`;
+    grid.appendChild(sep);
+    proximamente.forEach((p, i) => grid.appendChild(crearCard(p, i)));
+  }
 
   initReveal();
   feather.replace();
+}
+
+function crearCard(p, i) {
+  const pronto = p.stock === 0;
+  const card = document.createElement("div");
+  card.className = `producto-card reveal${pronto ? " pronto" : ""}`;
+  card.style.transitionDelay = `${Math.min(i, 6) * 50}ms`;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `Ver ${p.nombre}`);
+  card.tabIndex = 0;
+
+  let badgeStock = "";
+  if (pronto) badgeStock = `<span class="badge-stock badge-pronto">Próximamente</span>`;
+  else if (p.stock === 1) badgeStock = `<span class="badge-stock">Última unidad</span>`;
+  else if (p.stock === 2) badgeStock = `<span class="badge-stock">Quedan 2</span>`;
+
+  const enPedido = carrito.find(x => x.id === p.id);
+  card.innerHTML = `
+    <div class="producto-img-wrap">
+      <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
+      <span class="producto-badge${p.esDestacado ? " producto-badge--madre" : ""}">${p.categoria}</span>
+      ${badgeStock}
+    </div>
+    <div class="producto-info">
+      <h3 class="producto-nombre">${p.nombre}</h3>
+      <p class="producto-desc">${recortar(p.descripcion, 85)}</p>
+      <div class="producto-footer">
+        <span class="producto-precio">${fmt(p.precio)}</span>
+        ${pronto
+          ? `<a class="btn-comprar btn-avisame" href="${linkAvisame(p)}" target="_blank" rel="noopener">Avisame</a>`
+          : `<button class="btn-comprar${enPedido ? " en-pedido" : ""}" data-id="${p.id}">${enPedido ? "✓ En tu pedido" : "Agregar"}</button>`}
+      </div>
+    </div>`;
+
+  card.addEventListener("click", (e) => {
+    if (!e.target.closest(".btn-comprar")) abrirModalProducto(p.id);
+  });
+  card.addEventListener("keydown", (e) => { if (e.key === "Enter") abrirModalProducto(p.id); });
+  card.querySelector("button.btn-comprar")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    agregarAlCarrito(p.id);
+  });
+  return card;
+}
+
+function linkAvisame(p) {
+  const txt = `¡Hola! Vi en la web el ${p.nombre} y figura como "Próximamente". ¿Me avisás cuando vuelva? ¡Gracias!`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(txt)}`;
+}
+
+// Actualiza los botones "Agregar" / "✓ En tu pedido" sin redibujar el catálogo
+function marcarBotonesEnPedido() {
+  document.querySelectorAll("button.btn-comprar[data-id]").forEach(btn => {
+    const en = carrito.some(x => x.id === +btn.dataset.id);
+    btn.classList.toggle("en-pedido", en);
+    btn.textContent = en ? "✓ En tu pedido" : "Agregar";
+  });
+}
+
+function recortar(txt, n) {
+  return txt.length > n ? txt.substring(0, n).replace(/\s+\S*$/, "") + "…" : txt;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -817,41 +903,40 @@ function abrirModalProducto(id) {
   const agotado = p.stock === 0;
   const stockBajo = p.stock <= 2 && p.stock > 0;
   const stockLabel = agotado
-    ? "Sin stock"
+    ? "Próximamente"
     : stockBajo
       ? `<strong class="bajo">${p.stock === 1 ? "¡Última unidad!" : `Solo ${p.stock} disponibles`}</strong>`
-      : `<strong>${p.stock} disponibles</strong>`;
-  const stockClass = (agotado || stockBajo) ? "bajo" : "";
+      : `<strong>Disponible</strong>`;
 
   inner.innerHTML = `
     <div class="mp-img">
-      <img src="${p.imagen}" alt="${p.nombre}"
-        onerror="this.src='https://via.placeholder.com/500x500/eaf3e8/3a6b35?text=mates.rico'"/>
+      <img src="${p.imagen}" alt="${p.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
     </div>
     <div class="mp-info">
       <p class="mp-cat">${p.categoria}</p>
       <h2 class="mp-nombre">${p.nombre}</h2>
       <p class="mp-precio">${fmt(p.precio)}</p>
+      ${agotado ? `<p class="mp-pronto">Próximamente · vuelve pronto</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
       <div class="mp-features">
         ${p.features.map(f => `
-          <div class="mp-feature">
-            <div class="mp-feature-dot"></div>
-            <span>${f}</span>
-          </div>`).join("")}
+          <div class="mp-feature"><div class="mp-feature-dot"></div><span>${f}</span></div>`).join("")}
       </div>
-      <p class="mp-stock ${stockClass}">Stock: ${stockLabel}</p>
-      <button class="btn btn-primary" id="mp-btn-agregar" ${agotado ? "disabled" : ""} style="width:100%;justify-content:center;">
-        ${agotado ? "Sin stock" : "Agregar al carrito"}
-      </button>
+      ${agotado ? "" : `<p class="mp-stock ${stockBajo ? "bajo" : ""}">Stock: ${stockLabel}</p>`}
+      <div class="mp-cta">
+        <span class="mp-cta-precio">${fmt(p.precio)}</span>
+        ${agotado
+          ? `<a class="btn btn-outline" href="${linkAvisame(p)}" target="_blank" rel="noopener"><i data-feather="bell"></i> Avisame cuando vuelva</a>`
+          : `<button class="btn btn-primary" id="mp-btn-agregar">Agregar al pedido</button>`}
+      </div>
     </div>`;
 
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
   feather.replace();
   document.getElementById("mp-btn-agregar")?.addEventListener("click", () => {
-    agregarAlCarrito(id);
     cerrarModalProducto();
+    agregarAlCarrito(id, { abrirCarrito: true });
   });
 }
 
@@ -862,16 +947,15 @@ function cerrarModalProducto() {
 
 function initModalProducto() {
   const overlay = document.getElementById("modal-producto-overlay");
-  const closeBtn = document.getElementById("modal-producto-close");
-  closeBtn?.addEventListener("click", cerrarModalProducto);
+  document.getElementById("modal-producto-close")?.addEventListener("click", cerrarModalProducto);
   overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarModalProducto(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModalProducto(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") { cerrarModalProducto(); cerrarCarrito(); } });
 }
 
 // ═══════════════════════════════════════════════════════
-// 🛒 CARRITO
+// 🛒 CARRITO + COMPRA (todo en un solo panel)
 // ═══════════════════════════════════════════════════════
-function agregarAlCarrito(id) {
+function agregarAlCarrito(id, { abrirCarrito = false } = {}) {
   const p = productos.find(x => x.id === id);
   if (!p || p.stock === 0) return;
   const existente = carrito.find(i => i.id === id);
@@ -885,9 +969,24 @@ function agregarAlCarrito(id) {
     carrito.push({ id: p.id, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: 1 });
   }
   actualizarBadge();
-  actualizarBarraEnvio();
-  mostrarToast(`✓ ${p.nombre.split(" ").slice(0,3).join(" ")} agregado`);
   renderizarCarrito();
+  if (abrirCarrito) abrirCarritoLateral();
+  else if (!esCelu()) mostrarToast(`✓ Agregado`, { texto: "Ver pedido", fn: abrirCarritoLateral });
+}
+
+function esCelu() { return window.matchMedia("(max-width: 640px)").matches; }
+
+function abrirCarritoLateral() {
+  document.getElementById("carrito-exito").hidden = true;
+  document.getElementById("carrito-items").hidden = false;
+  renderizarCarrito();
+  document.getElementById("modal-carrito-overlay")?.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function cerrarCarrito() {
+  document.getElementById("modal-carrito-overlay")?.classList.remove("open");
+  document.body.style.overflow = "";
 }
 
 function cambiarCantidad(id, delta) {
@@ -898,6 +997,7 @@ function cambiarCantidad(id, delta) {
   if (nuevoVal <= 0) { eliminarDelCarrito(id); return; }
   if (p && nuevoVal > p.stock) { mostrarToast(`Máximo ${p.stock} unidades disponibles`); return; }
   item.cantidad = nuevoVal;
+  actualizarBadge();
   renderizarCarrito();
 }
 
@@ -907,333 +1007,314 @@ function eliminarDelCarrito(id) {
   renderizarCarrito();
 }
 
-function vaciarCarrito() {
-  carrito = [];
-  actualizarBadge();
-  renderizarCarrito();
-}
-
 function calcularTotal() {
   return carrito.reduce((acc, i) => acc + i.precio * i.cantidad, 0);
 }
 
 function actualizarBadge() {
+  const cant = carrito.reduce((acc, i) => acc + i.cantidad, 0);
   const badge = document.getElementById("carrito-badge");
-  if (!badge) return;
-  const total = carrito.reduce((acc, i) => acc + i.cantidad, 0);
-  badge.textContent = total;
-  badge.classList.remove("bump");
-  void badge.offsetWidth;
-  badge.classList.add("bump");
+  if (badge) {
+    badge.textContent = cant;
+    badge.classList.remove("bump");
+    void badge.offsetWidth;
+    badge.classList.add("bump");
+  }
+  // Barra fija de abajo (celu): aparece apenas hay algo en el pedido
+  const barra = document.getElementById("barra-pedido");
+  if (barra) {
+    barra.hidden = cant === 0;
+    document.body.classList.toggle("con-barra", cant > 0);
+    const txt = document.getElementById("barra-cant");
+    if (txt) txt.textContent = `${cant} ${cant === 1 ? "producto" : "productos"} · ${fmt(calcularTotal())}`;
+    barra.classList.remove("bump"); void barra.offsetWidth; barra.classList.add("bump");
+  }
+  marcarBotonesEnPedido();
+  guardarPedido();
 }
 
-// ═══════════════════════════════════════════════════════
-// 🚚 CÁLCULO DE ENVÍO
-// ═══════════════════════════════════════════════════════
-// Devuelve: número (costo fijo) | 0 (gratis) | null (a cotizar, resto del país)
+// El pedido queda guardado si la persona cierra la web y vuelve
+function guardarPedido() {
+  try { localStorage.setItem("pedidoMatesRico", JSON.stringify(carrito)); } catch {}
+}
+function recuperarPedido() {
+  try {
+    const guardado = JSON.parse(localStorage.getItem("pedidoMatesRico") || "[]");
+    carrito = guardado
+      .map(i => { const p = productos.find(x => x.id === i.id); return p && p.stock > 0 ? { ...i, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: Math.min(i.cantidad, p.stock) } : null; })
+      .filter(Boolean);
+  } catch { carrito = []; }
+}
+
+// número = costo fijo · 0 = gratis · null = a cotizar · undefined = falta elegir zona
 function calcularCostoEnvio() {
-  if (!localidadElegida) return null;
-  const key = localidadElegida.toLowerCase().trim();
-  if (key in ZONAS_ENVIO) return ZONAS_ENVIO[key];
-  // "Otra localidad" → resto del país por Correo Argentino
-  const total = calcularTotal();
-  return total >= ENVIO_GRATIS_MINIMO ? 0 : null;
-}
-
-// ═══════════════════════════════════════════════════════
-// 🚚 BARRA ENVÍO GRATIS
-// ═══════════════════════════════════════════════════════
-function actualizarBarraEnvio() {
-  const wrap = document.getElementById("envio-progress-wrap");
-  const fill = document.getElementById("envio-progress-fill");
-  const texto = document.getElementById("envio-progress-texto");
-  const falta = document.getElementById("envio-falta");
-  if (!wrap || !fill) return;
-
-  const total = calcularTotal();
-  const porcentaje = Math.min((total / ENVIO_GRATIS_MINIMO) * 100, 100);
-  const restante = Math.max(ENVIO_GRATIS_MINIMO - total, 0);
-  fill.style.width = porcentaje + "%";
-
-  const key = localidadElegida ? localidadElegida.toLowerCase().trim() : "";
-  const esZonaConocida = key in ZONAS_ENVIO;
-
-  // Zona con precio fijo (Río Ceballos, Salsipuedes, Unquillo, Villa Allende)
-  if (localidadElegida && esZonaConocida) {
-    const costo = ZONAS_ENVIO[key];
-    const barWrap = wrap.querySelector(".envio-progress-bar");
-    if (barWrap) barWrap.style.display = "none";
-    if (costo === 0) {
-      wrap.className = "envio-progress-wrap zona-gratis";
-      if (texto) texto.innerHTML = "📍 Tu zona tiene <strong>envío gratis</strong> 🎉";
-    } else {
-      wrap.className = "envio-progress-wrap zona-fija";
-      if (texto) texto.innerHTML = `📍 Envío a tu zona: <strong>${fmt(costo)}</strong>`;
-    }
-    return;
-  }
-
-  // Sin localidad elegida todavía
-  if (!localidadElegida) {
-    wrap.className = "envio-progress-wrap";
-    const barWrap = wrap.querySelector(".envio-progress-bar");
-    if (barWrap) barWrap.style.display = "none";
-    if (texto) texto.innerHTML = "Elegí tu localidad para ver el costo de envío";
-    return;
-  }
-
-  // "Otra localidad" → resto del país, por Correo Argentino
-  const barWrap = wrap.querySelector(".envio-progress-bar");
-  if (barWrap) barWrap.style.display = "";
-
-  if (total >= ENVIO_GRATIS_MINIMO) {
-    wrap.className = "envio-progress-wrap alcanzado";
-    if (texto) texto.innerHTML = "🎉 ¡Superaste los $100.000! <strong>Envío gratis</strong>";
-    if (falta) falta.textContent = "";
-  } else {
-    wrap.className = "envio-progress-wrap";
-    if (texto) texto.innerHTML = `Te faltan <strong id="envio-falta">${fmt(restante)}</strong> para envío gratis. Si no, el envío se cotiza aparte por Correo Argentino.`;
-  }
+  if (!zonaElegida) return undefined;
+  if (zonaElegida in ZONAS_ENVIO) return ZONAS_ENVIO[zonaElegida];
+  return calcularTotal() >= ENVIO_GRATIS_MINIMO ? 0 : null;
 }
 
 function renderizarCarrito() {
-  const body = document.getElementById("modal-body");
+  const items = document.getElementById("carrito-items");
+  const checkout = document.getElementById("checkout");
   const footer = document.getElementById("modal-footer");
-  const totalEl = document.getElementById("carrito-total-precio");
-  if (!body) return;
+  if (!items) return;
 
   if (carrito.length === 0) {
-    body.innerHTML = `
+    items.innerHTML = `
       <div class="carrito-vacio">
         <i data-feather="shopping-bag"></i>
-        <p>Tu carrito está vacío.<br/>¡Agregá algo!</p>
+        <p>Tu pedido está vacío.<br/>¡Agregá algo!</p>
       </div>`;
+    if (checkout) checkout.hidden = true;
     if (footer) footer.style.display = "none";
-    actualizarBarraEnvio();
     feather.replace();
     return;
   }
 
+  if (checkout) checkout.hidden = false;
   if (footer) footer.style.display = "flex";
-  body.innerHTML = carrito.map(item => `
+  items.innerHTML = carrito.map(item => `
     <div class="carrito-item">
-      <img class="carrito-item-img" src="${item.imagen}" alt="${item.nombre}"
-        onerror="this.src='https://via.placeholder.com/54x54/eaf3e8/3a6b35?text=M'"/>
+      <img class="carrito-item-img" src="${item.imagen}" alt="${item.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
       <div class="carrito-item-info">
         <div class="carrito-item-nombre">${item.nombre}</div>
         <div class="carrito-item-precio">${fmt(item.precio)}</div>
         <div class="carrito-item-cantidad">
-          <button class="qty-btn" data-id="${item.id}" data-delta="-1">−</button>
+          <button class="qty-btn" data-id="${item.id}" data-delta="-1" aria-label="Uno menos">−</button>
           <span class="qty-valor">${item.cantidad}</span>
-          <button class="qty-btn" data-id="${item.id}" data-delta="1">+</button>
+          <button class="qty-btn" data-id="${item.id}" data-delta="1" aria-label="Uno más">+</button>
         </div>
       </div>
-      <button class="carrito-item-eliminar" data-id="${item.id}" aria-label="Eliminar">
-        <i data-feather="trash-2"></i>
-      </button>
+      <button class="carrito-item-eliminar" data-id="${item.id}" aria-label="Eliminar"><i data-feather="trash-2"></i></button>
     </div>`).join("");
 
-  if (totalEl) totalEl.textContent = fmt(calcularTotal());
-  actualizarBarraEnvio();
+  items.querySelectorAll(".qty-btn").forEach(btn =>
+    btn.addEventListener("click", () => cambiarCantidad(+btn.dataset.id, +btn.dataset.delta)));
+  items.querySelectorAll(".carrito-item-eliminar").forEach(btn =>
+    btn.addEventListener("click", () => eliminarDelCarrito(+btn.dataset.id)));
 
-  body.querySelectorAll(".qty-btn").forEach(btn => {
-    btn.addEventListener("click", () => cambiarCantidad(+btn.dataset.id, +btn.dataset.delta));
-  });
-  body.querySelectorAll(".carrito-item-eliminar").forEach(btn => {
-    btn.addEventListener("click", () => eliminarDelCarrito(+btn.dataset.id));
-  });
+  actualizarResumen();
   feather.replace();
 }
 
-function initModalCarrito() {
+function actualizarResumen() {
+  const subtotal = calcularTotal();
+  const envio = calcularCostoEnvio();
+  const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
+
+  set("res-subtotal", fmt(subtotal));
+  if (envio === undefined) set("res-envio", `<span class="res-pendiente">Elegí tu zona</span>`);
+  else if (envio === null) set("res-envio", `<span class="res-pendiente">A cotizar</span>`);
+  else set("res-envio", envio === 0 ? "Gratis" : fmt(envio));
+  set("res-total", fmt(subtotal + (envio || 0)));
+
+  const nota = document.getElementById("res-nota");
+  if (nota) {
+    const falta = ENVIO_GRATIS_MINIMO - subtotal;
+    nota.textContent = zonaElegida === "otra" && falta > 0
+      ? `Te faltan ${fmt(falta)} para envío gratis a todo el país.`
+      : "";
+  }
+
+  // El efectivo es solo para la zona
+  const btnEfectivo = document.querySelector('.pago-opcion[data-pago="Efectivo"]');
+  if (btnEfectivo) {
+    btnEfectivo.hidden = zonaElegida === "otra";
+    if (zonaElegida === "otra" && pagoElegido === "Efectivo") elegirPago("Transferencia");
+  }
+}
+
+function elegirPago(pago) {
+  pagoElegido = pago;
+  document.querySelectorAll(".pago-opcion").forEach(b => b.classList.toggle("selected", b.dataset.pago === pago));
+  const alias = document.getElementById("checkout-alias");
+  if (alias) alias.hidden = pago !== "Transferencia";
+}
+
+function initCarrito() {
   const overlay = document.getElementById("modal-carrito-overlay");
-  const fab = document.getElementById("carrito-fab");
-  const closeBtn = document.getElementById("modal-carrito-close");
-  const btnFin = document.getElementById("btn-finalizar");
-  const btnVac = document.getElementById("btn-vaciar");
-
-  fab?.addEventListener("click", () => {
-    renderizarCarrito();
-    overlay?.classList.add("open");
-    document.body.style.overflow = "hidden";
-  });
-  closeBtn?.addEventListener("click", () => {
-    overlay?.classList.remove("open");
-    document.body.style.overflow = "";
-  });
-  overlay?.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      overlay.classList.remove("open");
-      document.body.style.overflow = "";
-    }
-  });
-  btnFin?.addEventListener("click", () => {
-    if (carrito.length === 0) { mostrarToast("Tu carrito está vacío"); return; }
-    overlay?.classList.remove("open");
-    document.body.style.overflow = "";
-    setTimeout(() => abrirModalEnvio(), 200);
-  });
-  btnVac?.addEventListener("click", () => {
-    vaciarCarrito();
-    mostrarToast("Carrito vaciado");
-  });
-  const footer = document.getElementById("modal-footer");
-  if (footer) footer.style.display = "none";
-}
-
-// ═══════════════════════════════════════════════════════
-// 🚚 MODAL ENVÍO
-// ═══════════════════════════════════════════════════════
-function abrirModalEnvio() {
-  const overlay = document.getElementById("modal-envio-overlay");
-  overlay?.classList.add("open");
-  document.body.style.overflow = "hidden";
-  localidadElegida = "";
-  tipoEntregaElegido = "domicilio";
-  datosEnvioNacional = null;
-  document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
-  const wrap = document.getElementById("envio-otra-wrap");
-  if (wrap) wrap.style.display = "none";
-  // Limpiar todos los inputs del formulario de "otra localidad"
-  ["envio-localidad-input", "envio-provincia-input", "envio-cp-input",
-   "envio-direccion-input", "envio-nombre-input", "envio-codarea-input",
-   "envio-celular-input", "envio-email-input"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = "";
-  });
-  document.querySelectorAll(".envio-tipo-btn").forEach(b => b.classList.remove("active"));
-  document.querySelector('.envio-tipo-btn[data-tipo="domicilio"]')?.classList.add("active");
-  const dirWrap = document.getElementById("envio-direccion-wrap");
-  if (dirWrap) dirWrap.style.display = "block";
-}
-
-function cerrarModalEnvio() {
-  document.getElementById("modal-envio-overlay")?.classList.remove("open");
-  document.body.style.overflow = "";
-}
-
-function initModalEnvio() {
-  const overlay = document.getElementById("modal-envio-overlay");
-  const closeBtn = document.getElementById("modal-envio-close");
-  const confirmar = document.getElementById("btn-confirmar-envio");
   const otraWrap = document.getElementById("envio-otra-wrap");
-  const dirWrap = document.getElementById("envio-direccion-wrap");
+  const domWrap = document.getElementById("envio-domicilio-wrap");
+  const sucWrap = document.getElementById("envio-sucursal-wrap");
 
-  closeBtn?.addEventListener("click", cerrarModalEnvio);
-  overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarModalEnvio(); });
+  document.getElementById("carrito-fab")?.addEventListener("click", abrirCarritoLateral);
+  document.getElementById("modal-carrito-close")?.addEventListener("click", cerrarCarrito);
+  document.getElementById("btn-seguir")?.addEventListener("click", cerrarCarrito);
+  overlay?.addEventListener("click", (e) => { if (e.target === overlay) cerrarCarrito(); });
 
   document.querySelectorAll(".envio-opcion").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
-      if (btn.dataset.loc === "otra") {
-        localidadElegida = "";
-        if (otraWrap) otraWrap.style.display = "block";
-      } else {
-        localidadElegida = btn.dataset.loc;
-        if (otraWrap) otraWrap.style.display = "none";
-        actualizarBarraEnvio();
-      }
+      zonaElegida = btn.dataset.loc;
+      if (otraWrap) otraWrap.style.display = zonaElegida === "otra" ? "flex" : "none";
+      document.getElementById("checkout-zona")?.classList.remove("falta");
+      actualizarResumen();
     });
   });
 
-  // Toggle "Entrega a domicilio" / "Retiro en sucursal" (solo aplica a otra localidad)
   document.querySelectorAll(".envio-tipo-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".envio-tipo-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       tipoEntregaElegido = btn.dataset.tipo;
-      if (dirWrap) dirWrap.style.display = tipoEntregaElegido === "domicilio" ? "block" : "none";
+      if (domWrap) domWrap.style.display = tipoEntregaElegido === "domicilio" ? "" : "none";
+      if (sucWrap) sucWrap.style.display = tipoEntregaElegido === "sucursal" ? "" : "none";
     });
   });
 
-  confirmar?.addEventListener("click", () => {
-    const btnOtra = document.querySelector('.envio-opcion[data-loc="otra"]');
+  document.querySelectorAll(".pago-opcion").forEach(btn =>
+    btn.addEventListener("click", () => elegirPago(btn.dataset.pago)));
+  elegirPago(pagoElegido);
 
-    if (btnOtra?.classList.contains("selected")) {
-      // ── Envío nacional: validar y juntar todos los datos ──
-      const val = (id) => document.getElementById(id)?.value.trim() || "";
-      const nombre = val("envio-nombre-input");
-      const localidad = val("envio-localidad-input");
-      const provincia = val("envio-provincia-input");
-      const cp = val("envio-cp-input");
-      const direccion = val("envio-direccion-input");
-      const codArea = val("envio-codarea-input");
-      const celular = val("envio-celular-input");
-      const email = val("envio-email-input");
+  document.getElementById("btn-finalizar")?.addEventListener("click", enviarPedido);
+}
 
-      const faltantes = [];
-      if (!nombre) faltantes.push("nombre y apellido");
-      if (!localidad) faltantes.push("localidad");
-      if (!provincia) faltantes.push("provincia");
-      if (!cp) faltantes.push("código postal");
-      if (!celular) faltantes.push("celular");
-      if (tipoEntregaElegido === "domicilio" && !direccion) faltantes.push("dirección");
+function enviarPedido() {
+  if (carrito.length === 0) { mostrarToast("Tu pedido está vacío"); return; }
 
-      if (faltantes.length > 0) {
-        mostrarToast(`Faltan datos: ${faltantes[0]}`);
-        return;
-      }
+  if (!zonaElegida) {
+    const zona = document.getElementById("checkout-zona");
+    zona?.classList.add("falta");
+    zona?.scrollIntoView({ behavior: "smooth", block: "center" });
+    mostrarToast("Elegí dónde te lo entregamos");
+    return;
+  }
 
-      localidadElegida = localidad;
-      datosEnvioNacional = { nombre, localidad, provincia, cp, direccion, codArea, celular, email, tipoEntrega: tipoEntregaElegido };
-    } else {
-      // ── Zona con precio fijo ──
-      if (!localidadElegida) {
-        mostrarToast("Elegí tu localidad para continuar");
-        return;
-      }
-      datosEnvioNacional = null;
+  let datos = null;
+  if (zonaElegida === "otra") {
+    const val = (id) => document.getElementById(id)?.value.trim() || "";
+    datos = {
+      nombre: val("envio-nombre-input"), email: val("envio-email-input"),
+      codArea: val("envio-codarea-input").replace(/\D/g, "").replace(/^0/, ""),
+      celular: val("envio-celular-input").replace(/\D/g, ""),
+      provincia: val("envio-provincia-input"), cp: val("envio-cp-input"), localidad: val("envio-localidad-input"),
+      calle: val("envio-calle-input"), numero: val("envio-numero-input"),
+      piso: val("envio-piso-input"), depto: val("envio-depto-input"),
+      sucursal: val("envio-sucursal-input"),
+      tipoEntrega: tipoEntregaElegido,
+    };
+    // Si escribió el 15 adelante del celular, se lo sacamos (Correo lo pide sin 15)
+    if (datos.celular.startsWith("15") && (datos.codArea + datos.celular).length > 10) datos.celular = datos.celular.slice(2);
+    const domicilio = datos.tipoEntrega === "domicilio";
+    const faltantes = [
+      [!datos.nombre, "nombre y apellido", "envio-nombre-input"],
+      [!/^\S+@\S+\.\S+$/.test(datos.email), "un email válido", "envio-email-input"],
+      [!datos.codArea, "código de área", "envio-codarea-input"],
+      [datos.celular.length < 6, "celular", "envio-celular-input"],
+      [!datos.provincia, "provincia", "envio-provincia-input"],
+      [!datos.cp, "código postal", "envio-cp-input"],
+      [!datos.localidad, "localidad", "envio-localidad-input"],
+      [domicilio && !datos.calle, "calle", "envio-calle-input"],
+      [domicilio && !datos.numero, "número de la calle", "envio-numero-input"],
+    ].filter(f => f[0]);
+    if (faltantes.length) {
+      mostrarToast(`Falta completar: ${faltantes[0][1]}`);
+      const el = document.getElementById(faltantes[0][2]);
+      el?.focus();
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
     }
+  }
 
-    cerrarModalEnvio();
-    generarWhatsapp(localidadElegida);
-  });
+  const total = calcularTotal() + (calcularCostoEnvio() || 0);
+  const aCotizar = calcularCostoEnvio() === null;
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(armarMensaje(datos))}`, "_blank");
+  mostrarExito(total, aCotizar);
+}
+
+function armarMensaje(d) {
+  const detalle = carrito.map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
+  const subtotal = calcularTotal();
+  const envio = calcularCostoEnvio();
+
+  let envioTexto, totalTexto;
+  if (envio === null) { envioTexto = "Envío: a cotizar por Correo Argentino"; totalTexto = `Subtotal: ${fmt(subtotal)}`; }
+  else if (envio === 0) { envioTexto = "Envío: gratis"; totalTexto = `Total: ${fmt(subtotal)}`; }
+  else { envioTexto = `Envío: ${fmt(envio)}`; totalTexto = `Total: ${fmt(subtotal + envio)}`; }
+
+  let entrega = `Zona: ${zonaElegida}\n${envioTexto}`;
+  if (d) {
+    const domicilio = d.tipoEntrega === "domicilio";
+    entrega = `Datos para Correo Argentino:\n` +
+      `Nombre y apellido: ${d.nombre}\n` +
+      `Email: ${d.email}\n` +
+      `Celular: (${d.codArea}) ${d.celular}\n` +
+      `Entrega: ${domicilio ? "A domicilio" : "Retiro en sucursal"}\n` +
+      `Provincia: ${d.provincia}\n` +
+      `Localidad: ${d.localidad}\n` +
+      `CP: ${d.cp}\n` +
+      (domicilio
+        ? `Calle: ${d.calle} ${d.numero}` + (d.piso ? ` · Piso ${d.piso}` : "") + (d.depto ? ` · Depto ${d.depto}` : "") + `\n`
+        : (d.sucursal ? `Sucursal: ${d.sucursal}\n` : "")) +
+      envioTexto;
+  }
+
+  return `¡Hola! Quiero hacer este pedido desde la web:\n\n${detalle}\n\n${totalTexto}\n\n${entrega}\nPago: ${pagoElegido}\n\n¿Me confirmás que está todo disponible? ¡Gracias!`;
+}
+
+function mostrarExito(total, aCotizar) {
+  const exito = document.getElementById("carrito-exito");
+  if (!exito) return;
+  const transferencia = pagoElegido === "Transferencia";
+  exito.innerHTML = `
+    <div class="exito-icon"><i data-feather="check"></i></div>
+    <h4>¡Pedido enviado!</h4>
+    <p>Se abrió WhatsApp con tu pedido. Mandalo y te confirmamos al toque.</p>
+    ${transferencia ? `
+      <div class="exito-pago">
+        <p class="exito-label">Total a transferir${aCotizar ? " (+ envío a cotizar)" : ""}</p>
+        <p class="exito-total">${fmt(total)}</p>
+        ${aliasHtml()}
+        <p class="exito-nota">Cuando transfieras, mandanos el comprobante por el mismo chat.</p>
+      </div>` : ""}
+    <button class="btn btn-outline btn-full" id="btn-exito-cerrar">Seguir mirando</button>`;
+  exito.hidden = false;
+  document.getElementById("carrito-items").hidden = true;
+  document.getElementById("btn-exito-cerrar")?.addEventListener("click", cerrarCarrito);
+  carrito = [];
+  actualizarBadge();
+  renderizarCarrito();
+  document.getElementById("modal-body")?.scrollTo(0, 0);
+  feather.replace();
 }
 
 // ═══════════════════════════════════════════════════════
-// 💬 WHATSAPP
+// 📋 ALIAS CON BOTÓN COPIAR
 // ═══════════════════════════════════════════════════════
-function generarWhatsapp(localidad) {
-  if (carrito.length === 0) return;
+function aliasHtml() {
+  return `
+    <div class="alias-box">
+      <div>
+        <span class="alias-label">Alias</span>
+        <strong class="alias-valor">${PAGO.alias}</strong>
+        <span class="alias-titular">${PAGO.titular}</span>
+      </div>
+      <button class="alias-copiar" data-copiar="${PAGO.alias}"><i data-feather="copy"></i> Copiar</button>
+    </div>`;
+}
 
-  const detalle = carrito.map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
-  const subtotal = calcularTotal();
-  const costoEnvio = calcularCostoEnvio(); // número | 0 | null (a cotizar)
-
-  let envioTexto, totalTexto;
-  if (costoEnvio === null) {
-    envioTexto = "Envío: a cotizar por Correo Argentino";
-    totalTexto = `Subtotal productos: ${fmt(subtotal)}`;
-  } else if (costoEnvio === 0) {
-    envioTexto = "Envío: gratis";
-    totalTexto = `Total: ${fmt(subtotal)}`;
-  } else {
-    envioTexto = `Envío: ${fmt(costoEnvio)}`;
-    totalTexto = `Total (productos + envío): ${fmt(subtotal + costoEnvio)}`;
-  }
-
-  let bloqueEnvio = `Localidad: ${localidad}\n${envioTexto}`;
-
-  // Si es envío nacional (otra localidad), agrego todos los datos para MiCorreo
-  if (datosEnvioNacional) {
-    const d = datosEnvioNacional;
-    const tipoTexto = d.tipoEntrega === "domicilio" ? "Entrega a domicilio" : "Retiro en sucursal";
-    bloqueEnvio = `Así te paso mis datos para el envío:\n\n` +
-      `Nombre y apellido: ${d.nombre}\n` +
-      `Tipo de entrega: ${tipoTexto}\n` +
-      `CP: ${d.cp}\n` +
-      `Provincia: ${d.provincia}\n` +
-      `Localidad: ${d.localidad}\n` +
-      (d.tipoEntrega === "domicilio" ? `Dirección: ${d.direccion}\n` : "") +
-      (d.codArea ? `Cód. área: ${d.codArea}\n` : "") +
-      `Celular: ${d.celular}\n` +
-      (d.email ? `Email: ${d.email}\n` : "") +
-      `\n${envioTexto}`;
-  }
-
-  const mensaje = `¡Hola, qué tal! Te escribo desde la web de mates.rico porque quiero hacer el siguiente pedido:\n\n${detalle}\n\n${totalTexto}\n\n${bloqueEnvio}\n\n¿Me confirmás si está todo disponible? ¡Muchas gracias!`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank");
+function initCopiar() {
+  // Rellena todos los lugares donde va el alias
+  document.querySelectorAll("[data-alias]").forEach(el => el.innerHTML = aliasHtml());
+  feather.replace();
+  // Un solo listener para todos los botones "Copiar"
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-copiar]");
+    if (!btn) return;
+    const texto = btn.dataset.copiar;
+    try {
+      await navigator.clipboard.writeText(texto);
+    } catch {
+      const t = document.createElement("textarea");
+      t.value = texto; document.body.appendChild(t); t.select();
+      document.execCommand("copy"); t.remove();
+    }
+    btn.classList.add("copiado");
+    btn.innerHTML = "✓ Copiado";
+    mostrarToast("Alias copiado");
+    setTimeout(() => { btn.classList.remove("copiado"); btn.innerHTML = `<i data-feather="copy"></i> Copiar`; feather.replace(); }, 2200);
+  });
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1268,6 +1349,9 @@ function initFiltros() {
       btn.classList.add("active");
       categoriaActual = btn.dataset.cat;
       renderizarProductos(categoriaActual);
+      // Si estaba más abajo en la lista, lo llevamos al principio del catálogo
+      const sec = document.getElementById("productos");
+      if (sec && window.scrollY > sec.offsetTop + 10) sec.scrollIntoView({ behavior: "smooth" });
     });
   });
 }
@@ -1291,13 +1375,21 @@ function initReveal() {
 // 🍞 TOAST
 // ═══════════════════════════════════════════════════════
 let toastTimer = null;
-function mostrarToast(msg) {
+function mostrarToast(msg, accion = null) {
   const toast = document.getElementById("toast");
   if (!toast) return;
   toast.textContent = msg;
+  if (accion) {
+    const b = document.createElement("button");
+    b.className = "toast-accion";
+    b.textContent = accion.texto;
+    b.addEventListener("click", () => { toast.classList.remove("show"); accion.fn(); });
+    toast.appendChild(b);
+  }
+  toast.classList.toggle("con-accion", !!accion);
   toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), accion ? 4000 : 2600);
 }
 
 // ═══════════════════════════════════════════════════════
