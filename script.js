@@ -10,6 +10,7 @@ if (!window.feather) window.feather = { replace() {} };
 // ═══════════════════════════════════════════════════════
 const productos = [
 
+
   // ─── MATES ───────────────────────────────────────────
   {
     id: 3,
@@ -60,22 +61,6 @@ const productos = [
     ],
   },
   {
-    id: 13,
-    nombre: "Camionero Criollo Premium",
-    descripcion: "Camionero de calabaza curada con base de cuero premium y trenzado de cuero crudo a mano. Robusto, cómodo y con un acabado rústico único. Bombilla no incluida.",
-    precio: 33000,
-    stock: 0,
-    imagen: "img/mate_camionero_criollo.jpg",
-    categoria: "Mates",
-    features: [
-      "Calabaza curada artesanalmente",
-      "Base de cuero premium",
-      "Trenzado de cuero crudo a mano",
-      "Forma camionero clásica",
-      "Bombilla no incluida",
-    ],
-  },
-  {
     id: 43,
     nombre: "Camionero Criollo",
     descripcion: "Camionero de calabaza curada con base de cuero crudo natural, sin curtir ni teñir. Boca ancha, forma criolla clásica. Bombilla no incluida.",
@@ -121,22 +106,6 @@ const productos = [
       "Doble anillo cincelado",
       "Forma camionero clásica",
       "Bombilla no incluida",
-    ],
-  },
-  {
-    id: 9,
-    nombre: "Camionero River Plate — Edición Oficial",
-    descripcion: "Camionero de madera con virola grabada oficial River Plate, bombilla incluida y caja de presentación negra. Club Atlético River Plate — 1901.",
-    precio: 35000,
-    stock: 0,
-    imagen: "img/mate_river_plate.jpg",
-    categoria: "Mates",
-    features: [
-      "Forma camionero artesanal",
-      "Virola con grabado oficial River Plate",
-      "Madera curada artesanalmente",
-      "Bombilla incluida",
-      "Caja de presentación negra",
     ],
   },
   {
@@ -284,22 +253,6 @@ const productos = [
     ],
   },
   {
-    id: 2,
-    nombre: "Torpedo Virola Alpaca Premium — Cuero Negro",
-    descripcion: "Mate torpedo con virola cincelada de alpaca, cuero liso negro y base de alpaca con pelotitas de bronce. Bombilla no incluida.",
-    precio: 55000,
-    stock: 0,
-    imagen: "img/torpedo_virola_alpaca.jpg",
-    categoria: "Mates",
-    features: [
-      "Virola de alpaca cincelada",
-      "Cuero liso negro",
-      "Base alpaca con pelotitas de bronce",
-      "Forma torpedo tradicional",
-      "Bombilla no incluida",
-    ],
-  },
-  {
     id: 15,
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
@@ -345,6 +298,33 @@ const productos = [
       "Terminación simple y resistente",
       "Ideal para uso diario",
       "Bombilla no incluida",
+    ],
+  },
+  {
+    id: 49,
+    nombre: "Regalo para Mamá",
+    etiqueta: "Regalo",           // ← lo que dice la etiqueta de la foto (en vez de "Mates")
+    descripcion: "El regalo perfecto para tu mamá: mate de algarrobo con su bombilla, una canastita tejida, vela, bombones y una tarjeta escrita. Llega armado en su caja, listo para dar.",
+    precio: 50000,
+    stock: 4,
+    mostrarStock: true,           // ← este sí muestra "Quedan 4"
+    imagen: "img/box_dia_de_la_madre.jpg",
+    categoria: "Mates",
+    // Opciones para elegir antes de agregar (cambiá nombre e imagen de cada grabado)
+    opciones: {
+      titulo: "Elegí el grabado del mate",
+      lista: [
+        { nombre: "Esa es mi mamá", detalle: "“Fuerte, hermosa, valiente y única · Esa es mi mamá ♡”", imagen: "img/grabado_esa_es_mi_mama.jpg" },
+        { nombre: "Te amo ma", detalle: "“Que tus mates sean eternos · Te amo ma ♡”", imagen: "img/grabado_te_amo_ma.jpg" },
+      ],
+    },
+    features: [
+      "Mate de algarrobo con bombilla",
+      "Canastita tejida con flores",
+      "Vela",
+      "Bombones Bon o Bon",
+      "Tarjeta con dedicatoria",
+      "Caja de regalo mates.rico",
     ],
   },
   // ─── YERBAS ──────────────────────────────────────────
@@ -567,7 +547,7 @@ const productos = [
     nombre: "Canasta Cuero Crudo",
     descripcion: "Canasta de mano en cuero ancho de Laguna, forrada en gamuza por dentro. Asas trenzadas a mano, resistentes y con mucho estilo. Ideal para llevar todo el set de mate junto — yerba, bombilla y termo — con onda y prolijidad.",
     precio: 70000,
-    stock: 1,
+    stock: 0,
     imagen: "img/canasta_cuero_crudo.jpg",
     categoria: "Accesorios",
     features: [
@@ -608,22 +588,6 @@ const productos = [
       "Costuras artesanales",
       "Broches metálicos",
       "Ideal para llevar a todos lados",
-    ],
-  },
-  {
-    id: 27,
-    nombre: "Termo System Messi Goat | Edición Especial 800ml",
-    descripcion: "Termo Stanley edición especial Goat Messi de 800ml en rosa. Incluye mate térmico y bombilla de regalo. Vacuum Bottle BPA Free — mantiene temperatura 24hs. Con caja original.",
-    precio: 60000,
-    stock: 0,
-    imagen: "img/stanley_goat_messi.jpg",
-    categoria: "Accesorios",
-    features: [
-      "Stanley Edición Especial Goat Messi",
-      "Capacidad 800ml",
-      "Incluye mate térmico Stanley chico",
-      "Bombilla de regalo",
-      "Pico System",
     ],
   },
   {
@@ -840,14 +804,13 @@ function crearCard(p, i) {
 
   let badgeStock = "";
   if (pronto) badgeStock = `<span class="badge-stock badge-pronto">Próximamente</span>`;
-  else if (p.stock === 1) badgeStock = `<span class="badge-stock">Última unidad</span>`;
-  else if (p.stock === 2) badgeStock = `<span class="badge-stock">Quedan 2</span>`;
+  else if (p.mostrarStock) badgeStock = `<span class="badge-stock">${p.stock === 1 ? "Última unidad" : `Quedan ${p.stock}`}</span>`;
 
   const enPedido = carrito.find(x => x.id === p.id);
   card.innerHTML = `
     <div class="producto-img-wrap">
-      <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
-      <span class="producto-badge${p.esDestacado ? " producto-badge--madre" : ""}">${p.categoria}</span>
+      <img src="${miniatura(p.imagen)}" alt="${p.nombre}" loading="lazy" decoding="async" data-grande="${p.imagen}" onerror="if(this.dataset.grande&&this.src.indexOf('/mini/')>-1){this.src=this.dataset.grande}else{this.onerror=null;this.src=IMG_FALLBACK}"/>
+      <span class="producto-badge${p.esDestacado || p.etiqueta ? " producto-badge--madre" : ""}">${p.etiqueta || p.categoria}</span>
       ${badgeStock}
     </div>
     <div class="producto-info">
@@ -857,7 +820,9 @@ function crearCard(p, i) {
         <span class="producto-precio">${fmt(p.precio)}</span>
         ${pronto
           ? `<a class="btn-comprar btn-avisame" href="${linkAvisame(p)}" target="_blank" rel="noopener">Avisame</a>`
-          : `<button class="btn-comprar${enPedido ? " en-pedido" : ""}" data-id="${p.id}">${enPedido ? "✓ En tu pedido" : "Agregar"}</button>`}
+          : p.opciones
+            ? `<button class="btn-comprar btn-elegir">${p.opciones.titulo.includes("grabado") ? "Elegir grabado" : "Elegir"}</button>`
+            : `<button class="btn-comprar${enPedido ? " en-pedido" : ""}" data-id="${p.id}">${enPedido ? "✓ En tu pedido" : "Agregar"}</button>`}
       </div>
     </div>`;
 
@@ -867,9 +832,15 @@ function crearCard(p, i) {
   card.addEventListener("keydown", (e) => { if (e.key === "Enter") abrirModalProducto(p.id); });
   card.querySelector("button.btn-comprar")?.addEventListener("click", (e) => {
     e.stopPropagation();
-    agregarAlCarrito(p.id);
+    if (p.opciones) abrirModalProducto(p.id);
+    else agregarAlCarrito(p.id);
   });
   return card;
+}
+
+// img/x.jpg → img/mini/x.jpg (versión liviana para el catálogo)
+function miniatura(src) {
+  return src.startsWith("img/") ? "img/mini/" + src.slice(4) : src;
 }
 
 function linkAvisame(p) {
@@ -880,7 +851,7 @@ function linkAvisame(p) {
 // Actualiza los botones "Agregar" / "✓ En tu pedido" sin redibujar el catálogo
 function marcarBotonesEnPedido() {
   document.querySelectorAll("button.btn-comprar[data-id]").forEach(btn => {
-    const en = carrito.some(x => x.id === +btn.dataset.id);
+    const en = cantidadDe(+btn.dataset.id) > 0;
     btn.classList.toggle("en-pedido", en);
     btn.textContent = en ? "✓ En tu pedido" : "Agregar";
   });
@@ -901,11 +872,11 @@ function abrirModalProducto(id) {
   if (!overlay || !inner) return;
 
   const agotado = p.stock === 0;
-  const stockBajo = p.stock <= 2 && p.stock > 0;
+  const stockBajo = p.mostrarStock && p.stock > 0;
   const stockLabel = agotado
     ? "Próximamente"
     : stockBajo
-      ? `<strong class="bajo">${p.stock === 1 ? "¡Última unidad!" : `Solo ${p.stock} disponibles`}</strong>`
+      ? `<strong class="bajo">${p.stock === 1 ? "¡Última unidad!" : `Quedan ${p.stock}`}</strong>`
       : `<strong>Disponible</strong>`;
 
   inner.innerHTML = `
@@ -913,11 +884,23 @@ function abrirModalProducto(id) {
       <img src="${p.imagen}" alt="${p.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
     </div>
     <div class="mp-info">
-      <p class="mp-cat">${p.categoria}</p>
+      <p class="mp-cat">${p.etiqueta || p.categoria}</p>
       <h2 class="mp-nombre">${p.nombre}</h2>
       <p class="mp-precio">${fmt(p.precio)}</p>
       ${agotado ? `<p class="mp-pronto">Próximamente · vuelve pronto</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
+      ${p.opciones && !agotado ? `
+        <div class="mp-opciones" id="mp-opciones">
+          <p class="mp-opciones-tit">${p.opciones.titulo}</p>
+          <div class="mp-opciones-lista">
+            ${p.opciones.lista.map((o, i) => `
+              <button type="button" class="mp-opcion" data-i="${i}" aria-pressed="false">
+                <img src="${o.imagen}" alt="${o.nombre}" loading="lazy" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
+                <span>${o.nombre}</span>
+                ${o.detalle ? `<small>${o.detalle}</small>` : ""}
+              </button>`).join("")}
+          </div>
+        </div>` : ""}
       <div class="mp-features">
         ${p.features.map(f => `
           <div class="mp-feature"><div class="mp-feature-dot"></div><span>${f}</span></div>`).join("")}
@@ -934,9 +917,29 @@ function abrirModalProducto(id) {
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
   feather.replace();
-  document.getElementById("mp-btn-agregar")?.addEventListener("click", () => {
+  // Elegir opción (grabado): cambia la foto grande y habilita el botón
+  let opcionElegida = null;
+  const btnAgregar = document.getElementById("mp-btn-agregar");
+  if (p.opciones && btnAgregar) btnAgregar.textContent = "Elegí el grabado";
+  inner.querySelectorAll(".mp-opcion").forEach(b => b.addEventListener("click", () => {
+    const o = p.opciones.lista[+b.dataset.i];
+    opcionElegida = o.nombre;
+    inner.querySelectorAll(".mp-opcion").forEach(x => { x.classList.toggle("selected", x === b); x.setAttribute("aria-pressed", x === b); });
+    const img = inner.querySelector(".mp-img img");
+    if (img) img.src = o.imagen;
+    document.getElementById("mp-opciones")?.classList.remove("falta");
+    if (btnAgregar) btnAgregar.textContent = "Agregar al pedido";
+  }));
+  btnAgregar?.addEventListener("click", () => {
+    if (p.opciones && !opcionElegida) {
+      const box = document.getElementById("mp-opciones");
+      box?.classList.add("falta");
+      box?.scrollIntoView({ behavior: "smooth", block: "center" });
+      mostrarToast("Elegí cuál grabado querés");
+      return;
+    }
     cerrarModalProducto();
-    agregarAlCarrito(id, { abrirCarrito: true });
+    agregarAlCarrito(id, { abrirCarrito: true, opcion: opcionElegida });
   });
 }
 
@@ -955,18 +958,21 @@ function initModalProducto() {
 // ═══════════════════════════════════════════════════════
 // 🛒 CARRITO + COMPRA (todo en un solo panel)
 // ═══════════════════════════════════════════════════════
-function agregarAlCarrito(id, { abrirCarrito = false } = {}) {
+const claveDe = (id, opcion) => `${id}|${opcion || ""}`;
+const cantidadDe = (id) => carrito.filter(i => i.id === id).reduce((a, i) => a + i.cantidad, 0);
+const avisoSinMas = (p) => mostrarToast(p.mostrarStock ? `Quedan solo ${p.stock}` : "No tenemos más unidades de este producto");
+
+function agregarAlCarrito(id, { abrirCarrito = false, opcion = null } = {}) {
   const p = productos.find(x => x.id === id);
   if (!p || p.stock === 0) return;
-  const existente = carrito.find(i => i.id === id);
+  if (cantidadDe(id) >= p.stock) { avisoSinMas(p); return; }
+  const clave = claveDe(id, opcion);
+  const existente = carrito.find(i => i.clave === clave);
   if (existente) {
-    if (existente.cantidad >= p.stock) {
-      mostrarToast(`Solo hay ${p.stock} unidad${p.stock > 1 ? "es" : ""} disponible`);
-      return;
-    }
     existente.cantidad += 1;
   } else {
-    carrito.push({ id: p.id, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: 1 });
+    const img = opcion ? (p.opciones?.lista.find(o => o.nombre === opcion)?.imagen || p.imagen) : p.imagen;
+    carrito.push({ clave, id: p.id, opcion, nombre: p.nombre, precio: p.precio, imagen: img, cantidad: 1 });
   }
   actualizarBadge();
   renderizarCarrito();
@@ -989,20 +995,20 @@ function cerrarCarrito() {
   document.body.style.overflow = "";
 }
 
-function cambiarCantidad(id, delta) {
-  const item = carrito.find(i => i.id === id);
+function cambiarCantidad(clave, delta) {
+  const item = carrito.find(i => i.clave === clave);
   if (!item) return;
-  const p = productos.find(x => x.id === id);
+  const p = productos.find(x => x.id === item.id);
   const nuevoVal = item.cantidad + delta;
-  if (nuevoVal <= 0) { eliminarDelCarrito(id); return; }
-  if (p && nuevoVal > p.stock) { mostrarToast(`Máximo ${p.stock} unidades disponibles`); return; }
+  if (nuevoVal <= 0) { eliminarDelCarrito(clave); return; }
+  if (p && delta > 0 && cantidadDe(item.id) + delta > p.stock) { avisoSinMas(p); return; }
   item.cantidad = nuevoVal;
   actualizarBadge();
   renderizarCarrito();
 }
 
-function eliminarDelCarrito(id) {
-  carrito = carrito.filter(i => i.id !== id);
+function eliminarDelCarrito(clave) {
+  carrito = carrito.filter(i => i.clave !== clave);
   actualizarBadge();
   renderizarCarrito();
 }
@@ -1041,7 +1047,12 @@ function recuperarPedido() {
   try {
     const guardado = JSON.parse(localStorage.getItem("pedidoMatesRico") || "[]");
     carrito = guardado
-      .map(i => { const p = productos.find(x => x.id === i.id); return p && p.stock > 0 ? { ...i, nombre: p.nombre, precio: p.precio, imagen: p.imagen, cantidad: Math.min(i.cantidad, p.stock) } : null; })
+      .map(i => {
+        const p = productos.find(x => x.id === i.id);
+        if (!p || p.stock === 0) return null;
+        if (p.opciones && !p.opciones.lista.some(o => o.nombre === i.opcion)) return null;
+        return { ...i, clave: claveDe(i.id, i.opcion), nombre: p.nombre, precio: p.precio, cantidad: Math.min(i.cantidad, p.stock) };
+      })
       .filter(Boolean);
   } catch { carrito = []; }
 }
@@ -1078,20 +1089,21 @@ function renderizarCarrito() {
       <img class="carrito-item-img" src="${item.imagen}" alt="${item.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
       <div class="carrito-item-info">
         <div class="carrito-item-nombre">${item.nombre}</div>
+        ${item.opcion ? `<div class="carrito-item-opcion">${item.opcion}</div>` : ""}
         <div class="carrito-item-precio">${fmt(item.precio)}</div>
         <div class="carrito-item-cantidad">
-          <button class="qty-btn" data-id="${item.id}" data-delta="-1" aria-label="Uno menos">−</button>
+          <button class="qty-btn" data-clave="${item.clave}" data-delta="-1" aria-label="Uno menos">−</button>
           <span class="qty-valor">${item.cantidad}</span>
-          <button class="qty-btn" data-id="${item.id}" data-delta="1" aria-label="Uno más">+</button>
+          <button class="qty-btn" data-clave="${item.clave}" data-delta="1" aria-label="Uno más">+</button>
         </div>
       </div>
-      <button class="carrito-item-eliminar" data-id="${item.id}" aria-label="Eliminar"><i data-feather="trash-2"></i></button>
+      <button class="carrito-item-eliminar" data-clave="${item.clave}" aria-label="Eliminar"><i data-feather="trash-2"></i></button>
     </div>`).join("");
 
   items.querySelectorAll(".qty-btn").forEach(btn =>
-    btn.addEventListener("click", () => cambiarCantidad(+btn.dataset.id, +btn.dataset.delta)));
+    btn.addEventListener("click", () => cambiarCantidad(btn.dataset.clave, +btn.dataset.delta)));
   items.querySelectorAll(".carrito-item-eliminar").forEach(btn =>
-    btn.addEventListener("click", () => eliminarDelCarrito(+btn.dataset.id)));
+    btn.addEventListener("click", () => eliminarDelCarrito(btn.dataset.clave)));
 
   actualizarResumen();
   feather.replace();
@@ -1168,6 +1180,28 @@ function initCarrito() {
   elegirPago(pagoElegido);
 
   document.getElementById("btn-finalizar")?.addEventListener("click", enviarPedido);
+  recuperarDatosCliente();
+}
+
+const CAMPOS_ENVIO = ["nombre","email","codarea","celular","provincia","cp","localidad","calle","numero","piso","depto","sucursal"];
+
+function guardarDatosCliente() {
+  try {
+    const datos = { zona: zonaElegida, pago: pagoElegido, tipo: tipoEntregaElegido, campos: {} };
+    CAMPOS_ENVIO.forEach(c => { const el = document.getElementById(`envio-${c}-input`); if (el) datos.campos[c] = el.value; });
+    localStorage.setItem("clienteMatesRico", JSON.stringify(datos));
+  } catch {}
+}
+
+function recuperarDatosCliente() {
+  try {
+    const d = JSON.parse(localStorage.getItem("clienteMatesRico") || "null");
+    if (!d) return;
+    Object.entries(d.campos || {}).forEach(([c, v]) => { const el = document.getElementById(`envio-${c}-input`); if (el && v) el.value = v; });
+    if (d.tipo) document.querySelector(`.envio-tipo-btn[data-tipo="${d.tipo}"]`)?.click();
+    if (d.zona) document.querySelector(`.envio-opcion[data-loc="${d.zona}"]`)?.click();
+    if (d.pago) document.querySelector(`.pago-opcion[data-pago="${d.pago}"]:not([hidden])`)?.click();
+  } catch {}
 }
 
 function enviarPedido() {
@@ -1219,12 +1253,13 @@ function enviarPedido() {
 
   const total = calcularTotal() + (calcularCostoEnvio() || 0);
   const aCotizar = calcularCostoEnvio() === null;
+  guardarDatosCliente();
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(armarMensaje(datos))}`, "_blank");
   mostrarExito(total, aCotizar);
 }
 
 function armarMensaje(d) {
-  const detalle = carrito.map(i => `• ${i.nombre} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
+  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
   const subtotal = calcularTotal();
   const envio = calcularCostoEnvio();
 

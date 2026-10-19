@@ -1267,3 +1267,20 @@ select.envio-input {
   .badge-item { font-size:0.68rem; gap:5px; }
   .badge-item svg { width:12px; height:12px; }
 }
+.hero-promo[hidden] { display:none; }
+
+/* Elegir grabado (opciones del producto) */
+.mp-opciones { margin:0 0 20px; padding:14px; border-radius:14px; background:var(--hueso); transition:box-shadow var(--tr); }
+.mp-opciones.falta { box-shadow:0 0 0 2px #c0392b; }
+.mp-opciones-tit { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; font-weight:600; color:var(--verde); margin-bottom:10px; }
+.mp-opciones-lista { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.mp-opcion { display:flex; flex-direction:column; gap:6px; padding:6px; border-radius:12px; border:2px solid var(--gris-claro); background:var(--blanco); text-align:center; transition:border-color var(--tr); }
+.mp-opcion img { width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px; background:var(--crema); }
+.mp-opcion span { font-size:0.84rem; font-weight:500; color:var(--negro); padding-bottom:2px; }
+.mp-opcion:hover { border-color:var(--verde-claro); }
+.mp-opcion.selected { border-color:var(--verde); box-shadow:0 0 0 3px var(--verde-suave); }
+.mp-opcion:focus-visible { outline:2px solid var(--verde); outline-offset:2px; }
+.btn-elegir { background:var(--verde); }
+.carrito-item-opcion { font-size:0.76rem; color:var(--gris-med); }
+.mp-opcion small { font-size:0.7rem; line-height:1.35; color:var(--gris-med); font-style:italic; padding:0 4px 4px; }
+.carrito-item-opcion::before { content:"Grabado: "; }
