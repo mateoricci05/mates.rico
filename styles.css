@@ -1609,3 +1609,4 @@ body.con-barra .wa-fab { bottom:calc(100px + env(safe-area-inset-bottom, 0px)); 
   .promo-banner { margin:-4px auto 20px; font-size:0.8rem; padding:9px 10px 9px 14px; }
   .producto-precio .precio-antes { display:block; margin:0 0 1px; font-size:0.72rem; }
 }
+.badge-llega { background:var(--c-beige, #f3e6cc); color:#0e0d0b; }

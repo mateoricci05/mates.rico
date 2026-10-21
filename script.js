@@ -18,6 +18,7 @@ const productos = [
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
@@ -34,6 +35,7 @@ const productos = [
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 30000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
@@ -247,6 +249,7 @@ const productos = [
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
     categoria: "Mates",
     features: [
@@ -263,6 +266,7 @@ const productos = [
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
     precio: 40000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -485,6 +489,7 @@ const productos = [
     descripcion: "Bombillón de 16cm, 100% alpaca, con cuerpo trenzado y filtro cuchara. Un clásico robusto para el mate de todos los días.",
     precio: 32000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/bombillon_obrero.jpg",
     categoria: "Bombillas",
     features: [
@@ -553,6 +558,7 @@ const productos = [
     descripcion: "Canasta de mano en cuero ancho de Laguna, forrada en gamuza por dentro. Asas trenzadas a mano, resistentes y con mucho estilo. Ideal para llevar todo el set de mate junto — yerba, bombilla y termo — con onda y prolijidad.",
     precio: 70000,
     stock: 0,
+    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
     imagen: "img/canasta_cuero_crudo.jpg",
     categoria: "Accesorios",
     features: [
@@ -813,7 +819,8 @@ function renderizarProductos(categoria = "Todos") {
   const deCategoria = categoria === "Todos" ? productos : productos.filter(p => p.categoria === categoria);
   const disponibles = deCategoria.filter(p => p.stock > 0)
     .sort((a, b) => tieneDescuento(b) - tieneDescuento(a));
-  const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado);
+  const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado)
+    .sort((a, b) => !!llegaTexto(b) - !!llegaTexto(a));
 
   if (disponibles.length === 0 && proximamente.length === 0) {
     grid.innerHTML = `<div class="grid-vacio">Por ahora no hay productos en esta categoría.</div>`;
@@ -847,7 +854,9 @@ function crearCard(p, i) {
   card.tabIndex = 0;
 
   let badgeStock = "";
-  if (pronto) badgeStock = `<span class="badge-stock badge-pronto">Próximamente</span>`;
+  if (pronto) badgeStock = llegaTexto(p)
+    ? `<span class="badge-stock badge-llega">Llega el ${llegaTexto(p)}</span>`
+    : `<span class="badge-stock badge-pronto">Próximamente</span>`;
   else if (tieneDescuento(p)) badgeStock = `<span class="badge-stock badge-promo">${porcentajeDe(p)}% OFF</span>`;
   else if (p.mostrarStock) badgeStock = `<span class="badge-stock">${p.stock === 1 ? "Última unidad" : `Quedan ${p.stock}`}</span>`;
 
@@ -923,8 +932,19 @@ function animarAgregado(img, boton) {
   };
 }
 
+// "Llega el 26/10" mientras la fecha no pasó
+function llegaTexto(p) {
+  if (!p.llega || p.stock > 0) return "";
+  const f = new Date(p.llega + "T23:59:59-03:00");
+  if (Date.now() > f.getTime()) return "";
+  const [a, m, d] = p.llega.split("-");
+  return `${+d}/${+m}`;
+}
+
 function linkAvisame(p) {
-  const txt = `¡Hola! Vi en la web el ${p.nombre} y figura como "Próximamente". ¿Me avisás cuando vuelva? ¡Gracias!`;
+  const txt = llegaTexto(p)
+    ? `¡Hola! Vi en la web que el ${p.nombre} llega el ${llegaTexto(p)}. ¿Me avisás apenas lo tengas? ¡Gracias!`
+    : `¡Hola! Vi en la web el ${p.nombre} y figura como "Próximamente". ¿Me avisás cuando vuelva? ¡Gracias!`;
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(txt)}`;
 }
 
@@ -968,7 +988,7 @@ function abrirModalProducto(id) {
       <h2 class="mp-nombre">${p.nombre}</h2>
       <p class="mp-precio">${precioHtml(p)}</p>
       ${tieneDescuento(p) ? `<p class="mp-promo">${PROMO.titulo} · ${porcentajeDe(p)}% OFF · <span data-cuenta-promo></span></p>` : ""}
-      ${agotado ? `<p class="mp-pronto">Próximamente · vuelve pronto</p>` : ""}
+      ${agotado ? `<p class="mp-pronto">${llegaTexto(p) ? `Llega el ${llegaTexto(p)} · avisame y te escribimos` : "Próximamente · vuelve pronto"}</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
       ${p.opciones && !agotado ? `
         <div class="mp-opciones" id="mp-opciones">
