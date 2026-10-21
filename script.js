@@ -49,6 +49,7 @@ const productos = [
     nombre: "Imperial Alpaca Grabado Boca Juniors",
     descripcion: "Imperial de calabaza con cuero alpaca y grabado exclusivo Boca Juniors. La pieza más premium para el fanático xeneize. Solo 1 unidad disponible. Bombilla no incluida.",
     precio: 50000,
+    descuento: 10000,               // ← promo de lanzamiento
     stock: 1,
     imagen: "img/imperial_alpaca_boca.jpg",
     categoria: "Mates",
@@ -81,6 +82,7 @@ const productos = [
     nombre: "Camionero Criollo Cincelado",
     descripcion: "Camionero de calabaza con base de cuero crudo trenzado tipo canasta y virola plateada cincelada con motivos florales. Boca ancha, terminación prolija. Bombilla no incluida.",
     precio: 46000,
+    descuento: 4000,               // ← promo de lanzamiento
     stock: 3,
     imagen: "img/camionero_criollo_cincelado.jpg",
     categoria: "Mates",
@@ -193,6 +195,7 @@ const productos = [
     nombre: "Torpedo al Lacre — Negro",
     descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
     precio: 48000,
+    descuento: 3000,               // ← promo de lanzamiento
     stock: 2,
     imagen: "img/torpedo_negro.jpg",
     categoria: "Mates",
@@ -209,6 +212,7 @@ const productos = [
     nombre: "Torpedo Criollo — Base Canasta Premium, Cincelado al Lacre",
     descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
     precio: 50000,
+    descuento: 2000,               // ← promo de lanzamiento
     stock: 3,
     imagen: "img/torpedo_base_canasta.jpg",
     categoria: "Mates",
@@ -225,6 +229,7 @@ const productos = [
     nombre: "Torpedo Cuero Crudo — Cincelado al Lacre",
     descripcion: "Torpedo de calabaza con cuero crudo natural y virola plateada cincelada al lacre, con motivos florales. Costura en tiento. Bombilla no incluida.",
     precio: 60000,
+    descuento: 5000,               // ← promo de lanzamiento
     stock: 2,
     imagen: "img/torpedo_cuero_crudo_lacre.jpg",
     categoria: "Mates",
@@ -652,6 +657,22 @@ const destacado = {
 };
 
 // ═══════════════════════════════════════════════════════
+// 🏷️ PROMO DE LANZAMIENTO
+//    Los productos con "descuento" bajan ese monto hasta esta fecha.
+//    Después vuelven solos al precio normal.
+// ═══════════════════════════════════════════════════════
+const PROMO = {
+  titulo: "Precios de lanzamiento",
+  hasta: "2026-10-23T20:01:00-03:00",
+};
+const promoActiva = () => Date.now() < new Date(PROMO.hasta).getTime();
+const tieneDescuento = (p) => !!(p && p.descuento && promoActiva() && p.stock > 0);
+const precioDe = (p) => tieneDescuento(p) ? p.precio - p.descuento : p.precio;
+const precioHtml = (p) => tieneDescuento(p)
+  ? `<s class="precio-antes">${fmt(p.precio)}</s>${fmt(precioDe(p))}`
+  : fmt(p.precio);
+
+// ═══════════════════════════════════════════════════════
 // ⚙️ CONFIG
 // ═══════════════════════════════════════════════════════
 const WHATSAPP_NUMBER = "5493543650854";
@@ -705,6 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
   recuperarPedido();
   renderizarDestacado();
   renderizarProductos();
+  initPromo();
   initNavbar();
   initFiltros();
   initModalProducto();
@@ -758,6 +780,26 @@ function renderizarDestacado() {
   document.getElementById("btn-madre")?.addEventListener("click", () => agregarAlCarrito(d.id, { abrirCarrito: true }));
 }
 
+// Cartel de arriba y cuenta regresiva de la promo
+function initPromo() {
+  const banner = document.getElementById("promo-banner");
+  const hayPromo = promoActiva() && productos.some(tieneDescuento);
+  if (banner) banner.hidden = !hayPromo;
+  if (!hayPromo) return;
+  const tick = () => {
+    const falta = new Date(PROMO.hasta).getTime() - Date.now();
+    if (falta <= 0) { location.reload(); return; }
+    const h = Math.floor(falta / 3600000), m = Math.floor(falta / 60000) % 60, s = Math.floor(falta / 1000) % 60;
+    const txt = `quedan ${h}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
+    document.querySelectorAll("[data-cuenta-promo]").forEach(el => el.textContent = txt);
+  };
+  tick(); setInterval(tick, 1000);
+  document.getElementById("promo-ver")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("productos")?.scrollIntoView({ behavior: "smooth" });
+  });
+}
+
 // ═══════════════════════════════════════════════════════
 // 🧱 RENDER PRODUCTOS
 // ═══════════════════════════════════════════════════════
@@ -768,7 +810,8 @@ function renderizarProductos(categoria = "Todos") {
 
   // Primero lo que hay. Lo que no tiene stock aparece al final como "Próximamente".
   const deCategoria = categoria === "Todos" ? productos : productos.filter(p => p.categoria === categoria);
-  const disponibles = deCategoria.filter(p => p.stock > 0);
+  const disponibles = deCategoria.filter(p => p.stock > 0)
+    .sort((a, b) => tieneDescuento(b) - tieneDescuento(a));
   const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado);
 
   if (disponibles.length === 0 && proximamente.length === 0) {
@@ -804,6 +847,7 @@ function crearCard(p, i) {
 
   let badgeStock = "";
   if (pronto) badgeStock = `<span class="badge-stock badge-pronto">Próximamente</span>`;
+  else if (tieneDescuento(p)) badgeStock = `<span class="badge-stock badge-promo">−${fmt(p.descuento)}</span>`;
   else if (p.mostrarStock) badgeStock = `<span class="badge-stock">${p.stock === 1 ? "Última unidad" : `Quedan ${p.stock}`}</span>`;
 
   const enPedido = carrito.find(x => x.id === p.id);
@@ -817,7 +861,7 @@ function crearCard(p, i) {
       <h3 class="producto-nombre">${p.nombre}</h3>
       <p class="producto-desc">${recortar(p.descripcion, 85)}</p>
       <div class="producto-footer">
-        <span class="producto-precio">${fmt(p.precio)}</span>
+        <span class="producto-precio">${precioHtml(p)}</span>
         ${pronto
           ? `<a class="btn-comprar btn-avisame" href="${linkAvisame(p)}" target="_blank" rel="noopener">Avisame</a>`
           : p.opciones
@@ -921,7 +965,8 @@ function abrirModalProducto(id) {
     <div class="mp-info">
       <p class="mp-cat">${p.etiqueta || p.categoria}</p>
       <h2 class="mp-nombre">${p.nombre}</h2>
-      <p class="mp-precio">${fmt(p.precio)}</p>
+      <p class="mp-precio">${precioHtml(p)}</p>
+      ${tieneDescuento(p) ? `<p class="mp-promo">${PROMO.titulo} · ${fmt(p.descuento)} menos · <span data-cuenta-promo></span></p>` : ""}
       ${agotado ? `<p class="mp-pronto">Próximamente · vuelve pronto</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
       ${p.opciones && !agotado ? `
@@ -942,7 +987,7 @@ function abrirModalProducto(id) {
       </div>
       ${agotado ? "" : `<p class="mp-stock ${stockBajo ? "bajo" : ""}">Stock: ${stockLabel}</p>`}
       <div class="mp-cta">
-        <span class="mp-cta-precio">${fmt(p.precio)}</span>
+        <span class="mp-cta-precio">${fmt(precioDe(p))}</span>
         ${agotado
           ? `<a class="btn btn-outline" href="${linkAvisame(p)}" target="_blank" rel="noopener"><i data-feather="bell"></i> Avisame cuando vuelva</a>`
           : `<button class="btn btn-primary" id="mp-btn-agregar">Agregar al pedido</button>`}
@@ -1007,7 +1052,7 @@ function agregarAlCarrito(id, { abrirCarrito = false, opcion = null } = {}) {
     existente.cantidad += 1;
   } else {
     const img = opcion ? (p.opciones?.lista.find(o => o.nombre === opcion)?.imagen || p.imagen) : p.imagen;
-    carrito.push({ clave, id: p.id, opcion, nombre: p.nombre, precio: p.precio, imagen: img, cantidad: 1 });
+    carrito.push({ clave, id: p.id, opcion, nombre: p.nombre, precio: precioDe(p), precioNormal: p.precio, imagen: img, cantidad: 1 });
   }
   actualizarBadge();
   renderizarCarrito();
@@ -1085,7 +1130,7 @@ function recuperarPedido() {
         const p = productos.find(x => x.id === i.id);
         if (!p || p.stock === 0) return null;
         if (p.opciones && !p.opciones.lista.some(o => o.nombre === i.opcion)) return null;
-        return { ...i, clave: claveDe(i.id, i.opcion), nombre: p.nombre, precio: p.precio, cantidad: Math.min(i.cantidad, p.stock) };
+        return { ...i, clave: claveDe(i.id, i.opcion), nombre: p.nombre, precio: precioDe(p), precioNormal: p.precio, cantidad: Math.min(i.cantidad, p.stock) };
       })
       .filter(Boolean);
   } catch { carrito = []; }
@@ -1124,7 +1169,7 @@ function renderizarCarrito() {
       <div class="carrito-item-info">
         <div class="carrito-item-nombre">${item.nombre}</div>
         ${item.opcion ? `<div class="carrito-item-opcion">${item.opcion}</div>` : ""}
-        <div class="carrito-item-precio">${fmt(item.precio)}</div>
+        <div class="carrito-item-precio">${item.precioNormal && item.precioNormal > item.precio ? `<s class="precio-antes">${fmt(item.precioNormal)}</s>` : ""}${fmt(item.precio)}</div>
         <div class="carrito-item-cantidad">
           <button class="qty-btn" data-clave="${item.clave}" data-delta="-1" aria-label="Uno menos">−</button>
           <span class="qty-valor">${item.cantidad}</span>
@@ -1293,7 +1338,7 @@ function enviarPedido() {
 }
 
 function armarMensaje(d) {
-  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}`).join("\n");
+  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}${i.precioNormal > i.precio ? " (precio de lanzamiento)" : ""}`).join("\n");
   const subtotal = calcularTotal();
   const envio = calcularCostoEnvio();
 

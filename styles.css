@@ -1589,3 +1589,23 @@ body.con-barra .wa-fab { bottom:calc(100px + env(safe-area-inset-bottom, 0px)); 
 .producto-img-wrap:has(img.cargada) { animation:none; background:var(--crema); }
 @keyframes cargando { from { background-position:120% 0; } to { background-position:-120% 0; } }
 @media (prefers-reduced-motion: reduce) { .producto-img-wrap { animation:none; } .producto-img-wrap img { opacity:1; } }
+
+/* ═════════ PROMO DE LANZAMIENTO ═════════ */
+.promo-banner {
+  display:inline-flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:6px 12px;
+  margin:-8px auto 26px; padding:10px 12px 10px 18px; border-radius:14px;
+  background:var(--verde-suave); border:1px solid var(--verde-claro); color:var(--negro);
+  font-size:0.86rem; opacity:0; animation:fadeUp 0.8s ease 0.45s forwards;
+}
+.promo-banner[hidden] { display:none; }
+.promo-banner-tit { font-family:var(--font-display); font-weight:700; font-size:1.05rem; }
+.promo-banner-cuenta { color:var(--verde-med); font-variant-numeric:tabular-nums; }
+.promo-banner-ver { background:var(--verde); color:var(--sobre-color); font-weight:600; padding:6px 12px; border-radius:9px; font-size:0.8rem; }
+.badge-promo { background:var(--verde); color:var(--sobre-color); }
+.precio-antes { font-size:0.75em; color:var(--gris-med); font-weight:400; margin-right:6px; text-decoration-thickness:1px; }
+.mp-promo { display:inline-block; align-self:flex-start; margin:-6px 0 16px; padding:5px 12px; border-radius:50px; background:var(--verde-suave); color:var(--verde-med); font-size:0.78rem; font-weight:500; font-variant-numeric:tabular-nums; }
+.carrito-item-precio .precio-antes { font-size:0.78rem; }
+@media (max-width: 640px) {
+  .promo-banner { margin:-4px auto 20px; font-size:0.8rem; padding:9px 10px 9px 14px; }
+  .producto-precio .precio-antes { display:block; margin:0 0 1px; font-size:0.72rem; }
+}
