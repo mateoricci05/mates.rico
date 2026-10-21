@@ -668,6 +668,7 @@ const PROMO = {
 const promoActiva = () => Date.now() < new Date(PROMO.hasta).getTime();
 const tieneDescuento = (p) => !!(p && p.descuento && promoActiva() && p.stock > 0);
 const precioDe = (p) => tieneDescuento(p) ? p.precio - p.descuento : p.precio;
+const porcentajeDe = (p) => Math.round((p.descuento / p.precio) * 100);
 const precioHtml = (p) => tieneDescuento(p)
   ? `<s class="precio-antes">${fmt(p.precio)}</s>${fmt(precioDe(p))}`
   : fmt(p.precio);
@@ -847,7 +848,7 @@ function crearCard(p, i) {
 
   let badgeStock = "";
   if (pronto) badgeStock = `<span class="badge-stock badge-pronto">Próximamente</span>`;
-  else if (tieneDescuento(p)) badgeStock = `<span class="badge-stock badge-promo">−${fmt(p.descuento)}</span>`;
+  else if (tieneDescuento(p)) badgeStock = `<span class="badge-stock badge-promo">${porcentajeDe(p)}% OFF</span>`;
   else if (p.mostrarStock) badgeStock = `<span class="badge-stock">${p.stock === 1 ? "Última unidad" : `Quedan ${p.stock}`}</span>`;
 
   const enPedido = carrito.find(x => x.id === p.id);
@@ -966,7 +967,7 @@ function abrirModalProducto(id) {
       <p class="mp-cat">${p.etiqueta || p.categoria}</p>
       <h2 class="mp-nombre">${p.nombre}</h2>
       <p class="mp-precio">${precioHtml(p)}</p>
-      ${tieneDescuento(p) ? `<p class="mp-promo">${PROMO.titulo} · ${fmt(p.descuento)} menos · <span data-cuenta-promo></span></p>` : ""}
+      ${tieneDescuento(p) ? `<p class="mp-promo">${PROMO.titulo} · ${porcentajeDe(p)}% OFF · <span data-cuenta-promo></span></p>` : ""}
       ${agotado ? `<p class="mp-pronto">Próximamente · vuelve pronto</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
       ${p.opciones && !agotado ? `
