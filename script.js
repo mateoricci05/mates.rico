@@ -40,7 +40,7 @@ const productos = [
       "Calabaza en negro mate",
       "Guarda cincelada plateada",
       "Base tipo pata clásica",
-      "Acabado premium artesanal",
+      "Acabado premium",
       "Bombilla no incluida",
     ],
   },
@@ -72,20 +72,20 @@ const productos = [
       "Calabaza 100%",
       "Base cuero crudo natural, sin teñir",
       "Boca ancha, forma criolla",
-      "Terminación artesanal",
+      "Terminación prolija",
       "Bombilla no incluida",
     ],
   },
   {
     id: 46,
     nombre: "Camionero Criollo Cincelado",
-    descripcion: "Camionero de calabaza con base de cuero crudo trenzado tipo canasta y virola plateada cincelada con motivos florales. Boca ancha, terminación artesanal prolija. Bombilla no incluida.",
+    descripcion: "Camionero de calabaza con base de cuero crudo trenzado tipo canasta y virola plateada cincelada con motivos florales. Boca ancha, terminación prolija. Bombilla no incluida.",
     precio: 46000,
     stock: 3,
     imagen: "img/camionero_criollo_cincelado.jpg",
     categoria: "Mates",
     features: [
-      "Calabaza curada artesanalmente",
+      "Calabaza curada",
       "Virola plateada cincelada, motivos florales",
       "Base de cuero trenzado tipo canasta",
       "Boca ancha, forma criolla",
@@ -118,7 +118,7 @@ const productos = [
     categoria: "Mates",
     features: [
       "Forma de coco tradicional",
-      "Calabaza curada artesanalmente",
+      "Calabaza curada",
       "Terminación simple",
       "Liviano y cómodo",
       "Bombilla no incluida",
@@ -134,7 +134,7 @@ const productos = [
     categoria: "Mates",
     features: [
       "Forma porito tradicional",
-      "Calabaza curada artesanalmente",
+      "Calabaza curada",
       "Guarda cincelada plateada",
       "Compacto y liviano",
       "Bombilla no incluida",
@@ -143,7 +143,7 @@ const productos = [
   {
     id: 19,
     nombre: "Torpedo Uruguayo Cincelado",
-    descripcion: "Torpedo estilo uruguayo con guarda cincelada plateada y cuerpo negro. La forma más reconocida del litoral, con la elegancia del cincelado artesanal. Bombilla no incluida.",
+    descripcion: "Torpedo estilo uruguayo con guarda cincelada plateada y cuerpo negro. La forma más reconocida del litoral, con la elegancia del cincelado a mano. Bombilla no incluida.",
     precio: 42000,
     stock: 0,
     imagen: "img/mate_torpedo_uruguayo.jpg",
@@ -152,7 +152,7 @@ const productos = [
       "Estilo torpedo uruguayo",
       "Cuerpo negro mate",
       "Guarda cincelada plateada",
-      "Acabado artesanal",
+      "Acabado prolijo",
       "Bombilla no incluida",
     ],
   },
@@ -207,7 +207,7 @@ const productos = [
   {
     id: 41,
     nombre: "Torpedo Criollo — Base Canasta Premium, Cincelado al Lacre",
-    descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación artesanal de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
+    descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
     precio: 50000,
     stock: 3,
     imagen: "img/torpedo_base_canasta.jpg",
@@ -278,7 +278,7 @@ const productos = [
     categoria: "Mates",
     features: [
       "Forma galleta ergonómica",
-      "Calabaza curada artesanalmente",
+      "Calabaza curada",
       "Base de cuero premium",
       "Trenzado de cuero crudo a mano",
       "Bombilla no incluida",
@@ -294,7 +294,7 @@ const productos = [
     categoria: "Mates",
     features: [
       "Forma galleta ergonómica",
-      "Calabaza curada artesanalmente",
+      "Calabaza curada",
       "Terminación simple y resistente",
       "Ideal para uso diario",
       "Bombilla no incluida",
@@ -585,7 +585,7 @@ const productos = [
     features: [
       "Porta mate de cuero negro",
       "Premium",
-      "Costuras artesanales",
+      "Costuras a mano",
       "Broches metálicos",
       "Ideal para llevar a todos lados",
     ],
@@ -809,7 +809,7 @@ function crearCard(p, i) {
   const enPedido = carrito.find(x => x.id === p.id);
   card.innerHTML = `
     <div class="producto-img-wrap">
-      <img src="${miniatura(p.imagen)}" alt="${p.nombre}" loading="lazy" decoding="async" data-grande="${p.imagen}" onerror="if(this.dataset.grande&&this.src.indexOf('/mini/')>-1){this.src=this.dataset.grande}else{this.onerror=null;this.src=IMG_FALLBACK}"/>
+      <img src="${miniatura(p.imagen)}" alt="${p.nombre}" ${i < 4 && !pronto ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" data-grande="${p.imagen}" onload="this.classList.add('cargada')" onerror="if(this.dataset.grande&&this.src.indexOf('/mini/')>-1){this.src=this.dataset.grande}else{this.onerror=null;this.src=IMG_FALLBACK}"/>
       <span class="producto-badge${p.esDestacado || p.etiqueta ? " producto-badge--madre" : ""}">${p.etiqueta || p.categoria}</span>
       ${badgeStock}
     </div>
@@ -832,8 +832,10 @@ function crearCard(p, i) {
   card.addEventListener("keydown", (e) => { if (e.key === "Enter") abrirModalProducto(p.id); });
   card.querySelector("button.btn-comprar")?.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (p.opciones) abrirModalProducto(p.id);
-    else agregarAlCarrito(p.id);
+    if (p.opciones) { abrirModalProducto(p.id); return; }
+    const antes = cantidadDe(p.id);
+    agregarAlCarrito(p.id);
+    if (cantidadDe(p.id) > antes) animarAgregado(card.querySelector(".producto-img-wrap img"), e.currentTarget);
   });
   return card;
 }
@@ -841,6 +843,39 @@ function crearCard(p, i) {
 // img/x.jpg → img/mini/x.jpg (versión liviana para el catálogo)
 function miniatura(src) {
   return src.startsWith("img/") ? "img/mini/" + src.slice(4) : src;
+}
+
+// ✨ Animación al agregar: la foto vuela hasta la barra "Tu pedido"
+function animarAgregado(img, boton) {
+  boton?.classList.remove("pop"); void boton?.offsetWidth; boton?.classList.add("pop");
+  const barra = document.getElementById("barra-pedido");
+  const cant = document.getElementById("barra-cant");
+  cant?.classList.remove("flash"); void cant?.offsetWidth; cant?.classList.add("flash");
+  if (!img || !barra || barra.hidden) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const desde = img.getBoundingClientRect();
+  const hasta = barra.getBoundingClientRect();
+  const lado = Math.min(desde.width, desde.height, 120);
+  const vuela = document.createElement("img");
+  vuela.src = img.currentSrc || img.src;
+  vuela.className = "vuela-al-pedido";
+  Object.assign(vuela.style, {
+    left: `${desde.left + desde.width / 2 - lado / 2}px`,
+    top: `${desde.top + desde.height / 2 - lado / 2}px`,
+    width: `${lado}px`, height: `${lado}px`,
+  });
+  document.body.appendChild(vuela);
+  const dx = hasta.left + 34 - (desde.left + desde.width / 2);
+  const dy = hasta.top + hasta.height / 2 - (desde.top + desde.height / 2);
+  const anim = vuela.animate([
+    { transform: "translate(0,0) scale(1)", opacity: 1 },
+    { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 60}px) scale(0.55)`, opacity: 1, offset: 0.55 },
+    { transform: `translate(${dx}px, ${dy}px) scale(0.18)`, opacity: 0.2 },
+  ], { duration: 650, easing: "cubic-bezier(.5,0,.3,1)" });
+  anim.onfinish = () => {
+    vuela.remove();
+    barra.classList.remove("bump"); void barra.offsetWidth; barra.classList.add("bump");
+  };
 }
 
 function linkAvisame(p) {
@@ -977,7 +1012,7 @@ function agregarAlCarrito(id, { abrirCarrito = false, opcion = null } = {}) {
   actualizarBadge();
   renderizarCarrito();
   if (abrirCarrito) abrirCarritoLateral();
-  else if (!esCelu()) mostrarToast(`✓ Agregado`, { texto: "Ver pedido", fn: abrirCarritoLateral });
+  // Sin aviso: la barra "Tu pedido" aparece / se mueve sola
 }
 
 function esCelu() { return window.matchMedia("(max-width: 640px)").matches; }
@@ -1033,7 +1068,6 @@ function actualizarBadge() {
     document.body.classList.toggle("con-barra", cant > 0);
     const txt = document.getElementById("barra-cant");
     if (txt) txt.textContent = `${cant} ${cant === 1 ? "producto" : "productos"} · ${fmt(calcularTotal())}`;
-    barra.classList.remove("bump"); void barra.offsetWidth; barra.classList.add("bump");
   }
   marcarBotonesEnPedido();
   guardarPedido();
