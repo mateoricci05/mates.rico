@@ -876,7 +876,7 @@ function crearCard(p, i) {
           ? `<a class="btn-comprar btn-avisame" href="${linkAvisame(p)}" target="_blank" rel="noopener">Avisame</a>`
           : p.opciones
             ? `<button class="btn-comprar btn-elegir">${p.opciones.titulo.includes("grabado") ? "Elegir grabado" : "Elegir"}</button>`
-            : `<button class="btn-comprar${enPedido ? " en-pedido" : ""}" data-id="${p.id}">${enPedido ? "✓ En tu pedido" : "Agregar"}</button>`}
+            : `<button class="btn-comprar${enPedido ? " en-pedido" : ""}" data-id="${p.id}">${enPedido ? "✓ Agregado" : "Agregar"}</button>`}
       </div>
     </div>`;
 
@@ -908,7 +908,9 @@ function animarAgregado(img, boton) {
   if (!img || !barra || barra.hidden) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const desde = img.getBoundingClientRect();
-  const hasta = barra.getBoundingClientRect();
+  // posición final de la barra (sin la animación de entrada)
+  const r = barra.getBoundingClientRect();
+  const hasta = { left: barra.offsetLeft || r.left, top: barra.offsetTop || r.top, height: r.height };
   const lado = Math.min(desde.width, desde.height, 120);
   const vuela = document.createElement("img");
   vuela.src = img.currentSrc || img.src;
@@ -948,12 +950,12 @@ function linkAvisame(p) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(txt)}`;
 }
 
-// Actualiza los botones "Agregar" / "✓ En tu pedido" sin redibujar el catálogo
+// Actualiza los botones "Agregar" / "✓ Agregado" sin redibujar el catálogo
 function marcarBotonesEnPedido() {
   document.querySelectorAll("button.btn-comprar[data-id]").forEach(btn => {
     const en = cantidadDe(+btn.dataset.id) > 0;
     btn.classList.toggle("en-pedido", en);
-    btn.textContent = en ? "✓ En tu pedido" : "Agregar";
+    btn.textContent = en ? "✓ Agregado" : "Agregar";
   });
 }
 

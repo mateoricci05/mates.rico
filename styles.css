@@ -1610,3 +1610,10 @@ body.con-barra .wa-fab { bottom:calc(100px + env(safe-area-inset-bottom, 0px)); 
   .producto-precio .precio-antes { display:block; margin:0 0 1px; font-size:0.72rem; }
 }
 .badge-llega { background:var(--c-beige, #f3e6cc); color:#0e0d0b; }
+
+/* Arreglos: precio con descuento + botón sin cortarse, y panel del pedido a pantalla exacta */
+.producto-precio .precio-antes { display:block; margin:0 0 1px; font-size:0.72rem; line-height:1.2; }
+.producto-footer { align-items:flex-end; }
+.btn-comprar { white-space:nowrap; flex-shrink:0; }
+.modal-carrito { height:auto; align-self:stretch; max-height:100%; }
+@media (max-width: 640px) { .modal-carrito { height:auto; } }
