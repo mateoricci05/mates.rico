@@ -668,7 +668,7 @@ const destacado = {
 //    Después vuelven solos al precio normal.
 // ═══════════════════════════════════════════════════════
 const PROMO = {
-  titulo: "Precios de lanzamiento",
+  titulo: "Ofertas limitadas",
   hasta: "2026-10-23T20:01:00-03:00",
 };
 const promoActiva = () => Date.now() < new Date(PROMO.hasta).getTime();
@@ -1361,7 +1361,7 @@ function enviarPedido() {
 }
 
 function armarMensaje(d) {
-  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}${i.precioNormal > i.precio ? " (precio de lanzamiento)" : ""}`).join("\n");
+  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt(i.precio * i.cantidad)}${i.precioNormal > i.precio ? " (oferta limitada)" : ""}`).join("\n");
   const subtotal = calcularTotal();
   const envio = calcularCostoEnvio();
 
