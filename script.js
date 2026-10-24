@@ -633,6 +633,18 @@ const productos = [
       "Bombilla de regalo",
     ],
   },
+  // ─── SOLO PARA PROBAR EL PAGO CON TARJETA (se ve únicamente con ?tarjeta) ── BORRAR después de la prueba
+  {
+    id: 999,
+    nombre: "Producto de prueba",
+    descripcion: "Solo para probar el pago con tarjeta. No se envía nada.",
+    precio: 100,
+    stock: 5,
+    soloPrueba: true,
+    imagen: "img/logo.png",
+    categoria: "Accesorios",
+    features: ["Prueba de pago"],
+  },
 ];
   
 
@@ -842,9 +854,10 @@ function renderizarProductos(categoria = "Todos") {
   grid.innerHTML = "";
 
   // Primero lo que hay. Lo que no tiene stock aparece al final como "Próximamente".
-  const deCategoria = categoria === "Todos" ? productos : productos.filter(p => p.categoria === categoria);
+  const visibles = productos.filter(p => !p.soloPrueba || modoTarjeta);
+  const deCategoria = categoria === "Todos" ? visibles : visibles.filter(p => p.categoria === categoria);
   const disponibles = deCategoria.filter(p => p.stock > 0)
-    .sort((a, b) => tieneDescuento(b) - tieneDescuento(a));
+    .sort((a, b) => (!!b.soloPrueba - !!a.soloPrueba) || (tieneDescuento(b) - tieneDescuento(a)));
   const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado)
     .sort((a, b) => !!llegaTexto(b) - !!llegaTexto(a));
 
