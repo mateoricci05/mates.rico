@@ -633,18 +633,6 @@ const productos = [
       "Bombilla de regalo",
     ],
   },
-  // ─── SOLO PARA PROBAR EL PAGO CON TARJETA (se ve únicamente con ?tarjeta) ── BORRAR después de la prueba
-  {
-    id: 999,
-    nombre: "Producto de prueba",
-    descripcion: "Solo para probar el pago con tarjeta. No se envía nada.",
-    precio: 100,
-    stock: 5,
-    soloPrueba: true,
-    imagen: "img/logo.png",
-    categoria: "Accesorios",
-    features: ["Prueba de pago"],
-  },
 ];
   
 
@@ -692,7 +680,7 @@ const porcentajeDe = (p) => Math.round((p.descuento / p.precio) * 100);
 // ═══════════════════════════════════════════════════════
 // TARJETA_ACTIVA = false → nadie lo ve, salvo entrando con ?tarjeta al final del link (para probar).
 // TARJETA_ACTIVA = true  → todos ven el precio con tarjeta, las cuotas y el botón de Mercado Pago.
-const TARJETA_ACTIVA = false;
+const TARJETA_ACTIVA = true;
 const PAGOS_API = "https://mates-rico-pagos.mateoricci05.workers.dev";
 const FACTOR_TARJETA = 0.78;   // precio con tarjeta = precio real / 0,78 (tiene que coincidir con pagos/src/index.js)
 const CUOTAS = 3;
@@ -734,7 +722,7 @@ const ZONAS_ENVIO = {
   "Villa Allende": 5000,
 };
 // Resto del país (Correo Argentino): gratis desde este monto, si no se cotiza aparte.
-const ENVIO_GRATIS_MINIMO = 100000;
+const ENVIO_GRATIS_MINIMO = 150000;
 
 // ═══════════════════════════════════════════════════════
 // 🗃️ ESTADO
