@@ -1623,6 +1623,7 @@ async function abrirPagoTarjeta(datos) {
   const total = totalTarjeta();
   let emailGuardado = datos?.email || "";
   try { emailGuardado ||= JSON.parse(localStorage.getItem("clienteMatesRico") || "{}").emailTarjeta || ""; } catch {}
+  if (!/^\S+@\S+\.\S+$/.test(emailGuardado)) emailGuardado = "";
   guardarDatosCliente();
 
   document.getElementById("carrito-items").hidden = true;
@@ -1635,8 +1636,6 @@ async function abrirPagoTarjeta(datos) {
     <h4 class="pt-tit">Pagá con tarjeta</h4>
     <div class="pt-total"><span>Total</span><strong>${fmt(total)}</strong></div>
     <p class="pt-cuotas">Hasta ${CUOTAS} cuotas sin interés de ${fmt(Math.round(total / CUOTAS))}</p>
-    <label class="pt-label" for="pt-email">Tu email (te llega el comprobante)</label>
-    <input id="pt-email" class="envio-input" type="email" inputmode="email" autocomplete="email" placeholder="tu@email.com" value="${emailGuardado.replace(/"/g, "")}"/>
     <div id="pt-brick" class="pt-brick"><p class="pt-cargando">Cargando formulario seguro…</p></div>
     <p class="pt-error" id="pt-error" hidden></p>
     <p class="pt-seguro"><i data-feather="lock"></i> Pago procesado por Mercado Pago. Los datos de tu tarjeta no pasan por mates.rico.</p>`;
@@ -1652,7 +1651,7 @@ async function abrirPagoTarjeta(datos) {
     if (brickTarjeta) { try { brickTarjeta.unmount(); } catch {} }
     document.getElementById("pt-brick").innerHTML = "";
     brickTarjeta = await mp.bricks().create("cardPayment", "pt-brick", {
-      initialization: { amount: total },
+      initialization: emailGuardado ? { amount: total, payer: { email: emailGuardado } } : { amount: total },
       customization: {
         visual: { style: { theme: "dark", customVariables: { baseColor: "#71a150", formBackgroundColor: "#151513" } } },
         paymentMethods: { maxInstallments: CUOTAS },
@@ -1701,10 +1700,9 @@ const MOTIVOS_RECHAZO = {
 function cobrarTarjeta(formData, datos) {
   return new Promise(async (resolve, reject) => {
     errorTarjeta("");
-    const email = (document.getElementById("pt-email")?.value || "").trim();
+    const email = String(formData?.payer?.email || datos?.email || "").trim();
     if (!/^\S+@\S+\.\S+$/.test(email)) {
-      errorTarjeta("Escribí tu email arriba para recibir el comprobante.");
-      document.getElementById("pt-email")?.focus();
+      errorTarjeta("Completá tu email en el formulario para recibir el comprobante.");
       reject(); return;
     }
     try {
