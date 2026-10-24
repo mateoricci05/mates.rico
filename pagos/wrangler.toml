@@ -1,0 +1,10 @@
+# Servidor de pagos de mates.rico (Cloudflare Workers, plan gratis)
+# El Access Token de Mercado Pago NO va acá: se carga en Cloudflare como
+# secreto "MP_ACCESS_TOKEN" (Settings → Variables and Secrets).
+name = "mates-rico-pagos"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+SITIO = "https://mateoricci05.github.io/mates.rico/"
+ORIGENES = "https://mateoricci05.github.io"
