@@ -1631,34 +1631,71 @@ async function pagarConMercadoPago(datos) {
 }
 
 // Cuando la persona vuelve de Mercado Pago (?mp=ok|error|pendiente)
+// o vuelve sola a la web (en el celu, la app de MP a veces no devuelve al navegador)
+function leerPagoPendiente() {
+  try {
+    const p = JSON.parse(localStorage.getItem("pagoMPMatesRico") || "null");
+    if (p && Date.now() - p.fecha < 24 * 3600 * 1000) return p;
+  } catch {}
+  return null;
+}
+
 async function procesarVueltaMP() {
   const q = new URLSearchParams(location.search);
   const estado = q.get("mp");
-  if (!estado) return;
-  const paymentId = q.get("payment_id") || q.get("collection_id");
-  let pend = null;
-  try { pend = JSON.parse(localStorage.getItem("pagoMPMatesRico") || "null"); } catch {}
-  try { history.replaceState(null, "", location.pathname); } catch {}
+  const pend = leerPagoPendiente();
+  if (estado) { try { history.replaceState(null, "", location.pathname); } catch {} }
 
+  if (!estado) { if (pend) verificarPagoPendiente(pend); return; }
   if (estado === "error") {
     mostrarToast("El pago no se completó. Podés probar de nuevo o pagar por transferencia.");
     return;
   }
-
+  const paymentId = q.get("payment_id") || q.get("collection_id");
   let pago = null;
-  if (paymentId && paymentId !== "null") {
-    try {
-      const r = await fetch(`${PAGOS_API}/pago?id=${encodeURIComponent(paymentId)}`);
-      if (r.ok) pago = await r.json();
-    } catch {}
-  }
-  const aprobado = pago?.estado === "approved";
-  const pendiente = !aprobado && (estado === "pendiente" || pago?.estado === "pending" || pago?.estado === "in_process");
-  if (!aprobado && !pendiente) {
-    mostrarToast("No pudimos confirmar el pago. Si te lo cobraron, escribinos por WhatsApp.");
-    return;
-  }
+  try {
+    const url = paymentId && paymentId !== "null"
+      ? `${PAGOS_API}/pago?id=${encodeURIComponent(paymentId)}`
+      : pend ? `${PAGOS_API}/pago?ref=${encodeURIComponent(pend.ref)}` : null;
+    if (url) { const r = await fetch(url); if (r.ok) pago = await r.json(); }
+  } catch {}
+  if (pago?.estado === "approved" || pago?.estado === "pending" || pago?.estado === "in_process") mostrarResultadoMP(pago, pend);
+  else mostrarToast("No pudimos confirmar el pago. Si te lo cobraron, escribinos por WhatsApp.");
+}
 
+let verificandoMP = false;
+async function verificarPagoPendiente(pend, manual = false) {
+  if (verificandoMP) return;
+  verificandoMP = true;
+  try {
+    const r = await fetch(`${PAGOS_API}/pago?ref=${encodeURIComponent(pend.ref)}`);
+    const pago = r.ok ? await r.json() : null;
+    if (pago?.estado === "approved") { mostrarResultadoMP(pago, pend); return; }
+    if (pago?.estado === "rejected") {
+      try { localStorage.removeItem("pagoMPMatesRico"); } catch {}
+      mostrarToast("El pago con tarjeta fue rechazado. Probá con otra tarjeta o pagá por transferencia.");
+      return;
+    }
+    if (manual) mostrarToast("Todavía no vemos el pago. Si recién pagaste, esperá unos segundos.", { texto: "Verificar", fn: () => verificarPagoPendiente(pend, true) });
+    else mostrarToast("¿Pagaste con Mercado Pago?", { texto: "Verificar pago", fn: () => verificarPagoPendiente(pend, true) });
+  } catch {
+    if (manual) mostrarToast("No pudimos verificar el pago. Probá de nuevo en un ratito.");
+  } finally { verificandoMP = false; }
+}
+
+// Si vuelve a la pestaña (desde la app de MP), se fija solo
+let ultimoChequeoMP = 0;
+function chequearAlVolver() {
+  const pend = leerPagoPendiente();
+  if (!pend || document.hidden || Date.now() - ultimoChequeoMP < 4000) return;
+  ultimoChequeoMP = Date.now();
+  verificarPagoPendiente(pend);
+}
+document.addEventListener("visibilitychange", chequearAlVolver);
+window.addEventListener("pageshow", (e) => { if (e.persisted) chequearAlVolver(); });
+
+function mostrarResultadoMP(pago, pend) {
+  const aprobado = pago?.estado === "approved";
   const base = pend?.mensaje || "¡Hola! Hice un pedido desde la web y lo pagué con Mercado Pago.";
   const linea = aprobado
     ? `✅ PAGADO con Mercado Pago · operación N° ${pago.id} · ${fmt(pago.monto)}${pago.cuotas > 1 ? ` en ${pago.cuotas} cuotas` : ""}`

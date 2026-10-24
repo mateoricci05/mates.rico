@@ -31,7 +31,8 @@ export default {
         return json(await crearPreferencia(await request.json(), env), 200, cors);
       }
       if (url.pathname === "/pago" && request.method === "GET") {
-        return json(await consultarPago(url.searchParams.get("id"), env), 200, cors);
+        const ref = url.searchParams.get("ref");
+        return json(ref ? await buscarPorReferencia(ref, env) : await consultarPago(url.searchParams.get("id"), env), 200, cors);
       }
       if (url.pathname === "/" ) return json({ ok: true, servicio: "mates.rico pagos" }, 200, cors);
       return json({ error: "Ruta no encontrada" }, 404, cors);
@@ -95,6 +96,7 @@ async function crearPreferencia(body, env) {
       pending: `${sitio}?mp=pendiente`,
     },
     auto_return: "approved",
+    binary_mode: true,   // aprobado o rechazado al instante, sin pagos "pendientes"
     payer: { name: nombre || undefined, email: /^\S+@\S+\.\S+$/.test(email) ? email : undefined },
     metadata: { zona: String(body.zona || ""), cliente: nombre },
   };
@@ -133,6 +135,19 @@ async function consultarPago(id, env) {
     ref: p.external_reference,
     items: (p.additional_info?.items || []).map(i => ({ titulo: i.title, cantidad: Number(i.quantity), precio: Number(i.unit_price) })),
   };
+}
+
+// Busca el pago de un pedido por su referencia (para cuando la app de MP no devuelve a la web)
+async function buscarPorReferencia(ref, env) {
+  if (!/^MR-[A-Z0-9-]{4,40}$/.test(String(ref || ""))) throw falla(400, "Pedido inválido.");
+  const r = await fetch(`${MP_API}/v1/payments/search?external_reference=${encodeURIComponent(ref)}&sort=date_created&criteria=desc&limit=10`, {
+    headers: { "Authorization": `Bearer ${env.MP_ACCESS_TOKEN}` },
+  });
+  if (!r.ok) throw falla(502, "No pudimos consultar el pago.");
+  const lista = (await r.json()).results || [];
+  const p = lista.find(x => x.status === "approved") || lista[0];
+  if (!p) return { estado: "sin_pago", ref };
+  return { id: p.id, estado: p.status, monto: p.transaction_amount, cuotas: p.installments, ref: p.external_reference };
 }
 
 // ─────────────── Catálogo: se lee de la web publicada ───────────────
