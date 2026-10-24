@@ -6,7 +6,8 @@
    desde el navegador) y verifica los pagos cuando el cliente vuelve.
 
    Rutas:
-     POST /preferencia  → crea el cobro y devuelve el link de pago
+     POST /pagar        → cobra con tarjeta desde el formulario de la web (sin salir de la tienda)
+     POST /preferencia  → crea el cobro y devuelve el link de pago (Checkout Pro, de respaldo)
      GET  /pago?id=123  → estado de un pago (para confirmar al volver)
 
    Secreto necesario (se carga en Cloudflare, nunca en el código):
@@ -27,6 +28,9 @@ export default {
 
     const url = new URL(request.url);
     try {
+      if (url.pathname === "/pagar" && request.method === "POST") {
+        return json(await pagarConTarjeta(await request.json(), env), 200, cors);
+      }
       if (url.pathname === "/preferencia" && request.method === "POST") {
         return json(await crearPreferencia(await request.json(), env), 200, cors);
       }
@@ -45,10 +49,9 @@ export default {
 
 // ───────────────────────── Cobro ─────────────────────────
 
-async function crearPreferencia(body, env) {
-  if (!env.MP_ACCESS_TOKEN) throw falla(500, "Falta configurar Mercado Pago.");
-  const sitio = env.SITIO;
-  const cat = await catalogo(sitio);
+// Arma los ítems con precios reales de la web (precio con tarjeta) y el envío
+async function armarPedido(body, env) {
+  const cat = await catalogo(env.SITIO);
 
   const pedido = Array.isArray(body?.items) ? body.items : [];
   if (!pedido.length || pedido.length > 30) throw falla(400, "Tu pedido está vacío.");
@@ -77,8 +80,61 @@ async function crearPreferencia(body, env) {
   if (envio > 0) {
     items.push({ id: "envio", title: `Envío (${body.zona})`, quantity: 1, unit_price: precioLista(envio), currency_id: "ARS" });
   }
+  const total = items.reduce((a, i) => a + i.unit_price * i.quantity, 0);
+  return { items, total };
+}
 
-  const ref = "MR-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+const nuevaRef = () => "MR-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+
+// Pago con tarjeta desde el formulario de Mercado Pago dentro de la web (Card Payment Brick)
+async function pagarConTarjeta(body, env) {
+  if (!env.MP_ACCESS_TOKEN) throw falla(500, "Falta configurar Mercado Pago.");
+  const { items, total } = await armarPedido(body, env);
+  const t = body?.tarjeta || {};
+  if (!t.token || !t.payment_method_id) throw falla(400, "Faltan los datos de la tarjeta.");
+  if (Math.abs(Number(t.transaction_amount) - total) > 0.5) throw falla(409, "El total de tu pedido cambió. Volvé al pedido y probá de nuevo.");
+  const email = String(t.payer?.email || body?.cliente?.email || "").trim();
+  if (!/^\S+@\S+\.\S+$/.test(email)) throw falla(400, "Necesitamos un email válido para el comprobante.");
+  const nombre = String(body?.cliente?.nombre || "").slice(0, 80);
+  const ref = nuevaRef();
+
+  const pago = {
+    transaction_amount: total,
+    token: t.token,
+    description: "Pedido mates.rico",
+    installments: Math.max(1, Math.floor(Number(t.installments) || 1)),
+    payment_method_id: t.payment_method_id,
+    issuer_id: t.issuer_id ? Number(t.issuer_id) || t.issuer_id : undefined,
+    payer: {
+      email,
+      identification: t.payer?.identification?.number ? t.payer.identification : undefined,
+      first_name: nombre || undefined,
+    },
+    external_reference: ref,
+    statement_descriptor: "MATES.RICO",
+    binary_mode: true,
+    additional_info: { items: items.map(i => ({ id: i.id, title: i.title, quantity: i.quantity, unit_price: i.unit_price })) },
+    metadata: { zona: String(body.zona || ""), cliente: nombre },
+  };
+  const r = await fetch(`${MP_API}/v1/payments`, {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${env.MP_ACCESS_TOKEN}`, "Content-Type": "application/json", "X-Idempotency-Key": ref },
+    body: JSON.stringify(pago),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || !d.id) {
+    console.log("MP pago error", r.status, JSON.stringify(d).slice(0, 600));
+    throw falla(402, "No pudimos procesar la tarjeta. Revisá los datos o probá con otra.");
+  }
+  return { id: d.id, estado: d.status, detalle: d.status_detail, monto: d.transaction_amount, cuotas: d.installments, ref };
+}
+
+async function crearPreferencia(body, env) {
+  if (!env.MP_ACCESS_TOKEN) throw falla(500, "Falta configurar Mercado Pago.");
+  const sitio = env.SITIO;
+  const { items } = await armarPedido(body, env);
+
+  const ref = nuevaRef();
   const nombre = String(body?.cliente?.nombre || "").slice(0, 80);
   const email = String(body?.cliente?.email || "");
 

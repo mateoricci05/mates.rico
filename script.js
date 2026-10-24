@@ -694,6 +694,7 @@ const porcentajeDe = (p) => Math.round((p.descuento / p.precio) * 100);
 // TARJETA_ACTIVA = true  → todos ven el precio con tarjeta, las cuotas y el botón de Mercado Pago.
 const TARJETA_ACTIVA = false;
 const PAGOS_API = "https://mates-rico-pagos.mateoricci05.workers.dev";
+const MP_PUBLIC_KEY = "APP_USR-c0b6b50c-69bc-4fbb-bafd-548c99434bf8"; // pública (no es secreta)
 const FACTOR_TARJETA = 0.78;   // precio con tarjeta = precio real / 0,78 (tiene que coincidir con pagos/src/index.js)
 const CUOTAS = 3;
 const OFF_TRANSFERENCIA = 22;  // % que se muestra como descuento por transferencia
@@ -780,7 +781,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("barra-pedido")?.addEventListener("click", abrirCarritoLateral);
   initReveal();
   feather.replace();
-  procesarVueltaMP();
 });
 
 // ═══════════════════════════════════════════════════════
@@ -1125,6 +1125,7 @@ function agregarAlCarrito(id, { abrirCarrito = false, opcion = null } = {}) {
 function esCelu() { return window.matchMedia("(max-width: 640px)").matches; }
 
 function abrirCarritoLateral() {
+  if (!document.getElementById("pago-tarjeta")?.hidden) cerrarPagoTarjeta();
   document.getElementById("carrito-exito").hidden = true;
   document.getElementById("carrito-items").hidden = false;
   renderizarCarrito();
@@ -1282,7 +1283,7 @@ function actualizarResumen() {
   const fin = document.getElementById("btn-finalizar");
   if (fin && !fin.classList.contains("cargando")) {
     fin.classList.toggle("btn-mp", esMP);
-    fin.innerHTML = esMP ? `<i data-feather="credit-card"></i> Pagar con Mercado Pago` : `<i data-feather="message-circle"></i> Enviar pedido por WhatsApp`;
+    fin.innerHTML = esMP ? `<i data-feather="credit-card"></i> Pagar con tarjeta` : `<i data-feather="message-circle"></i> Enviar pedido por WhatsApp`;
     feather.replace();
   }
 
@@ -1437,7 +1438,7 @@ function enviarPedido() {
     }
   }
 
-  if (pagoElegido === "Mercado Pago") { pagarConMercadoPago(datos); return; }
+  if (pagoElegido === "Mercado Pago") { abrirPagoTarjeta(datos); return; }
 
   const total = calcularTotal() + (calcularCostoEnvio() || 0);
   const aCotizar = calcularCostoEnvio() === null;
@@ -1446,16 +1447,15 @@ function enviarPedido() {
   mostrarExito(total, aCotizar);
 }
 
-function armarMensaje(d) {
-  const tarjeta = pagoElegido === "Mercado Pago";
-  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad} — ${fmt((tarjeta ? precioLista(i.precio) : i.precio) * i.cantidad)}${!tarjeta && i.precioNormal > i.precio ? " (oferta limitada)" : ""}`).join("\n");
-  const subtotal = tarjeta ? totalTarjeta() - (calcularCostoEnvio() > 0 ? precioLista(calcularCostoEnvio()) : 0) : calcularTotal();
-  const envio = tarjeta && calcularCostoEnvio() > 0 ? precioLista(calcularCostoEnvio()) : calcularCostoEnvio();
+function armarMensaje(d, pago = null) {
+  const detalle = carrito.map(i => `• ${i.nombre}${i.opcion ? ` (grabado "${i.opcion}")` : ""} x${i.cantidad}${pago ? "" : ` — ${fmt(i.precio * i.cantidad)}${i.precioNormal > i.precio ? " (oferta limitada)" : ""}`}`).join("\n");
+  const subtotal = calcularTotal();
+  const envio = calcularCostoEnvio();
 
   let envioTexto, totalTexto;
   if (envio === null) { envioTexto = "Envío: a cotizar por Correo Argentino"; totalTexto = `Subtotal: ${fmt(subtotal)}`; }
   else if (envio === 0) { envioTexto = "Envío: gratis"; totalTexto = `Total: ${fmt(subtotal)}`; }
-  else { envioTexto = `Envío: ${fmt(envio)}`; totalTexto = `Total: ${fmt(subtotal + envio)}`; }
+  else { envioTexto = pago ? "Envío: incluido en el total" : `Envío: ${fmt(envio)}`; totalTexto = `Total: ${fmt(subtotal + envio)}`; }
 
   let entrega = `Zona: ${zonaElegida}\n${envioTexto}`;
   if (d) {
@@ -1474,7 +1474,10 @@ function armarMensaje(d) {
       envioTexto;
   }
 
-  if (tarjeta) return `¡Hola! Hice este pedido desde la web y lo pagué con Mercado Pago:\n\n${detalle}\n\n${totalTexto} (con tarjeta, hasta ${CUOTAS} cuotas sin interés)\n\n${entrega}`;
+  if (pago) {
+    const cuotas = pago.cuotas > 1 ? ` en ${pago.cuotas} cuotas sin interés` : "";
+    return `¡Hola! Te hice un pedido en la web y ya lo pagué con tarjeta:\n\n${detalle}\n\nTotal pagado: ${fmt(pago.monto)}${cuotas}\nOperación de Mercado Pago N° ${pago.id}\n\n${entrega}\n\n¿Cuándo lo puedo recibir? ¡Gracias!`;
+  }
   return `¡Hola! Quiero hacer este pedido desde la web:\n\n${detalle}\n\n${totalTexto}\n\n${entrega}\nPago: ${pagoElegido}\n\n¿Me confirmás que está todo disponible? ¡Gracias!`;
 }
 
@@ -1597,133 +1600,166 @@ function initReveal() {
 }
 
 // ═══════════════════════════════════════════════════════
-// 💳 MERCADO PAGO: ir a pagar y volver
+// 💳 PAGO CON TARJETA DENTRO DE LA WEB (formulario seguro de Mercado Pago)
 // ═══════════════════════════════════════════════════════
-async function pagarConMercadoPago(datos) {
-  const btn = document.getElementById("btn-finalizar");
-  if (btn?.classList.contains("cargando")) return;
-  btn?.classList.add("cargando");
-  if (btn) btn.innerHTML = "Abriendo Mercado Pago…";
+let brickTarjeta = null;
+let sdkMP = null;
+
+function cargarSDKMP() {
+  if (window.MercadoPago) return Promise.resolve();
+  if (!sdkMP) sdkMP = new Promise((ok, mal) => {
+    const sc = document.createElement("script");
+    sc.src = "https://sdk.mercadopago.com/js/v2";
+    sc.onload = ok;
+    sc.onerror = () => { sdkMP = null; mal(new Error("No se pudo cargar Mercado Pago")); };
+    document.head.appendChild(sc);
+  });
+  return sdkMP;
+}
+
+async function abrirPagoTarjeta(datos) {
+  const panel = document.getElementById("pago-tarjeta");
+  if (!panel) return;
+  const total = totalTarjeta();
+  let emailGuardado = datos?.email || "";
+  try { emailGuardado ||= JSON.parse(localStorage.getItem("clienteMatesRico") || "{}").emailTarjeta || ""; } catch {}
   guardarDatosCliente();
+
+  document.getElementById("carrito-items").hidden = true;
+  const checkout = document.getElementById("checkout");
+  if (checkout) checkout.hidden = true;
+  const footer = document.getElementById("modal-footer");
+  if (footer) footer.style.display = "none";
+  panel.innerHTML = `
+    <button class="pt-volver" id="pt-volver" type="button">← Volver al pedido</button>
+    <h4 class="pt-tit">Pagá con tarjeta</h4>
+    <div class="pt-total"><span>Total</span><strong>${fmt(total)}</strong></div>
+    <p class="pt-cuotas">Hasta ${CUOTAS} cuotas sin interés de ${fmt(Math.round(total / CUOTAS))}</p>
+    <label class="pt-label" for="pt-email">Tu email (te llega el comprobante)</label>
+    <input id="pt-email" class="envio-input" type="email" inputmode="email" autocomplete="email" placeholder="tu@email.com" value="${emailGuardado.replace(/"/g, "")}"/>
+    <div id="pt-brick" class="pt-brick"><p class="pt-cargando">Cargando formulario seguro…</p></div>
+    <p class="pt-error" id="pt-error" hidden></p>
+    <p class="pt-seguro"><i data-feather="lock"></i> Pago procesado por Mercado Pago. Los datos de tu tarjeta no pasan por mates.rico.</p>`;
+  panel.hidden = false;
+  feather.replace();
+  document.getElementById("modal-body")?.scrollTo(0, 0);
+  document.getElementById("pt-volver").addEventListener("click", cerrarPagoTarjeta);
+
   try {
-    const r = await fetch(`${PAGOS_API}/preferencia`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: carrito.map(i => ({ id: i.id, opcion: i.opcion || null, cantidad: i.cantidad })),
-        zona: zonaElegida,
-        cliente: { nombre: datos?.nombre || "", email: datos?.email || "" },
-      }),
+    await cargarSDKMP();
+    if (panel.hidden) return;
+    const mp = new MercadoPago(MP_PUBLIC_KEY, { locale: "es-AR" });
+    if (brickTarjeta) { try { brickTarjeta.unmount(); } catch {} }
+    document.getElementById("pt-brick").innerHTML = "";
+    brickTarjeta = await mp.bricks().create("cardPayment", "pt-brick", {
+      initialization: { amount: total },
+      customization: {
+        visual: { style: { theme: "dark", customVariables: { baseColor: "#71a150", formBackgroundColor: "#151513" } } },
+        paymentMethods: { maxInstallments: CUOTAS },
+      },
+      callbacks: {
+        onReady: () => {},
+        onError: (e) => console.warn("Brick MP:", e),
+        onSubmit: (formData) => cobrarTarjeta(formData, datos),
+      },
     });
-    const j = await r.json().catch(() => ({}));
-    if (!r.ok || !j.url) throw new Error(j.error || "No pudimos abrir Mercado Pago. Probá de nuevo o pagá por transferencia.");
-    try {
-      localStorage.setItem("pagoMPMatesRico", JSON.stringify({
-        ref: j.ref, mensaje: armarMensaje(datos), total: j.totalTarjeta, carrito, fecha: Date.now(),
-      }));
-    } catch {}
-    location.href = j.url;
   } catch (e) {
-    btn?.classList.remove("cargando");
-    actualizarResumen();
-    mostrarToast(e.message || "No pudimos abrir Mercado Pago. Probá de nuevo.");
+    const b = document.getElementById("pt-brick");
+    if (b) b.innerHTML = `<p class="pt-cargando">No pudimos cargar el formulario de pago. Revisá tu conexión o pagá por transferencia.</p>`;
   }
 }
 
-// Cuando la persona vuelve de Mercado Pago (?mp=ok|error|pendiente)
-// o vuelve sola a la web (en el celu, la app de MP a veces no devuelve al navegador)
-function leerPagoPendiente() {
-  try {
-    const p = JSON.parse(localStorage.getItem("pagoMPMatesRico") || "null");
-    if (p && Date.now() - p.fecha < 24 * 3600 * 1000) return p;
-  } catch {}
-  return null;
+function cerrarPagoTarjeta() {
+  if (brickTarjeta) { try { brickTarjeta.unmount(); } catch {} brickTarjeta = null; }
+  const panel = document.getElementById("pago-tarjeta");
+  if (panel) { panel.hidden = true; panel.innerHTML = ""; }
+  document.getElementById("carrito-items").hidden = false;
+  renderizarCarrito();
 }
 
-async function procesarVueltaMP() {
-  const q = new URLSearchParams(location.search);
-  const estado = q.get("mp");
-  const pend = leerPagoPendiente();
-  if (estado) { try { history.replaceState(null, "", location.pathname); } catch {} }
-
-  if (!estado) { if (pend) verificarPagoPendiente(pend); return; }
-  if (estado === "error") {
-    mostrarToast("El pago no se completó. Podés probar de nuevo o pagar por transferencia.");
-    return;
-  }
-  const paymentId = q.get("payment_id") || q.get("collection_id");
-  let pago = null;
-  try {
-    const url = paymentId && paymentId !== "null"
-      ? `${PAGOS_API}/pago?id=${encodeURIComponent(paymentId)}`
-      : pend ? `${PAGOS_API}/pago?ref=${encodeURIComponent(pend.ref)}` : null;
-    if (url) { const r = await fetch(url); if (r.ok) pago = await r.json(); }
-  } catch {}
-  if (pago?.estado === "approved" || pago?.estado === "pending" || pago?.estado === "in_process") mostrarResultadoMP(pago, pend);
-  else mostrarToast("No pudimos confirmar el pago. Si te lo cobraron, escribinos por WhatsApp.");
+function errorTarjeta(msg) {
+  const el = document.getElementById("pt-error");
+  if (!el) return;
+  el.textContent = msg;
+  el.hidden = !msg;
+  if (msg) el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-let verificandoMP = false;
-async function verificarPagoPendiente(pend, manual = false) {
-  if (verificandoMP) return;
-  verificandoMP = true;
-  try {
-    const r = await fetch(`${PAGOS_API}/pago?ref=${encodeURIComponent(pend.ref)}`);
-    const pago = r.ok ? await r.json() : null;
-    if (pago?.estado === "approved") { mostrarResultadoMP(pago, pend); return; }
-    if (pago?.estado === "rejected") {
-      try { localStorage.removeItem("pagoMPMatesRico"); } catch {}
-      mostrarToast("El pago con tarjeta fue rechazado. Probá con otra tarjeta o pagá por transferencia.");
-      return;
+const MOTIVOS_RECHAZO = {
+  cc_rejected_insufficient_amount: "La tarjeta no tiene saldo o límite suficiente.",
+  cc_rejected_bad_filled_security_code: "El código de seguridad no es correcto.",
+  cc_rejected_bad_filled_date: "La fecha de vencimiento no es correcta.",
+  cc_rejected_bad_filled_card_number: "Revisá el número de la tarjeta.",
+  cc_rejected_bad_filled_other: "Revisá los datos de la tarjeta.",
+  cc_rejected_call_for_authorize: "Tu banco pide que autorices el pago. Llamalos y probá de nuevo.",
+  cc_rejected_card_disabled: "La tarjeta no está habilitada. Llamá a tu banco o probá con otra.",
+  cc_rejected_duplicated_payment: "Ya hiciste un pago igual hace un momento. Fijate en tu Mercado Pago o escribinos.",
+  cc_rejected_high_risk: "Mercado Pago rechazó el pago por seguridad. Probá con otra tarjeta o pagá por transferencia.",
+  cc_rejected_max_attempts: "Llegaste al límite de intentos. Probá con otra tarjeta.",
+};
+
+function cobrarTarjeta(formData, datos) {
+  return new Promise(async (resolve, reject) => {
+    errorTarjeta("");
+    const email = (document.getElementById("pt-email")?.value || "").trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      errorTarjeta("Escribí tu email arriba para recibir el comprobante.");
+      document.getElementById("pt-email")?.focus();
+      reject(); return;
     }
-    if (manual) mostrarToast("Todavía no vemos el pago. Si recién pagaste, esperá unos segundos.", { texto: "Verificar", fn: () => verificarPagoPendiente(pend, true) });
-    else mostrarToast("¿Pagaste con Mercado Pago?", { texto: "Verificar pago", fn: () => verificarPagoPendiente(pend, true) });
-  } catch {
-    if (manual) mostrarToast("No pudimos verificar el pago. Probá de nuevo en un ratito.");
-  } finally { verificandoMP = false; }
+    try {
+      const c = JSON.parse(localStorage.getItem("clienteMatesRico") || "{}");
+      localStorage.setItem("clienteMatesRico", JSON.stringify({ ...c, emailTarjeta: email }));
+    } catch {}
+    try {
+      const r = await fetch(`${PAGOS_API}/pagar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: carrito.map(i => ({ id: i.id, opcion: i.opcion || null, cantidad: i.cantidad })),
+          zona: zonaElegida,
+          cliente: { nombre: datos?.nombre || "", email },
+          tarjeta: { ...formData, payer: { ...(formData.payer || {}), email } },
+        }),
+      });
+      const pago = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(pago.error || "No pudimos procesar la tarjeta. Probá de nuevo.");
+      if (pago.estado === "approved") {
+        resolve();
+        const mensaje = armarMensaje(datos, pago);
+        mostrarPagoAprobado(pago, mensaje);
+        return;
+      }
+      reject();
+      errorTarjeta(MOTIVOS_RECHAZO[pago.detalle] || "La tarjeta fue rechazada. Probá con otra o pagá por transferencia.");
+    } catch (e) {
+      reject();
+      errorTarjeta(e.message || "No pudimos procesar la tarjeta. Probá de nuevo.");
+    }
+  });
 }
 
-// Si vuelve a la pestaña (desde la app de MP), se fija solo
-let ultimoChequeoMP = 0;
-function chequearAlVolver() {
-  const pend = leerPagoPendiente();
-  if (!pend || document.hidden || Date.now() - ultimoChequeoMP < 4000) return;
-  ultimoChequeoMP = Date.now();
-  verificarPagoPendiente(pend);
-}
-document.addEventListener("visibilitychange", chequearAlVolver);
-window.addEventListener("pageshow", (e) => { if (e.persisted) chequearAlVolver(); });
-
-function mostrarResultadoMP(pago, pend) {
-  const aprobado = pago?.estado === "approved";
-  const base = pend?.mensaje || "¡Hola! Hice un pedido desde la web y lo pagué con Mercado Pago.";
-  const linea = aprobado
-    ? `✅ PAGADO con Mercado Pago · operación N° ${pago.id} · ${fmt(pago.monto)}${pago.cuotas > 1 ? ` en ${pago.cuotas} cuotas` : ""}`
-    : `⏳ Pago PENDIENTE en Mercado Pago${pago?.id ? ` · operación N° ${pago.id}` : ""}`;
-  const mensaje = `${base}\n\n${linea}${pend?.ref ? `\nPedido: ${pend.ref}` : ""}`;
+function mostrarPagoAprobado(pago, mensaje) {
   const link = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
-
-  if (aprobado) {
-    carrito = [];
-    actualizarBadge();
-    try { localStorage.removeItem("pagoMPMatesRico"); } catch {}
-  }
+  if (brickTarjeta) { try { brickTarjeta.unmount(); } catch {} brickTarjeta = null; }
+  const panel = document.getElementById("pago-tarjeta");
+  if (panel) { panel.hidden = true; panel.innerHTML = ""; }
+  carrito = [];
+  actualizarBadge();
+  const checkout = document.getElementById("checkout");
+  if (checkout) checkout.hidden = true;
 
   const exito = document.getElementById("carrito-exito");
   if (!exito) return;
-  abrirCarritoLateral();
   exito.innerHTML = `
-    <div class="exito-icon"><i data-feather="${aprobado ? "check" : "clock"}"></i></div>
-    <h4>${aprobado ? "¡Pago aprobado!" : "Tu pago está pendiente"}</h4>
-    <p>${aprobado
-      ? "Último paso: mandanos el pedido por WhatsApp así coordinamos la entrega."
-      : "Mercado Pago lo está procesando. Mandanos el pedido por WhatsApp y te avisamos apenas se acredite."}</p>
-    ${aprobado ? `
-      <div class="exito-pago">
-        <p class="exito-label">Pagaste</p>
-        <p class="exito-total">${fmt(pago.monto)}</p>
-        <p class="exito-nota">${pago.cuotas > 1 ? `En ${pago.cuotas} cuotas sin interés · ` : ""}Operación N° ${pago.id}</p>
-      </div>` : ""}
+    <div class="exito-icon"><i data-feather="check"></i></div>
+    <h4>¡Pago aprobado!</h4>
+    <p>Último paso: mandanos el pedido por WhatsApp así coordinamos la entrega.</p>
+    <div class="exito-pago">
+      <p class="exito-label">Pagaste</p>
+      <p class="exito-total">${fmt(pago.monto)}</p>
+      <p class="exito-nota">${pago.cuotas > 1 ? `En ${pago.cuotas} cuotas sin interés · ` : ""}Operación N° ${pago.id}</p>
+    </div>
     <a class="btn btn-primary btn-full" id="btn-exito-wa" href="${link}" target="_blank" rel="noopener"><i data-feather="message-circle"></i> Enviar pedido por WhatsApp</a>
     <button class="btn btn-ghost btn-full" id="btn-exito-cerrar">Seguir mirando</button>`;
   exito.hidden = false;
@@ -1731,6 +1767,7 @@ function mostrarResultadoMP(pago, pend) {
   const footer = document.getElementById("modal-footer");
   if (footer) footer.style.display = "none";
   document.getElementById("btn-exito-cerrar")?.addEventListener("click", cerrarCarrito);
+  document.getElementById("modal-body")?.scrollTo(0, 0);
   feather.replace();
 }
 

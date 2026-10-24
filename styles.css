@@ -1648,3 +1648,20 @@ body.con-tarjeta .pago-opciones { grid-template-columns:1fr 1fr !important; }
 .footer-legal a { color:rgba(243,230,204,0.6); text-decoration:underline; text-underline-offset:3px; font-size:0.78rem; }
 .footer-legal a:hover { color:var(--c-beige); }
 .btn-arrepentimiento { border:1px solid rgba(243,230,204,0.35); border-radius:20px; padding:5px 12px; text-decoration:none !important; }
+
+/* Panel de pago con tarjeta */
+.pago-tarjeta { display:flex; flex-direction:column; gap:12px; padding:4px 0 20px; }
+.pago-tarjeta[hidden] { display:none; }
+.pt-volver { align-self:flex-start; background:none; border:0; color:var(--gris-osc); font:inherit; font-size:0.85rem; cursor:pointer; padding:4px 0; }
+.pt-tit { font-family:var(--font-display); font-size:1.6rem; color:var(--c-beige); margin:0; }
+.pt-total { display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--gris-claro); padding-top:12px; }
+.pt-total span { color:var(--gris-osc); font-size:0.9rem; }
+.pt-total strong { font-size:1.5rem; color:var(--c-beige); font-variant-numeric:lining-nums tabular-nums; }
+.pt-cuotas { margin:-6px 0 4px; font-size:0.82rem; color:var(--c-verde-cl); text-align:right; }
+.pt-label { font-size:0.78rem; color:var(--gris-osc); }
+.pt-brick { min-height:120px; }
+.pt-cargando { font-size:0.85rem; color:var(--gris-med); text-align:center; padding:30px 0; }
+.pt-error { background:rgba(220,80,60,.12); border:1px solid rgba(220,80,60,.45); color:#f2b8ad; border-radius:10px; padding:10px 12px; font-size:0.85rem; line-height:1.45; }
+.pt-error[hidden] { display:none; }
+.pt-seguro { font-size:0.74rem; color:var(--gris-med); display:flex; gap:6px; align-items:center; justify-content:center; text-align:center; }
+.pt-seguro svg { width:13px; height:13px; flex-shrink:0; }
