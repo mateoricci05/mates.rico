@@ -126,7 +126,7 @@
         </li>
         <li class="paso">
           <span class="paso-num">2</span>
-          <div><strong>Agregá al pedido</strong><p>Elegí tu zona y pagá por transferencia o en efectivo.</p></div>
+          <div><strong>Agregá al pedido</strong><p data-texto-tarjeta="Elegí tu zona y pagá por transferencia, efectivo o tarjeta en cuotas.">Elegí tu zona y pagá por transferencia o en efectivo.</p></div>
         </li>
         <li class="paso">
           <span class="paso-num">3</span>
@@ -303,11 +303,19 @@
               <div class="pagos-row-borde" style="background:#3a6b35;"></div>
               <div class="pagos-row-info">
                 <p class="pagos-row-nombre">Transferencia bancaria</p>
-                <p class="pagos-row-desc">Sin recargo · en la zona o envíos por correo</p>
+                <p class="pagos-row-desc" data-texto-tarjeta="22% OFF sobre el precio de lista · en la zona o envíos por correo">Sin recargo · en la zona o envíos por correo</p>
               </div>
               <span class="pagos-badge pagos-badge--verde">Recomendado</span>
             </div>
             <div class="pagos-alias" data-alias></div>
+            <div class="pagos-row" data-solo-tarjeta hidden>
+              <div class="pagos-row-borde" style="background:#009ee3;"></div>
+              <div class="pagos-row-info">
+                <p class="pagos-row-nombre">Tarjeta de crédito o débito</p>
+                <p class="pagos-row-desc">Hasta 3 cuotas sin interés con Mercado Pago · a todo el país</p>
+              </div>
+              <span class="pagos-badge pagos-badge--mp">Cuotas</span>
+            </div>
             <div class="pagos-row pagos-row--last">
               <div class="pagos-row-borde" style="background:#c8a84b;"></div>
               <div class="pagos-row-info">
@@ -346,8 +354,8 @@
                 <i data-feather="credit-card"></i>
               </div>
               <div>
-                <p class="garantia-nombre">Sin adelantos</p>
-                <p class="garantia-desc">Pagás una vez que el pedido está acordado.</p>
+                <p class="garantia-nombre" data-texto-tarjeta="Pagás como quieras">Sin adelantos</p>
+                <p class="garantia-desc" data-texto-tarjeta="Transferencia, efectivo en la zona o tarjeta en hasta 3 cuotas sin interés.">Pagás una vez que el pedido está acordado.</p>
               </div>
             </div>
 
@@ -377,6 +385,10 @@
       </div>
     </div>
     <div class="footer-bottom">
+      <p class="footer-legal" data-solo-tarjeta hidden>
+        <a href="https://wa.me/5493543650854?text=Hola%2C%20quiero%20cancelar%20mi%20compra%20%28bot%C3%B3n%20de%20arrepentimiento%29.%0ANombre%3A%0AFecha%20de%20compra%3A%0AProducto%3A" target="_blank" rel="noopener" class="btn-arrepentimiento">Botón de arrepentimiento</a>
+        <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario" target="_blank" rel="noopener">Defensa del Consumidor</a>
+      </p>
       <p>© 2026 mates.rico — Todos los derechos reservados · Río Ceballos, Córdoba</p>
     </div>
   </footer>
@@ -532,8 +544,10 @@
             <div class="pago-opciones">
               <button class="pago-opcion" data-pago="Transferencia">Transferencia</button>
               <button class="pago-opcion" data-pago="Efectivo">Efectivo</button>
+              <button class="pago-opcion pago-opcion--mp" data-pago="Mercado Pago" hidden>Tarjeta · 3 cuotas sin interés</button>
             </div>
             <div id="checkout-alias" data-alias></div>
+            <p id="checkout-mp" class="checkout-mp" hidden>Pagás con tarjeta de crédito o débito en Mercado Pago, hasta 3 cuotas sin interés. Te lleva a su página segura y después volvés acá.</p>
             <p class="checkout-nota">Te confirmamos stock por WhatsApp antes de que pagues.</p>
           </div>
         </div>
@@ -544,6 +558,7 @@
           <div class="resumen-fila"><span>Productos</span><span id="res-subtotal">$0</span></div>
           <div class="resumen-fila"><span>Envío</span><span id="res-envio">—</span></div>
           <div class="resumen-fila resumen-total"><span>Total</span><strong id="res-total">$0</strong></div>
+          <p class="resumen-alt" id="res-alt" hidden></p>
           <p class="resumen-nota" id="res-nota"></p>
         </div>
         <button class="btn btn-primary btn-full" id="btn-finalizar">
