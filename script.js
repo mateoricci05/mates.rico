@@ -17,8 +17,7 @@ const productos = [
     nombre: "Imperial Algarrobo",
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/imperial_algarrobo_nuevo.jpg",
     categoria: "Mates",
     features: [
@@ -34,8 +33,7 @@ const productos = [
     nombre: "Imperial Negro — Guarda Cincelada Plateada",
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 30000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
@@ -117,7 +115,7 @@ const productos = [
     nombre: "Mate Coquito",
     descripcion: "Coquito de calabaza curada, versión normal, sin apliques. Cómodo, liviano y con la forma de coco tradicional. Bombilla no incluida.",
     precio: 23000,
-    stock: 2,
+    stock: 5,
     imagen: "img/mate_coquito.jpg",
     categoria: "Mates",
     features: [
@@ -248,8 +246,7 @@ const productos = [
     nombre: "Torpedo Avejentado — Sol de Mayo, Cincelado al Lacre",
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
     categoria: "Mates",
     features: [
@@ -265,8 +262,7 @@ const productos = [
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
     precio: 40000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
     features: [
@@ -472,7 +468,7 @@ const productos = [
     nombre: "Bombilla Pico de Loro — Acero Inoxidable",
     descripcion: "Bombilla pico de loro de 16cm en acero inoxidable. El filtro que usan los materos de verdad — no tapa, no se dobla, dura años. Compatible con cualquier mate.",
     precio: 5000,
-    stock: 0,
+    stock: 5,
     imagen: "img/bombilla_acero.jpg",
     categoria: "Bombillas",
     features: [
@@ -488,8 +484,7 @@ const productos = [
     nombre: "Bombillón Obrero — 100% Alpaca",
     descripcion: "Bombillón de 16cm, 100% alpaca, con cuerpo trenzado y filtro cuchara. Un clásico robusto para el mate de todos los días.",
     precio: 32000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/bombillon_obrero.jpg",
     categoria: "Bombillas",
     features: [
@@ -505,7 +500,7 @@ const productos = [
     nombre: "Bombillón Oro — Alpaca y Bronce",
     descripcion: "Bombillón de 16cm, combinación de alpaca y bronce, con cuerpo trenzado y filtro cuchara. Un brillo distinto para destacar en la ronda de mate.",
     precio: 32000,
-    stock: 0,
+    stock: 5,
     imagen: "img/bombillon_oro.jpg",
     categoria: "Bombillas",
     features: [
@@ -557,8 +552,7 @@ const productos = [
     nombre: "Canasta Cuero Crudo",
     descripcion: "Canasta de mano en cuero ancho de Laguna, forrada en gamuza por dentro. Asas trenzadas a mano, resistentes y con mucho estilo. Ideal para llevar todo el set de mate junto — yerba, bombilla y termo — con onda y prolijidad.",
     precio: 70000,
-    stock: 0,
-    llega: "2026-10-26",          // ← fecha en que entra (se muestra en Próximamente)
+    stock: 5,
     imagen: "img/canasta_cuero_crudo.jpg",
     categoria: "Accesorios",
     features: [
@@ -583,6 +577,22 @@ const productos = [
       "Mantiene temperatura por horas",
       "Tapa rosca segura",
       "Liviano y resistente",
+    ],
+  },
+  {
+    id: 50,
+    nombre: "Termo 1L Acero Inoxidable — Full Negro",
+    descripcion: "Termo de 1 litro en acero inoxidable, todo negro. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
+    precio: 28000,
+    stock: 5,
+    imagen: "img/termo_1l_negro.jpg",
+    categoria: "Accesorios",
+    features: [
+      "Capacidad 1 litro",
+      "Acero inoxidable doble pared",
+      "Mantiene temperatura por horas",
+      "Pico cebador y tapa rosca",
+      "Color full negro",
     ],
   },
   {
