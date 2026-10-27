@@ -261,7 +261,7 @@ const productos = [
     id: 15,
     nombre: "Mate Ranchero",
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
-    precio: 40000,
+    precio: 37000,
     stock: 5,
     imagen: "img/mate_ranchero.jpg",
     categoria: "Mates",
