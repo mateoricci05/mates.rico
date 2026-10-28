@@ -568,7 +568,7 @@ const productos = [
     nombre: "Matera Color Negro",
     descripcion: "Matera de color negro. Costuras a mano, broches metálicos. Todo lo que necesitás para llevar tu ritual a cualquier lugar con estilo.",
     precio: 25000,
-    stock: 2,
+    stock: 0,
     imagen: "img/kit_matera_negra.jpg",
     categoria: "Accesorios",
     features: [
