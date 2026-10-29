@@ -197,7 +197,7 @@ const productos = [
     nombre: "Imperial Negro — Guarda Cincelada Plateada",
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 30000,
-    stock: 5,
+    stock: 0,
     imagen: "img/imperial_clasico.jpg",
     categoria: "Mates",
     features: [
@@ -370,7 +370,7 @@ const productos = [
     nombre: "Latas Baldo",
     descripcion: "Lata metálica de Yerba Baldo, edición coleccionable. Diseño clásico con ventana medidora de nivel y guía de preparación impresa. Ideal para tener en la mesada o para regalar.",
     precio: 23000,
-    stock: 2,
+    stock: 0,
     imagen: "img/latas_baldo.jpg",
     categoria: "Yerbas",
     features: [
