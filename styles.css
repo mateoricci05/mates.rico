@@ -1654,3 +1654,9 @@ body.con-tarjeta .pago-opciones { grid-template-columns:1fr 1fr !important; }
 .aviso-pago-btns { display:flex; gap:8px; }
 .aviso-pago-si { flex:1; background:var(--c-verde); color:#0b0b0a; border:0; border-radius:10px; padding:11px; font:inherit; font-weight:600; cursor:pointer; }
 .aviso-pago-no { background:none; border:1px solid var(--gris-claro); color:var(--gris-osc); border-radius:10px; padding:11px 14px; font:inherit; cursor:pointer; }
+
+/* Por encargo: mismos colores que el resto de la tienda */
+.badge-encargo { background:rgba(11,11,10,.78) !important; color:var(--c-beige) !important; border:1px solid rgba(243,230,204,.35); }
+.btn-encargar { text-decoration:none; text-align:center; display:inline-flex; align-items:center; justify-content:center; }
+.mp-encargo { margin:6px 0 4px; font-size:0.88rem; line-height:1.5; color:var(--gris-osc); background:var(--verde-suave); border:1px solid var(--gris-claro); border-radius:10px; padding:10px 12px; }
+.mp-encargo strong { color:var(--c-beige); }

@@ -417,8 +417,9 @@ const productos = [
     id: 24,
     nombre: "Yerba Baldo 5kg",
     descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
-    precio: 49500,
+    precio: 55000,
     stock: 0,
+    encargo: true,   // ← "Por encargo": no hay stock, se pide especialmente al cliente
     imagen: "img/baldo_5kg.jpg",
     categoria: "Yerbas",
     features: [
@@ -854,9 +855,9 @@ function renderizarProductos(categoria = "Todos") {
   // Primero lo que hay. Lo que no tiene stock aparece al final como "Próximamente".
   const visibles = productos.filter(p => !p.soloPrueba || modoTarjeta);
   const deCategoria = categoria === "Todos" ? visibles : visibles.filter(p => p.categoria === categoria);
-  const disponibles = deCategoria.filter(p => p.stock > 0)
+  const disponibles = deCategoria.filter(p => p.stock > 0 || p.encargo)
     .sort((a, b) => (!!b.soloPrueba - !!a.soloPrueba) || (tieneDescuento(b) - tieneDescuento(a)));
-  const proximamente = deCategoria.filter(p => p.stock === 0 && !p.esDestacado)
+  const proximamente = deCategoria.filter(p => p.stock === 0 && !p.encargo && !p.esDestacado)
     .sort((a, b) => !!llegaTexto(b) - !!llegaTexto(a));
 
   if (disponibles.length === 0 && proximamente.length === 0) {
@@ -882,7 +883,7 @@ function renderizarProductos(categoria = "Todos") {
 }
 
 function crearCard(p, i) {
-  const pronto = p.stock === 0;
+  const pronto = p.stock === 0 && !p.encargo;
   const card = document.createElement("div");
   card.className = `producto-card reveal${pronto ? " pronto" : ""}`;
   card.style.transitionDelay = `${Math.min(i, 6) * 50}ms`;
@@ -891,7 +892,8 @@ function crearCard(p, i) {
   card.tabIndex = 0;
 
   let badgeStock = "";
-  if (pronto) badgeStock = llegaTexto(p)
+  if (p.encargo && p.stock === 0) badgeStock = `<span class="badge-stock badge-encargo">Por encargo</span>`;
+  else if (pronto) badgeStock = llegaTexto(p)
     ? `<span class="badge-stock badge-llega">Llega el ${llegaTexto(p)}</span>`
     : `<span class="badge-stock badge-pronto">Próximamente</span>`;
   else if (tieneDescuento(p)) badgeStock = `<span class="badge-stock badge-promo">${porcentajeDe(p)}% OFF</span>`;
@@ -909,7 +911,9 @@ function crearCard(p, i) {
       <p class="producto-desc">${recortar(p.descripcion, 85)}</p>
       <div class="producto-footer">
         <span class="producto-precio">${precioHtml(p)}</span>
-        ${pronto
+        ${p.encargo && p.stock === 0
+          ? `<a class="btn-comprar btn-encargar" href="${linkEncargo(p)}" target="_blank" rel="noopener">Encargar</a>`
+          : pronto
           ? `<a class="btn-comprar btn-avisame" href="${linkAvisame(p)}" target="_blank" rel="noopener">Avisame</a>`
           : p.opciones
             ? `<button class="btn-comprar btn-elegir">${p.opciones.titulo.includes("grabado") ? "Elegir grabado" : "Elegir"}</button>`
@@ -980,6 +984,11 @@ function llegaTexto(p) {
   return `${+d}/${+m}`;
 }
 
+function linkEncargo(p) {
+  const txt = `¡Hola! Quiero encargar ${p.nombre} (${fmt(precioDe(p))} por transferencia). ¿Para cuándo la podrías tener?`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(txt)}`;
+}
+
 function linkAvisame(p) {
   const txt = llegaTexto(p)
     ? `¡Hola! Vi en la web que el ${p.nombre} llega el ${llegaTexto(p)}. ¿Me avisás apenas lo tengas? ¡Gracias!`
@@ -1010,7 +1019,8 @@ function abrirModalProducto(id) {
   const inner = document.getElementById("modal-producto-inner");
   if (!overlay || !inner) return;
 
-  const agotado = p.stock === 0;
+  const encargo = p.encargo && p.stock === 0;
+  const agotado = p.stock === 0 && !encargo;
   const stockBajo = p.mostrarStock && p.stock > 0;
   const stockLabel = agotado
     ? "Próximamente"
@@ -1027,6 +1037,7 @@ function abrirModalProducto(id) {
       <h2 class="mp-nombre">${p.nombre}</h2>
       <p class="mp-precio">${precioHtml(p)}</p>
       ${tieneDescuento(p) ? `<p class="mp-promo">${PROMO.titulo} · ${porcentajeDe(p)}% OFF · <span data-cuenta-promo></span></p>` : ""}
+      ${encargo ? `<p class="mp-encargo"><strong>Por encargo</strong> · La pedimos especialmente para vos y te la tenemos en pocos días. Escribinos y coordinamos.</p>` : ""}
       ${agotado ? `<p class="mp-pronto">${llegaTexto(p) ? `Llega el ${llegaTexto(p)} · avisame y te escribimos` : "Próximamente · vuelve pronto"}</p>` : ""}
       <p class="mp-desc">${p.descripcion}</p>
       ${p.opciones && !agotado ? `
@@ -1045,10 +1056,12 @@ function abrirModalProducto(id) {
         ${p.features.map(f => `
           <div class="mp-feature"><div class="mp-feature-dot"></div><span>${f}</span></div>`).join("")}
       </div>
-      ${agotado ? "" : `<p class="mp-stock ${stockBajo ? "bajo" : ""}">Stock: ${stockLabel}</p>`}
+      ${agotado || encargo ? "" : `<p class="mp-stock ${stockBajo ? "bajo" : ""}">Stock: ${stockLabel}</p>`}
       <div class="mp-cta">
         <span class="mp-cta-precio">${fmt(precioDe(p))}</span>
-        ${agotado
+        ${encargo
+          ? `<a class="btn btn-primary" href="${linkEncargo(p)}" target="_blank" rel="noopener"><i data-feather="message-circle"></i> Encargar por WhatsApp</a>`
+          : agotado
           ? `<a class="btn btn-outline" href="${linkAvisame(p)}" target="_blank" rel="noopener"><i data-feather="bell"></i> Avisame cuando vuelva</a>`
           : `<button class="btn btn-primary" id="mp-btn-agregar">Agregar al pedido</button>`}
       </div>
