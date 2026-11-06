@@ -133,7 +133,7 @@ const productos = [
     descripcion: "Camionero de calabaza curada con base de cuero crudo natural, sin curtir ni teñir. Boca ancha, forma criolla clásica. Bombilla no incluida.",
     precio: 24000,
     stock: 1,
-    imagen: "img/camionero_criollo_natural.jpg",
+    imagen: "img/camionero_criollo_v3.jpg",
     categoria: "Mates",
     features: [
       "Calabaza 100%",
