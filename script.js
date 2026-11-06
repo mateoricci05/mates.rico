@@ -35,7 +35,7 @@ const productos = [
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
     stock: 5,
-    imagen: "img/torpedo_avejentado_v2.jpg",
+    imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
     categoria: "Mates",
     features: [
       "Forma torpedo tradicional",
@@ -101,7 +101,7 @@ const productos = [
     descripcion: "Torpedo uruguayo de calabaza negra con guarda cincelada plateada y apliques en bronce dorado. La combinación de plata y bronce le da un carácter único. Bombilla no incluida.",
     precio: 54000,
     stock: 1,
-    imagen: "img/torpedo_uruguayo_bronce.jpg",
+    imagen: "img/torpedo_uruguayo_v2.jpg",
     categoria: "Mates",
     features: [
       "Forma torpedo uruguayo",
