@@ -35,7 +35,7 @@ const productos = [
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
     stock: 5,
-    imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
+    imagen: "img/torpedo_avejentado_v2.jpg",
     categoria: "Mates",
     features: [
       "Forma torpedo tradicional",
@@ -149,7 +149,7 @@ const productos = [
     descripcion: "Camionero de calabaza curada con base de cuero crudo natural, sin curtir ni teñir. Boca ancha, forma criolla clásica. Bombilla no incluida.",
     precio: 24000,
     stock: 1,
-    imagen: "img/camionero_criollo_natural.jpg",
+    imagen: "img/camionero_criollo_v2.jpg",
     categoria: "Mates",
     features: [
       "Calabaza 100%",
@@ -182,7 +182,7 @@ const productos = [
     descripcion: "Imperial de madera de algarrobo con guarda de acero inoxidable. Veta natural única en cada pieza — ningún mate es igual a otro. Disponible en tamaño chico y mediano.",
     precio: 30000,
     stock: 5,
-    imagen: "img/imperial_algarrobo_nuevo.jpg",
+    imagen: "img/imperial_algarrobo_v2.jpg",
     categoria: "Mates",
     features: [
       "Madera de algarrobo auténtica",
@@ -198,7 +198,7 @@ const productos = [
     descripcion: "Imperial de calabaza en negro mate con guarda cincelada plateada. Cuerpo oscuro, detalles finos. Bombilla no incluida.",
     precio: 30000,
     stock: 0,
-    imagen: "img/imperial_clasico.jpg",
+    imagen: "img/imperial_negro_v2.jpg",
     categoria: "Mates",
     features: [
       "Calabaza en negro mate",
@@ -231,7 +231,7 @@ const productos = [
     descripcion: "Coquito de calabaza curada, versión normal, sin apliques. Cómodo, liviano y con la forma de coco tradicional. Bombilla no incluida.",
     precio: 23000,
     stock: 5,
-    imagen: "img/mate_coquito.jpg",
+    imagen: "img/mate_coquito_v2.jpg",
     categoria: "Mates",
     features: [
       "Forma de coco tradicional",
@@ -263,7 +263,7 @@ const productos = [
     descripcion: "Mate ranchero de madera con terminación bicolor natural. Cada pieza tiene su propia veta y manchas únicas — ningún ranchero es igual al otro. Bombilla no incluida.",
     precio: 37000,
     stock: 5,
-    imagen: "img/mate_ranchero.jpg",
+    imagen: "img/mate_ranchero_v2.jpg",
     categoria: "Mates",
     features: [
       "Madera con terminación bicolor",
