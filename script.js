@@ -128,28 +128,12 @@ const productos = [
     ],
   },
   {
-    id: 37,
-    nombre: "Camionero Cuero Crudo — Virola Volteada con Doble Anillo",
-    descripcion: "Camionero de calabaza con cuero crudo natural, virola plateada volteada con doble anillo cincelado. Una pieza de carácter único, con el color natural del cuero sin curtir. Bombilla no incluida.",
-    precio: 69000,
-    stock: 1,
-    imagen: "img/camionero_cuero_crudo_doble_anillo.jpg",
-    categoria: "Mates",
-    features: [
-      "Cuero crudo natural sin curtir",
-      "Virola plateada volteada",
-      "Doble anillo cincelado",
-      "Forma camionero clásica",
-      "Bombilla no incluida",
-    ],
-  },
-  {
     id: 43,
     nombre: "Camionero Criollo",
     descripcion: "Camionero de calabaza curada con base de cuero crudo natural, sin curtir ni teñir. Boca ancha, forma criolla clásica. Bombilla no incluida.",
     precio: 24000,
     stock: 1,
-    imagen: "img/camionero_criollo_v2.jpg",
+    imagen: "img/camionero_criollo_natural.jpg",
     categoria: "Mates",
     features: [
       "Calabaza 100%",
@@ -166,7 +150,7 @@ const productos = [
     precio: 46000,
     descuento: 4000,               // ← promo de lanzamiento
     stock: 3,
-    imagen: "img/camionero_criollo_cincelado.jpg",
+    imagen: "img/camionero_cincelado_v2.jpg",
     categoria: "Mates",
     features: [
       "Calabaza curada",
@@ -206,23 +190,6 @@ const productos = [
       "Base tipo pata clásica",
       "Acabado premium",
       "Bombilla no incluida",
-    ],
-  },
-  {
-    id: 8,
-    nombre: "Imperial Alpaca Grabado Boca Juniors",
-    descripcion: "Imperial de calabaza con cuero alpaca y grabado exclusivo Boca Juniors. La pieza más premium para el fanático xeneize. Solo 1 unidad disponible. Bombilla no incluida.",
-    precio: 50000,
-    descuento: 10000,               // ← promo de lanzamiento
-    stock: 1,
-    imagen: "img/imperial_alpaca_boca.jpg",
-    categoria: "Mates",
-    features: [
-      "Imperial calabaza con alpaca",
-      "Grabado Boca Juniors exclusivo",
-      "Edición especial",
-      "Bombilla no incluida",
-      "Solo 1 unidad disponible",
     ],
   },
   {
