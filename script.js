@@ -321,7 +321,7 @@ const productos = [
     nombre: "Yerba Baldo 1kg",
     descripcion: "Yerba Baldo 1kg — sabor equilibrado, aroma intenso y cebadas largas. La preferida por los materos exigentes.",
     precio: 11500,
-    stock: 0,
+    stock: 5,
     imagen: "img/yerba_baldo.jpg",
     categoria: "Yerbas",
     features: [
@@ -370,7 +370,7 @@ const productos = [
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
     precio: 14500,
-    stock: 0,
+    stock: 5,
     imagen: "img/yerba_esmeralda.jpg",
     categoria: "Yerbas",
     features: [
