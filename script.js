@@ -349,23 +349,6 @@ const productos = [
     ],
   },
   {
-    id: 24,
-    nombre: "Yerba Baldo 5kg",
-    descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
-    precio: 55000,
-    stock: 0,
-    encargo: true,   // ← "Por encargo": no hay stock, se pide especialmente al cliente
-    imagen: "img/baldo_5kg.jpg",
-    categoria: "Yerbas",
-    features: [
-      "Yerba Baldo seleccionada",
-      "Formato familiar 5kg",
-      "Reservas naturales del Brasil",
-      "Sabor equilibrado y aroma intenso",
-      "Bolsa resellable",
-    ],
-  },
-  {
     id: 33,
     nombre: "Yerba Esmeralda 1kg",
     descripcion: "Yerba Esmeralda Super Extra tipo P.U.1, sin adición de azúcar. Producida y cosechada de forma sustentable. Cebadas parejas y sabor limpio.",
@@ -395,6 +378,23 @@ const productos = [
       "Envase biopack sustentable",
       "Yerba mate saborizada",
       "Peso neto 500g",
+    ],
+  },
+  {
+    id: 24,
+    nombre: "Yerba Baldo 5kg",
+    descripcion: "Yerba Baldo en formato familiar de 5kg. Procedente de reservas naturales del Brasil. El mismo sabor equilibrado de siempre, en el tamaño que dura.",
+    precio: 55000,
+    stock: 0,
+    encargo: true,   // ← "Por encargo": no hay stock, se pide especialmente al cliente
+    imagen: "img/baldo_5kg.jpg",
+    categoria: "Yerbas",
+    features: [
+      "Yerba Baldo seleccionada",
+      "Formato familiar 5kg",
+      "Reservas naturales del Brasil",
+      "Sabor equilibrado y aroma intenso",
+      "Bolsa resellable",
     ],
   },
 
