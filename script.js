@@ -198,6 +198,7 @@ const productos = [
     descripcion: "Coquito de calabaza curada, versión normal, sin apliques. Cómodo, liviano y con la forma de coco tradicional. Bombilla no incluida.",
     precio: 23000,
     stock: 5,
+    llega: "2026-11-14",
     imagen: "img/mate_coquito_v2.jpg",
     categoria: "Mates",
     features: [
@@ -421,6 +422,7 @@ const productos = [
     descripcion: "Bombillón de 16cm, 100% alpaca, con cuerpo trenzado y filtro cuchara. Un clásico robusto para el mate de todos los días.",
     precio: 32000,
     stock: 0,
+    llega: "2026-11-14",
     imagen: "img/bombillon_obrero.jpg",
     categoria: "Bombillas",
     features: [
