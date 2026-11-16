@@ -522,7 +522,7 @@ const productos = [
     nombre: "Termo 1L Acero Inoxidable — Full Negro",
     descripcion: "Termo de 1 litro en acero inoxidable, todo negro. Mantiene el agua caliente por horas. El compañero ideal para matear donde vayas.",
     precio: 28000,
-    stock: 5,
+    stock: 0,
     imagen: "img/termo_1l_negro.jpg",
     categoria: "Accesorios",
     features: [
