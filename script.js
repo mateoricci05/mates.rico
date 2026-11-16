@@ -13,6 +13,22 @@ const productos = [
 
   // ─── MATES ───────────────────────────────────────────
   {
+    id: 51,
+    nombre: "Torpedo Avejentado — Virola Ancha Premium",
+    descripcion: "Torpedo de calabaza avejentada con virola ancha de alpaca cincelada a mano con hojas, y base con patas forradas. Tiene boca ancha, ideal para cebar cómodo y armar bien la montañita. Una pieza premium para lucirse en la ronda. Bombilla no incluida.",
+    precio: 85000,
+    stock: 3,
+    imagen: "img/torpedo_avejentado_virola_ancha.jpg",
+    categoria: "Mates",
+    features: [
+      "Forma torpedo tradicional",
+      "Calabaza avejentada",
+      "Virola ancha de alpaca cincelada",
+      "Boca ancha",
+      "Bombilla no incluida",
+    ],
+  },
+  {
     id: 41,
     nombre: "Torpedo Criollo — Base Canasta Premium, Cincelado al Lacre",
     descripcion: "Torpedo criollo con base canasta premium y virola cincelada al lacre. Terminación de alta gama, con guarda plateada trabajada a mano. Bombilla no incluida.",
@@ -449,6 +465,22 @@ const productos = [
       "Compatible con cualquier mate",
     ],
   },
+  {
+    id: 53,
+    nombre: "Bombillón Trenzado — 100% Alpaca",
+    descripcion: "Bombillón de alpaca 100% con cuerpo trenzado, virolas labradas y filtro cuchara. Pico ancho y cómodo, no se tapa. Un clásico que dura toda la vida.",
+    precio: 31000,
+    stock: 2,
+    imagen: "img/bombillon_trenzado_alpaca.jpg",
+    categoria: "Bombillas",
+    features: [
+      "100% alpaca",
+      "Cuerpo trenzado",
+      "Virolas labradas",
+      "Filtro tipo cuchara",
+      "Compatible con cualquier mate",
+    ],
+  },
 
   {
     id: 42,
@@ -499,6 +531,21 @@ const productos = [
       "Asas trenzadas a mano",
       "Ideal para llevar el set de mate completo",
       "Pieza única, hecha a mano",
+    ],
+  },
+  {
+    id: 52,
+    nombre: "Yerbera de Gamuza — Sol de Mayo",
+    descripcion: "Yerbera de gamuza con el Sol de Mayo grabado y cierre. Entran 250g de yerba: ideal para llevar en la matera, el auto o la mochila sin que se te desparrame nada.",
+    precio: 14000,
+    stock: 3,
+    imagen: "img/yerbera_gamuza_sol_de_mayo.jpg",
+    categoria: "Accesorios",
+    features: [
+      "Capacidad: 250g de yerba",
+      "Gamuza con Sol de Mayo grabado",
+      "Cierre para que no se vuelque",
+      "Liviana, ideal para llevar",
     ],
   },
   {
