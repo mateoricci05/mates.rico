@@ -51,7 +51,7 @@ const productos = [
     descripcion: "Torpedo de calabaza en negro mate, con virola plateada cincelada con motivos florales. Elegante y con mucho carácter. Bombilla no incluida.",
     precio: 48000,
     descuento: 3000,               // ← promo de lanzamiento
-    stock: 2,
+    stock: 0,
     imagen: "img/torpedo_negro.jpg",
     categoria: "Mates",
     features: [
