@@ -50,7 +50,7 @@ const productos = [
     nombre: "Torpedo Avejentado — Sol de Mayo, Cincelado al Lacre",
     descripcion: "Torpedo de calabaza avejentada con virola plateada cincelada al lacre y aplique de Sol de Mayo en bronce. Una pieza con identidad bien argentina. Bombilla no incluida.",
     precio: 60000,
-    stock: 5,
+    stock: 0,
     imagen: "img/torpedo_avejentado_sol_de_mayo.jpg",
     categoria: "Mates",
     features: [
@@ -470,7 +470,7 @@ const productos = [
     nombre: "Bombillón Trenzado — 100% Alpaca",
     descripcion: "Bombillón de alpaca 100% con cuerpo trenzado, virolas labradas y filtro cuchara. Pico ancho y cómodo, no se tapa. Un clásico que dura toda la vida.",
     precio: 31000,
-    stock: 2,
+    stock: 0,
     imagen: "img/bombillon_trenzado_alpaca.jpg",
     categoria: "Bombillas",
     features: [
