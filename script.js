@@ -414,6 +414,21 @@ const productos = [
       "Bolsa resellable",
     ],
   },
+  {
+    id: 52,
+    nombre: "Yerbera de Gamuza — Sol de Mayo",
+    descripcion: "Yerbera de gamuza con el Sol de Mayo grabado y cierre. Entran 250g de yerba: ideal para llevar en la matera, el auto o la mochila sin que se te desparrame nada.",
+    precio: 14000,
+    stock: 3,
+    imagen: "img/yerbera_gamuza_sol_de_mayo.jpg",
+    categoria: "Accesorios",
+    features: [
+      "Capacidad: 250g de yerba",
+      "Gamuza con Sol de Mayo grabado",
+      "Cierre para que no se vuelque",
+      "Liviana, ideal para llevar",
+    ],
+  },
 
   // ─── BOMBILLAS ───────────────────────────────────────
   {
@@ -531,21 +546,6 @@ const productos = [
       "Asas trenzadas a mano",
       "Ideal para llevar el set de mate completo",
       "Pieza única, hecha a mano",
-    ],
-  },
-  {
-    id: 52,
-    nombre: "Yerbera de Gamuza — Sol de Mayo",
-    descripcion: "Yerbera de gamuza con el Sol de Mayo grabado y cierre. Entran 250g de yerba: ideal para llevar en la matera, el auto o la mochila sin que se te desparrame nada.",
-    precio: 14000,
-    stock: 3,
-    imagen: "img/yerbera_gamuza_sol_de_mayo.jpg",
-    categoria: "Accesorios",
-    features: [
-      "Capacidad: 250g de yerba",
-      "Gamuza con Sol de Mayo grabado",
-      "Cierre para que no se vuelque",
-      "Liviana, ideal para llevar",
     ],
   },
   {
