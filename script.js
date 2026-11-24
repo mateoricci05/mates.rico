@@ -1013,8 +1013,15 @@ function abrirModalProducto(id) {
       : `<strong>Disponible</strong>`;
 
   inner.innerHTML = `
-    <div class="mp-img">
-      <img src="${p.imagen}" alt="${p.nombre}" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
+    <div class="pp-top">
+      <button type="button" class="pp-volver" aria-label="Volver al catálogo">← Volver</button>
+      <span class="pp-logo">mates<em>.rico</em></span>
+      <span class="pp-cat">${p.categoria}</span>
+    </div>
+    <div class="mp-img mp-galeria">
+      <img src="${p.imagen}" alt="${p.nombre}" id="mp-foto" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
+      ${stockPocos(p)}
+      <div class="mp-thumbs">${thumbsHtml(p)}</div>
     </div>
     <div class="mp-info">
       <p class="mp-cat">${p.etiqueta || p.categoria}</p>
@@ -1040,20 +1047,42 @@ function abrirModalProducto(id) {
         ${p.features.map(f => `
           <div class="mp-feature"><div class="mp-feature-dot"></div><span>${f}</span></div>`).join("")}
       </div>
-      ${agotado || encargo ? "" : `<p class="mp-stock ${stockBajo ? "bajo" : ""}">Stock: ${stockLabel}</p>`}
-      <div class="mp-cta">
+      ${agotado || encargo ? "" : `
+      <ul class="mp-datos">
+        <li><i data-feather="truck"></i><span><b>Envío gratis en Río Ceballos.</b> Al resto del país por Correo, gratis desde ${fmt(ENVIO_GRATIS_MINIMO)}.</span></li>
+        <li><i data-feather="credit-card"></i><span>Transferencia, efectivo o <b>${CUOTAS} cuotas sin interés</b> con Mercado Pago.</span></li>
+        <li><i data-feather="message-circle"></i><span>¿Dudas? <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`¡Hola! Estoy mirando el ${p.nombre} en la web. ¿Me pasás más fotos?`)}" target="_blank" rel="noopener">Pedinos más fotos o un video</a> por WhatsApp.</span></li>
+      </ul>`}
+      ${p.categoria === "Mates" && !agotado && !encargo ? combinaHtml() : ""}
+      <div class="mp-cta mp-cta2">
         <span class="mp-cta-precio">${fmt(precioDe(p))}</span>
         ${encargo
           ? `<a class="btn btn-primary" href="${linkEncargo(p)}" target="_blank" rel="noopener"><i data-feather="message-circle"></i> Encargar por WhatsApp</a>`
           : agotado
           ? `<a class="btn btn-outline" href="${linkAvisame(p)}" target="_blank" rel="noopener"><i data-feather="bell"></i> Avisame cuando vuelva</a>`
-          : `<button class="btn btn-primary" id="mp-btn-agregar">Agregar al pedido</button>`}
+          : `<button class="btn btn-primary" id="mp-btn-agregar">Comprar ahora</button>
+             ${p.opciones ? "" : `<button class="btn btn-outline" id="mp-btn-seguir" aria-label="Agregar y seguir mirando">+ Agregar</button>`}`}
       </div>
     </div>`;
 
   overlay.classList.add("open");
   document.body.style.overflow = "hidden";
+  document.getElementById("modal-producto").scrollTop = 0;
+  if (!history.state || history.state.mate !== p.id) history.pushState({ mate: p.id }, "", "?mate=" + slugMate(p));
+  document.title = p.nombre + " · mates.rico";
+  inner.querySelector(".pp-volver")?.addEventListener("click", () => history.back());
   feather.replace();
+  inner.querySelectorAll(".mp-thumb").forEach(t => t.addEventListener("click", () => {
+    inner.querySelectorAll(".mp-thumb").forEach(x => x.classList.toggle("activo", x === t));
+    const f = document.getElementById("mp-foto"), z = +t.dataset.z;
+    if (t.dataset.src) { f.src = t.dataset.src; f.style.transform = ""; return; }
+    f.style.transform = z === 1 ? "scale(2.2)" : z === 2 ? "scale(1.8)" : "";
+    f.style.transformOrigin = z === 1 ? "50% 38%" : "50% 75%";
+  }));
+  document.getElementById("mp-btn-seguir")?.addEventListener("click", () => { cerrarModalProducto(); agregarAlCarrito(id); mostrarToast("Agregado a tu pedido"); });
+  inner.querySelectorAll(".mp-combi-add").forEach(b => b.addEventListener("click", () => {
+    agregarAlCarrito(+b.dataset.id); b.textContent = "✓"; b.classList.add("ok");
+  }));
   // Elegir opción (grabado): cambia la foto grande y habilita el botón
   let opcionElegida = null;
   const btnAgregar = document.getElementById("mp-btn-agregar");
@@ -1080,7 +1109,40 @@ function abrirModalProducto(id) {
   });
 }
 
+function thumbsHtml(p) {
+  if (p.fotos && p.fotos.length) return [p.imagen, ...p.fotos].map((f, i) => `<button class="mp-thumb${i ? "" : " activo"}" data-src="${f}"><img src="${miniatura(f)}" alt=""></button>`).join("");
+  return `<button class="mp-thumb activo" data-z="0"><img src="${miniatura(p.imagen)}" alt=""></button>
+        <button class="mp-thumb" data-z="1"><img src="${miniatura(p.imagen)}" alt="" style="transform:scale(2.2);transform-origin:50% 38%"></button>
+        <button class="mp-thumb" data-z="2"><img src="${miniatura(p.imagen)}" alt="" style="transform:scale(1.8);transform-origin:50% 75%"></button>`;
+}
+function stockPocos(p) {
+  return p.stock > 0 && p.stock <= 2 ? `<span class="mp-pocos">${p.stock === 1 ? "¡Última unidad!" : `¡Quedan ${p.stock}!`}</span>` : "";
+}
+function combinaHtml() {
+  const bs = productos.filter(b => b.categoria === "Bombillas" && b.stock > 0).slice(0, 3);
+  if (!bs.length) return "";
+  return `<div class="mp-combina"><p class="mp-combina-tit">Completalo con una bombilla</p>
+    ${bs.map(b => `<div class="mp-combi"><img src="${miniatura(b.imagen)}" alt=""><div><span>${b.nombre.split(" — ")[0]}</span><b>${fmt(precioDe(b))}</b></div><button class="mp-combi-add" data-id="${b.id}" aria-label="Agregar">+</button></div>`).join("")}
+  </div>`;
+}
+
+const TITULO_WEB = document.title;
+function slugMate(p) {
+  return p.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").split("—")[0].trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + "-" + p.id;
+}
+window.addEventListener("popstate", (e) => {
+  if (e.state && e.state.mate) abrirModalProducto(e.state.mate);
+  else { document.getElementById("modal-producto-overlay")?.classList.remove("open"); document.body.style.overflow = ""; document.title = TITULO_WEB; }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const m = new URLSearchParams(location.search).get("mate");
+  const id = m && +m.split("-").pop();
+  if (id) { history.replaceState(null, "", location.pathname); setTimeout(() => abrirModalProducto(id), 300); }
+});
+
 function cerrarModalProducto() {
+  if (history.state && history.state.mate) { history.back(); }
+  document.title = TITULO_WEB;
   document.getElementById("modal-producto-overlay")?.classList.remove("open");
   document.body.style.overflow = "";
 }

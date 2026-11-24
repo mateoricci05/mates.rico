@@ -1660,3 +1660,45 @@ body.con-tarjeta .pago-opciones { grid-template-columns:1fr 1fr !important; }
 .btn-encargar { text-decoration:none; text-align:center; display:inline-flex; align-items:center; justify-content:center; }
 .mp-encargo { margin:6px 0 4px; font-size:0.88rem; line-height:1.5; color:var(--gris-osc); background:var(--verde-suave); border:1px solid var(--gris-claro); border-radius:10px; padding:10px 12px; }
 .mp-encargo strong { color:var(--c-beige); }
+
+/* ===== VISTA PREVIA ficha de producto ===== */
+.mp-galeria{position:relative}
+.mp-galeria #mp-foto{transition:transform .35s ease}
+.mp-thumbs{position:absolute;left:10px;bottom:10px;display:flex;gap:6px;z-index:2}
+.mp-thumb{width:46px;height:46px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,.5);padding:0;background:#222;cursor:pointer}
+.mp-thumb.activo{border-color:var(--c-verde)}
+.mp-thumb img{width:100%;height:100%;object-fit:cover}
+.mp-pocos{position:absolute;top:12px;left:12px;z-index:2;background:#c0392b;color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px}
+.mp-datos{list-style:none;margin:14px 0 6px;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:12px;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,.03)}
+.mp-datos li{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.4;color:var(--gris-med)}
+.mp-datos li svg{width:16px;height:16px;flex:0 0 16px;color:var(--c-verde-cl);margin-top:2px}
+.mp-datos b{color:#f1ebe0;font-weight:600}.mp-datos a{color:var(--c-verde-cl);text-decoration:underline}
+.mp-combina{margin:12px 0 6px}
+.mp-combina-tit{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--c-verde-cl);margin-bottom:8px;font-weight:600}
+.mp-combi{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,.08);margin-bottom:6px}
+.mp-combi img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+.mp-combi div{flex:1;display:flex;flex-direction:column;font-size:.82rem;color:#f1ebe0}
+.mp-combi b{color:var(--c-verde-cl);font-size:.85rem}
+.mp-combi-add{width:34px;height:34px;border-radius:50%;border:1px solid var(--c-verde);background:transparent;color:var(--c-verde-cl);font-size:1.2rem;cursor:pointer}
+.mp-combi-add.ok{background:var(--c-verde);color:#0b0b0a}
+.mp-cta2 .btn-outline{margin-top:0}
+@media (max-width:640px){
+ .mp-cta2 .mp-cta-precio{display:none}
+ .mp-cta2{gap:10px}
+ .mp-cta2 .btn{padding:13px 10px;font-size:.92rem}
+ .mp-cta2 #mp-btn-agregar{flex:1.5}
+ .mp-cta2 #mp-btn-seguir{flex:1}
+}
+.mp-datos li span{min-width:0}
+
+/* ===== VISTA PREVIA: ficha como página ===== */
+#modal-producto-overlay{padding:0!important;align-items:stretch!important;background:#0e0e0d;backdrop-filter:none}
+#modal-producto{max-width:none;width:100%;max-height:100dvh!important;height:100dvh;border-radius:0!important;border:0;transform:translateX(30px)!important;opacity:.6;transition:transform .28s ease,opacity .28s ease}
+.modal-overlay.open #modal-producto{transform:none!important;opacity:1}
+#modal-producto-close{display:none!important}
+.pp-top{grid-column:1/-1;position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:rgba(14,14,13,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
+.pp-volver{background:none;border:1px solid rgba(255,255,255,.18);color:#f1ebe0;border-radius:20px;padding:7px 14px;font-size:.85rem;cursor:pointer}
+.pp-logo{font-family:var(--font-display);font-weight:700;font-size:1.25rem;color:#f1ebe0}.pp-logo em{font-style:normal;color:var(--c-verde-cl)}
+.pp-cat{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-med)}
+@media (min-width:900px){ #modal-producto .modal-producto-inner{max-width:1100px;margin:0 auto} .mp-img{border-radius:16px;margin:24px} }
+@media (max-width:640px){ .mp-img{border-radius:0!important;max-height:none!important;aspect-ratio:4/5!important} }
