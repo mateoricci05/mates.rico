@@ -1693,7 +1693,7 @@ body.con-tarjeta .pago-opciones { grid-template-columns:1fr 1fr !important; }
 
 /* ===== VISTA PREVIA: ficha como página ===== */
 #modal-producto-overlay{padding:0!important;align-items:stretch!important;background:#0e0e0d;backdrop-filter:none}
-#modal-producto{max-width:none;width:100%;max-height:100dvh!important;height:100dvh;border-radius:0!important;border:0;transform:translateX(30px)!important;opacity:.6;transition:transform .28s ease,opacity .28s ease}
+#modal-producto{max-width:none;width:100%;max-height:100dvh!important;height:100dvh;border-radius:0!important;border:0;transform:translateX(16px)!important;opacity:0;transition:transform .18s ease-out,opacity .14s ease-out}
 .modal-overlay.open #modal-producto{transform:none!important;opacity:1}
 #modal-producto-close{display:none!important}
 .pp-top{grid-column:1/-1;position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:rgba(14,14,13,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
@@ -1753,3 +1753,9 @@ body.con-tarjeta .pago-opciones { grid-template-columns:1fr 1fr !important; }
 .mp-galeria{background:transparent!important}.mp-galeria #mp-foto{border-radius:inherit}
 @media (max-width:899px){.mp-thumbs{padding:10px 14px 2px!important}}
 .mp-foto-box{overflow:hidden;border-radius:inherit;line-height:0}
+
+/* foto de la ficha: espacio reservado desde el primer momento, sin saltos */
+.mp-foto-box{width:100%;background:#1a1a18}
+.mp-foto-box #mp-foto{width:100%;height:100%!important;object-fit:cover!important;display:block}
+@media (min-width:900px){.mp-foto-box{max-height:calc(100dvh - 140px)}.mp-foto-box #mp-foto{object-fit:contain!important}}
+@media (prefers-reduced-motion:reduce){#modal-producto{transition:none!important}}

@@ -926,6 +926,9 @@ function crearCard(p, i) {
       </div>
     </div>`;
 
+  const pre = () => precargarFoto(p.imagen);
+  card.addEventListener("pointerdown", pre, { passive: true });
+  card.addEventListener("mouseenter", pre, { passive: true });
   card.addEventListener("click", (e) => {
     if (!e.target.closest(".btn-comprar")) abrirModalProducto(p.id);
   });
@@ -1040,7 +1043,7 @@ function abrirModalProducto(id) {
       <span class="pp-cat">${p.categoria}</span>
     </div>
     <div class="mp-img mp-galeria">
-      <div class="mp-foto-box"><img src="${p.imagen}" alt="${p.nombre}" id="mp-foto" onerror="this.onerror=null;this.src=IMG_FALLBACK"/></div>
+      <div class="mp-foto-box" style="aspect-ratio:${proporcionFoto(p)}"><img src="${miniatura(p.imagen)}" alt="${p.nombre}" id="mp-foto" decoding="async" onerror="if(this.src.indexOf('/mini/')>-1){this.src='${p.imagen}'}else{this.onerror=null;this.src=IMG_FALLBACK}"/></div>
       <div class="mp-thumbs">${thumbsHtml(p)}</div>
     </div>
     <div class="mp-info">
@@ -1093,6 +1096,7 @@ function abrirModalProducto(id) {
   inner.querySelector(".pp-volver")?.addEventListener("click", () => history.back());
   feather.replace();
   const gal = inner.querySelector(".mp-galeria"), foto = document.getElementById("mp-foto");
+  fotoGrande(foto, p.imagen);
   inner.querySelectorAll(".mp-thumb").forEach(t => t.addEventListener("click", () => {
     inner.querySelectorAll(".mp-thumb").forEach(x => x.classList.toggle("activo", x === t));
     const f = document.getElementById("mp-foto"), z = +t.dataset.z;
@@ -1131,6 +1135,37 @@ function abrirModalProducto(id) {
   });
 }
 
+// Foto de la ficha: aparece al instante la versión liviana (ya bajada en el catálogo)
+// y se cambia sola por la grande cuando termina de cargar, sin saltos.
+// Proporción de cada foto (ancho/alto) para reservar el espacio exacto y que no salte
+const PROPORCION_FOTO = {"img/baldo_5kg.jpg": "900/1125", "img/bombilla_acero.jpg": "900/1125", "img/bombillon_obrero.jpg": "1050/1400", "img/bombillon_oro.jpg": "1050/1400", "img/bombillon_pampa.jpg": "1050/1400", "img/bombillon_pico_de_loro.jpg": "900/1200", "img/bombillon_trenzado_alpaca.jpg": "900/1125", "img/box_dia_de_la_madre.jpg": "900/968", "img/camionero_cincelado_v2.jpg": "900/1125", "img/camionero_criollo_v3.jpg": "900/1125", "img/canasta_cuero_crudo.jpg": "900/1200", "img/grabado_esa_es_mi_mama.jpg": "600/600", "img/grabado_te_amo_ma.jpg": "600/600", "img/imperial_algarrobo_v2.jpg": "900/1125", "img/imperial_negro_v2.jpg": "900/1125", "img/kit_matera_negra.jpg": "900/1125", "img/latas_baldo.jpg": "900/1200", "img/mate_coquito_v2.jpg": "900/1125", "img/mate_galleta.jpg": "900/1125", "img/mate_galleta_simple.jpg": "1050/1400", "img/mate_porito.jpg": "900/1125", "img/mate_ranchero_v2.jpg": "900/1125", "img/mate_torpedo_uruguayo.jpg": "900/1125", "img/stanley_system_azul.jpg": "900/1125", "img/stanley_system_negro.jpg": "900/1125", "img/termo_1l.jpg": "900/1125", "img/termo_1l_negro.jpg": "900/1125", "img/torpedo_avejentado_sol_de_mayo.jpg": "1050/1400", "img/torpedo_avejentado_virola_ancha.jpg": "900/1125", "img/torpedo_base_canasta.jpg": "1050/1400", "img/torpedo_borravino.jpg": "1050/1400", "img/torpedo_cuero_crudo_lacre.jpg": "1050/1400", "img/torpedo_negro.jpg": "1050/1400", "img/torpedo_uruguayo_v2.jpg": "900/1125", "img/yerba_baldo.jpg": "900/1125", "img/yerba_esmeralda.jpg": "1050/1400", "img/yerba_sara_coco.jpg": "1050/1400", "img/yerba_verdecita.jpg": "900/1125", "img/yerbera_gamuza_sol_de_mayo.jpg": "900/1125"};
+const proporciones = Object.assign({}, PROPORCION_FOTO);
+function proporcionFoto(p) {
+  if (proporciones[p.imagen]) return proporciones[p.imagen];
+  const ch = document.querySelector(`#productos-grid img[data-grande="${p.imagen}"]`);
+  if (ch && ch.naturalWidth) return (proporciones[p.imagen] = `${ch.naturalWidth}/${ch.naturalHeight}`);
+  return "4/5";
+}
+const fotosCargadas = new Set();
+function precargarFoto(src) {
+  if (fotosCargadas.has(src)) return;
+  const im = new Image(); im.decoding = "async"; im.src = src;
+  im.onload = () => { fotosCargadas.add(src); proporciones[src] = `${im.naturalWidth}/${im.naturalHeight}`; };
+}
+function fotoGrande(img, src) {
+  if (!img) return;
+  const poner = () => {
+    if (!img.isConnected || img.src.indexOf("/mini/") < 0) return;
+    img.src = src;
+    const box = img.parentElement;
+    if (box && im.naturalWidth) box.style.aspectRatio = `${im.naturalWidth}/${im.naturalHeight}`;
+  };
+  let im = { naturalWidth: 0 };
+  if (fotosCargadas.has(src)) { poner(); return; }
+  im = new Image(); im.decoding = "async"; im.src = src;
+  const listo = () => { fotosCargadas.add(src); (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(poner); };
+  if (im.complete) listo(); else im.onload = listo;
+}
 function thumbsHtml(p) {
   if (p.fotos && p.fotos.length) return [p.imagen, ...p.fotos].map((f, i) => `<button class="mp-thumb${i ? "" : " activo"}" data-src="${f}"><img src="${miniatura(f)}" alt=""></button>`).join("");
   // Sin fotos extra: la foto entera + un detalle con un poco de zoom
