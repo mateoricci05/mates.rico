@@ -6,7 +6,7 @@
 if (!window.feather) window.feather = { replace() {} };
 
 // ═══════════════════════════════════════════════════════
-// 📦 PRODUCTOS — ordenados: Mates → Yerbas → Bombillas → Accesorios
+// 📦 PRODUCTOS — ordenados: Mates → Yerbas → Bombillas → Materas
 // ═══════════════════════════════════════════════════════
 const productos = [
 
@@ -421,7 +421,7 @@ const productos = [
     precio: 14000,
     stock: 3,
     imagen: "img/yerbera_gamuza_sol_de_mayo.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Capacidad: 250g de yerba",
       "Gamuza con Sol de Mayo grabado",
@@ -539,7 +539,7 @@ const productos = [
     precio: 70000,
     stock: 5,
     imagen: "img/canasta_cuero_crudo.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Cuero ancho de Laguna",
       "Forrada en gamuza por dentro",
@@ -555,7 +555,7 @@ const productos = [
     precio: 25000,
     stock: 0,
     imagen: "img/kit_matera_negra.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Porta mate de cuero negro",
       "Premium",
@@ -571,7 +571,7 @@ const productos = [
     precio: 28000,
     stock: 0,
     imagen: "img/termo_1l_negro.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Capacidad 1 litro",
       "Acero inoxidable doble pared",
@@ -587,7 +587,7 @@ const productos = [
     precio: 25000,
     stock: 0,
     imagen: "img/termo_1l.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Capacidad 1 litro",
       "Acero inoxidable doble pared",
@@ -603,7 +603,7 @@ const productos = [
     precio: 49000,
     stock: 0,
     imagen: "img/stanley_system_azul.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Stanley Classic Vacuum Bottle",
       "Capacidad 1.2L",
@@ -619,7 +619,7 @@ const productos = [
     precio: 49000,
     stock: 0,
     imagen: "img/stanley_system_negro.jpg",
-    categoria: "Accesorios",
+    categoria: "Materas",
     features: [
       "Stanley Classic Vacuum Bottle",
       "Capacidad 1.2L",
@@ -695,7 +695,7 @@ const precioHtml = (p) => {
   const real = precioDe(p), lista = precioLista(real);
   return `<s class="pl-tachado">${fmt(lista)}</s>`
     + `<span class="pl-transfer"><span class="pl-t-row"><b>${fmt(real)}</b><i>${OFF_TRANSFERENCIA}% OFF</i></span><span class="pl-t-txt">por transferencia</span></span>`
-    + `<span class="pl-cuotas">o ${CUOTAS} cuotas sin interés de ${fmt(Math.round(lista / CUOTAS))}</span>`;
+    + `<span class="pl-cuotas">${CUOTAS} cuotas de ${fmt(Math.round(lista / CUOTAS))}</span>`;
 };
 
 // ═══════════════════════════════════════════════════════
@@ -831,6 +831,17 @@ function initPromo() {
 // ═══════════════════════════════════════════════════════
 // 🧱 RENDER PRODUCTOS
 // ═══════════════════════════════════════════════════════
+function grupoDe(p) {
+  if (p.categoria === "Mates") {
+    if (p.etiqueta === "Combo") return "Combos";
+    if (/^torpedo/i.test(p.nombre)) return "Torpedos";
+    if (/^camionero/i.test(p.nombre)) return "Camioneros";
+    if (/^imperial/i.test(p.nombre)) return "Imperiales";
+    return "Más mates";
+  }
+  if (/yerbera/i.test(p.nombre)) return "Yerbas";
+  return p.categoria;
+}
 function renderizarProductos(categoria = "Todos") {
   const grid = document.getElementById("productos-grid");
   if (!grid) return;
@@ -849,7 +860,17 @@ function renderizarProductos(categoria = "Todos") {
     return;
   }
 
-  disponibles.forEach((p, i) => grid.appendChild(crearCard(p, i)));
+  let grupoAnt = null;
+  disponibles.forEach((p, i) => {
+    const g = grupoDe(p);
+    if (g !== grupoAnt) {
+      const h = document.createElement("div");
+      h.className = "grid-grupo";
+      h.innerHTML = `<h3>${g}</h3><span>${disponibles.filter(x => grupoDe(x) === g).length}</span>`;
+      grid.appendChild(h); grupoAnt = g;
+    }
+    grid.appendChild(crearCard(p, i));
+  });
 
   if (proximamente.length) {
     const sep = document.createElement("div");
@@ -887,7 +908,7 @@ function crearCard(p, i) {
   card.innerHTML = `
     <div class="producto-img-wrap">
       <img src="${miniatura(p.imagen)}" alt="${p.nombre}" ${i < 4 && !pronto ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" data-grande="${p.imagen}" onload="this.classList.add('cargada')" onerror="if(this.dataset.grande&&this.src.indexOf('/mini/')>-1){this.src=this.dataset.grande}else{this.onerror=null;this.src=IMG_FALLBACK}"/>
-      <span class="producto-badge${p.esDestacado || p.etiqueta ? " producto-badge--madre" : ""}">${p.etiqueta || p.categoria}</span>
+      ${p.etiqueta ? `<span class="producto-badge producto-badge--madre">${p.etiqueta}</span>` : ""}
       ${badgeStock}
     </div>
     <div class="producto-info">
@@ -1019,8 +1040,7 @@ function abrirModalProducto(id) {
       <span class="pp-cat">${p.categoria}</span>
     </div>
     <div class="mp-img mp-galeria">
-      <img src="${p.imagen}" alt="${p.nombre}" id="mp-foto" onerror="this.onerror=null;this.src=IMG_FALLBACK"/>
-      ${stockPocos(p)}
+      <div class="mp-foto-box"><img src="${p.imagen}" alt="${p.nombre}" id="mp-foto" onerror="this.onerror=null;this.src=IMG_FALLBACK"/></div>
       <div class="mp-thumbs">${thumbsHtml(p)}</div>
     </div>
     <div class="mp-info">
@@ -1072,12 +1092,14 @@ function abrirModalProducto(id) {
   document.title = p.nombre + " · mates.rico";
   inner.querySelector(".pp-volver")?.addEventListener("click", () => history.back());
   feather.replace();
+  const gal = inner.querySelector(".mp-galeria"), foto = document.getElementById("mp-foto");
   inner.querySelectorAll(".mp-thumb").forEach(t => t.addEventListener("click", () => {
     inner.querySelectorAll(".mp-thumb").forEach(x => x.classList.toggle("activo", x === t));
     const f = document.getElementById("mp-foto"), z = +t.dataset.z;
     if (t.dataset.src) { f.src = t.dataset.src; f.style.transform = ""; return; }
-    f.style.transform = z === 1 ? "scale(2.2)" : z === 2 ? "scale(1.8)" : "";
-    f.style.transformOrigin = z === 1 ? "50% 38%" : "50% 75%";
+    gal.classList.remove("zoom");
+    f.style.transformOrigin = "50% 42%";
+    f.style.transform = z === 1 ? "scale(1.6)" : "";
   }));
   document.getElementById("mp-btn-seguir")?.addEventListener("click", () => { cerrarModalProducto(); agregarAlCarrito(id); mostrarToast("Agregado a tu pedido"); });
   inner.querySelectorAll(".mp-combi-add").forEach(b => b.addEventListener("click", () => {
@@ -1111,9 +1133,9 @@ function abrirModalProducto(id) {
 
 function thumbsHtml(p) {
   if (p.fotos && p.fotos.length) return [p.imagen, ...p.fotos].map((f, i) => `<button class="mp-thumb${i ? "" : " activo"}" data-src="${f}"><img src="${miniatura(f)}" alt=""></button>`).join("");
-  return `<button class="mp-thumb activo" data-z="0"><img src="${miniatura(p.imagen)}" alt=""></button>
-        <button class="mp-thumb" data-z="1"><img src="${miniatura(p.imagen)}" alt="" style="transform:scale(2.2);transform-origin:50% 38%"></button>
-        <button class="mp-thumb" data-z="2"><img src="${miniatura(p.imagen)}" alt="" style="transform:scale(1.8);transform-origin:50% 75%"></button>`;
+  // Sin fotos extra: la foto entera + un detalle con un poco de zoom
+  return `<button class="mp-thumb activo" data-z="0" aria-label="Foto completa"><img src="${miniatura(p.imagen)}" alt=""></button>
+        <button class="mp-thumb" data-z="1" aria-label="Ver detalle"><img src="${miniatura(p.imagen)}" alt="" style="transform:scale(1.6);transform-origin:50% 42%"></button>`;
 }
 function stockPocos(p) {
   return p.stock > 0 && p.stock <= 2 ? `<span class="mp-pocos">${p.stock === 1 ? "¡Última unidad!" : `¡Quedan ${p.stock}!`}</span>` : "";
@@ -1339,7 +1361,8 @@ function actualizarResumen() {
   const fin = document.getElementById("btn-finalizar");
   if (fin && !fin.classList.contains("cargando")) {
     fin.classList.toggle("btn-mp", esMP);
-    fin.innerHTML = esMP ? `<i data-feather="credit-card"></i> Pagar con Mercado Pago` : `<i data-feather="message-circle"></i> Enviar pedido por WhatsApp`;
+    const tot = document.getElementById("res-total")?.textContent || "";
+    fin.innerHTML = esMP ? `<i data-feather="credit-card"></i> Pagar ${tot} con Mercado Pago` : `<i data-feather="message-circle"></i> Pedir por WhatsApp · ${tot}`;
     feather.replace();
   }
 
@@ -1361,6 +1384,7 @@ function actualizarResumen() {
 
 function elegirPago(pago) {
   pagoElegido = pago;
+  try { localStorage.setItem("mrPago", pago); } catch {}
   document.querySelectorAll(".pago-opcion").forEach(b => b.classList.toggle("selected", b.dataset.pago === pago));
   const alias = document.getElementById("checkout-alias");
   if (alias) alias.hidden = pago !== "Transferencia";
@@ -1386,7 +1410,15 @@ function initTarjeta() {
   actualizarResumen();
 }
 
+function recordarEleccion() {
+  try {
+    const z = localStorage.getItem("mrZona"), pg = localStorage.getItem("mrPago");
+    if (z && z !== "otra") document.querySelector(`.envio-opcion[data-loc="${z}"]`)?.click();
+    if (pg) document.querySelector(`.pago-opcion[data-pago="${pg}"]:not([hidden])`)?.click();
+  } catch {}
+}
 function initCarrito() {
+  setTimeout(recordarEleccion, 0);
   const overlay = document.getElementById("modal-carrito-overlay");
   const otraWrap = document.getElementById("envio-otra-wrap");
   const domWrap = document.getElementById("envio-domicilio-wrap");
@@ -1402,6 +1434,7 @@ function initCarrito() {
       document.querySelectorAll(".envio-opcion").forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
       zonaElegida = btn.dataset.loc;
+      try { localStorage.setItem("mrZona", zonaElegida); } catch {}
       if (otraWrap) otraWrap.style.display = zonaElegida === "otra" ? "flex" : "none";
       document.getElementById("checkout-zona")?.classList.remove("falta");
       actualizarResumen();
